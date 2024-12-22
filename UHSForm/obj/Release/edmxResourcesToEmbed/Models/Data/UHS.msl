@@ -1,0 +1,1260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="db_TestUHSModelStoreContainer" CdmEntityContainer="UHSEntities">
+    <EntitySetMapping Name="Admin_Sub">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Admin_Sub">
+        <MappingFragment StoreEntitySet="Admin_Sub">
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="AlternativeMobileNo" ColumnName="AlternativeMobileNo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LandMark" ColumnName="LandMark" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="PhoneCode" ColumnName="PhoneCode" />
+          <ScalarProperty Name="IdentityProofName" ColumnName="IdentityProofName" />
+          <ScalarProperty Name="IdentityProofID" ColumnName="IdentityProofID" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="logID" ColumnName="logID" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarServiceTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CarServiceType">
+        <MappingFragment StoreEntitySet="CarServiceTypes">
+          <ScalarProperty Name="carstID" ColumnName="carstID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CarType">
+        <MappingFragment StoreEntitySet="CarTypes">
+          <ScalarProperty Name="cartID" ColumnName="cartID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ISO" ColumnName="ISO" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="CountryNicename" ColumnName="CountryNicename" />
+          <ScalarProperty Name="ISO3" ColumnName="ISO3" />
+          <ScalarProperty Name="Numcode" ColumnName="Numcode" />
+          <ScalarProperty Name="Phonecode" ColumnName="Phonecode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="CustomerTypeOn" ColumnName="CustomerTypeOn" />
+          <ScalarProperty Name="cuID" ColumnName="cuID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="AlternativeNo" ColumnName="AlternativeNo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="PhoneCode" ColumnName="PhoneCode" />
+          <ScalarProperty Name="IdentityProveName" ColumnName="IdentityProveName" />
+          <ScalarProperty Name="IdentityProveID" ColumnName="IdentityProveID" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="logID" ColumnName="logID" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="Salutaion" ColumnName="Salutaion" />
+          <ScalarProperty Name="WhatsAppNo" ColumnName="WhatsAppNo" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+          <ScalarProperty Name="IsMobile" ColumnName="IsMobile" />
+          <ScalarProperty Name="IsEmail" ColumnName="IsEmail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerAvailabilities">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerAvailability">
+        <MappingFragment StoreEntitySet="CustomerAvailability">
+          <ScalarProperty Name="custSCID" ColumnName="custSCID" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="Availability" ColumnName="Availability" />
+          <ScalarProperty Name="KeyCollection" ColumnName="KeyCollection" />
+          <ScalarProperty Name="AccessProperty" ColumnName="AccessProperty" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="ReceptionDate" ColumnName="ReceptionDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerCarServiceDetails">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerCarServiceDetail">
+        <MappingFragment StoreEntitySet="CustomerCarServiceDetails">
+          <ScalarProperty Name="custCarsDID" ColumnName="custCarsDID" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="ParkingLevel" ColumnName="ParkingLevel" />
+          <ScalarProperty Name="ParkingNumber" ColumnName="ParkingNumber" />
+          <ScalarProperty Name="VehicleBrand" ColumnName="VehicleBrand" />
+          <ScalarProperty Name="VehicleColor" ColumnName="VehicleColor" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="VehicleNumber" ColumnName="VehicleNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerComplaints">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerComplaint">
+        <MappingFragment StoreEntitySet="CustomerComplaint">
+          <ScalarProperty Name="custComID" ColumnName="custComID" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="cuID" ColumnName="cuID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerConditionalTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerConditionalType">
+        <MappingFragment StoreEntitySet="CustomerConditionalType">
+          <ScalarProperty Name="custCTID" ColumnName="custCTID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerCustomDateTimes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerCustomDateTime">
+        <MappingFragment StoreEntitySet="CustomerCustomDateTime">
+          <ScalarProperty Name="custDTID" ColumnName="custDTID" />
+          <ScalarProperty Name="cuID" ColumnName="cuID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="CustomStartDate" ColumnName="CustomStartDate" />
+          <ScalarProperty Name="CustomStartTime" ColumnName="CustomStartTime" />
+          <ScalarProperty Name="CustomEndTime" ColumnName="CustomEndTime" />
+          <ScalarProperty Name="CustomDays" ColumnName="CustomDays" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerDateBlocks">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerDateBlock">
+        <MappingFragment StoreEntitySet="CustomerDateBlock">
+          <ScalarProperty Name="teamID" ColumnName="teamID" />
+          <ScalarProperty Name="custDBID" ColumnName="custDBID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="packID" ColumnName="packID" />
+          <ScalarProperty Name="parkID" ColumnName="parkID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerFeedbacks">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerFeedback">
+        <MappingFragment StoreEntitySet="CustomerFeedback">
+          <ScalarProperty Name="custfdbID" ColumnName="custfdbID" />
+          <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+          <ScalarProperty Name="cuID" ColumnName="cuID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdaatedOn" ColumnName="UpdaatedOn" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="custTDID" ColumnName="custTDID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerInovices">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerInovice">
+        <MappingFragment StoreEntitySet="CustomerInovice">
+          <ScalarProperty Name="custInID" ColumnName="custInID" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="cuID" ColumnName="cuID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="custTrasID" ColumnName="custTrasID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerIssueTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerIssueType">
+        <MappingFragment StoreEntitySet="CustomerIssueType">
+          <ScalarProperty Name="custISID" ColumnName="custISID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerOfficalDetails">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerOfficalDetail">
+        <MappingFragment StoreEntitySet="CustomerOfficalDetails">
+          <ScalarProperty Name="carTRID" ColumnName="carTRID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="SpecialService" ColumnName="SpecialService" />
+          <ScalarProperty Name="propaID" ColumnName="propaID" />
+          <ScalarProperty Name="propType" ColumnName="propType" />
+          <ScalarProperty Name="vID" ColumnName="vID" />
+          <ScalarProperty Name="proprestID" ColumnName="proprestID" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="AppartmentNumber" ColumnName="AppartmentNumber" />
+          <ScalarProperty Name="stfID" ColumnName="stfID" />
+          <ScalarProperty Name="teamID" ColumnName="teamID" />
+          <ScalarProperty Name="StatusOfWork" ColumnName="StatusOfWork" />
+          <ScalarProperty Name="TaskNo" ColumnName="TaskNo" />
+          <ScalarProperty Name="ClosingRemarks" ColumnName="ClosingRemarks" />
+          <ScalarProperty Name="BuldleDays" ColumnName="BuldleDays" />
+          <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
+          <ScalarProperty Name="NoOfMonths" ColumnName="NoOfMonths" />
+          <ScalarProperty Name="cartID" ColumnName="cartID" />
+          <ScalarProperty Name="carstID" ColumnName="carstID" />
+          <ScalarProperty Name="IsCarWash" ColumnName="IsCarWash" />
+          <ScalarProperty Name="subAreaID" ColumnName="subAreaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerOtherProperties">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerOtherProperty">
+        <MappingFragment StoreEntitySet="CustomerOtherProperty">
+          <ScalarProperty Name="custOPID" ColumnName="custOPID" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="TowerName" ColumnName="TowerName" />
+          <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+          <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+          <ScalarProperty Name="ZoneNumber" ColumnName="ZoneNumber" />
+          <ScalarProperty Name="Loacation" ColumnName="Loacation" />
+          <ScalarProperty Name="LocationLink" ColumnName="LocationLink" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerPaymentStatus">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerPaymentStatu">
+        <MappingFragment StoreEntitySet="CustomerPaymentStatus">
+          <ScalarProperty Name="custPSID" ColumnName="custPSID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerPricings">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerPricing">
+        <MappingFragment StoreEntitySet="CustomerPricing">
+          <ScalarProperty Name="cupID" ColumnName="cupID" />
+          <ScalarProperty Name="cuID" ColumnName="cuID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="packID" ColumnName="packID" />
+          <ScalarProperty Name="parkID" ColumnName="parkID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerRenewalMonths">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerRenewalMonth">
+        <MappingFragment StoreEntitySet="CustomerRenewalMonths">
+          <ScalarProperty Name="custrmID" ColumnName="custrmID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NoOfMonths" ColumnName="NoOfMonths" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerSpecializedCleanings">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerSpecializedCleaning">
+        <MappingFragment StoreEntitySet="CustomerSpecializedCleaning">
+          <ScalarProperty Name="custSCID" ColumnName="custSCID" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="servcatID" ColumnName="servcatID" />
+          <ScalarProperty Name="servsubcatID" ColumnName="servsubcatID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerTimeBlocks">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerTimeBlock">
+        <MappingFragment StoreEntitySet="CustomerTimeBlock">
+          <ScalarProperty Name="custTBID" ColumnName="custTBID" />
+          <ScalarProperty Name="TempID" ColumnName="TempID" />
+          <ScalarProperty Name="Days" ColumnName="Days" />
+          <ScalarProperty Name="Times" ColumnName="Times" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="teamID" ColumnName="teamID" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerTimelines">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerTimeline">
+        <MappingFragment StoreEntitySet="CustomerTimeline">
+          <ScalarProperty Name="teamID" ColumnName="teamID" />
+          <ScalarProperty Name="custTDID" ColumnName="custTDID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="packID" ColumnName="packID" />
+          <ScalarProperty Name="parkID" ColumnName="parkID" />
+          <ScalarProperty Name="StatusOfWork" ColumnName="StatusOfWork" />
+          <ScalarProperty Name="TaskNo" ColumnName="TaskNo" />
+          <ScalarProperty Name="ClosingRemarks" ColumnName="ClosingRemarks" />
+          <ScalarProperty Name="ClosingDate" ColumnName="ClosingDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerTransactions">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerTransaction">
+        <MappingFragment StoreEntitySet="CustomerTransaction">
+          <ScalarProperty Name="custTrasID" ColumnName="custTrasID" />
+          <ScalarProperty Name="cuID" ColumnName="cuID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="PayementID" ColumnName="PayementID" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerType">
+        <MappingFragment StoreEntitySet="CustomerType">
+          <ScalarProperty Name="custTyID" ColumnName="custTyID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Files">
+      <EntityTypeMapping TypeName="db_TestUHSModel.File">
+        <MappingFragment StoreEntitySet="Files">
+          <ScalarProperty Name="custSID" ColumnName="custSID" />
+          <ScalarProperty Name="fileID" ColumnName="fileID" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="stfID" ColumnName="stfID" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="servcatID" ColumnName="servcatID" />
+          <ScalarProperty Name="servsubcatID" ColumnName="servsubcatID" />
+          <ScalarProperty Name="stID" ColumnName="stID" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="FileContentType" ColumnName="FileContentType" />
+          <ScalarProperty Name="FileFieldName" ColumnName="FileFieldName" />
+          <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+          <ScalarProperty Name="FileUse" ColumnName="FileUse" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="cuiD" ColumnName="cuiD" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FileUses">
+      <EntityTypeMapping TypeName="db_TestUHSModel.FileUse">
+        <MappingFragment StoreEntitySet="FileUse">
+          <ScalarProperty Name="fileUseID" ColumnName="fileUseID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IncExclus">
+      <EntityTypeMapping TypeName="db_TestUHSModel.IncExclu">
+        <MappingFragment StoreEntitySet="IncExclu">
+          <ScalarProperty Name="incexID" ColumnName="incexID" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="sercatID" ColumnName="sercatID" />
+          <ScalarProperty Name="servsubcatID" ColumnName="servsubcatID" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logins">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Login">
+        <MappingFragment StoreEntitySet="Login">
+          <ScalarProperty Name="logID" ColumnName="logID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+          <ScalarProperty Name="LastTimeLogin" ColumnName="LastTimeLogin" />
+          <ScalarProperty Name="rID" ColumnName="rID" />
+          <ScalarProperty Name="parentID" ColumnName="parentID" />
+          <ScalarProperty Name="IsBlocked" ColumnName="IsBlocked" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdateRole" ColumnName="UpdateRole" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Log">
+        <MappingFragment StoreEntitySet="Logs">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="logDate" ColumnName="logDate" />
+          <ScalarProperty Name="logThread" ColumnName="logThread" />
+          <ScalarProperty Name="logLevel" ColumnName="logLevel" />
+          <ScalarProperty Name="logSource" ColumnName="logSource" />
+          <ScalarProperty Name="logMessage" ColumnName="logMessage" />
+          <ScalarProperty Name="exception" ColumnName="exception" />
+          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MainCategories">
+      <EntityTypeMapping TypeName="db_TestUHSModel.MainCategory">
+        <MappingFragment StoreEntitySet="MainCategory">
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="IsFlag" ColumnName="IsFlag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Packages">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Package">
+        <MappingFragment StoreEntitySet="Packages">
+          <ScalarProperty Name="packID" ColumnName="packID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="RecursiveTime" ColumnName="RecursiveTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pricings">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Pricing">
+        <MappingFragment StoreEntitySet="Pricing">
+          <ScalarProperty Name="parkID" ColumnName="parkID" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="servcatID" ColumnName="servcatID" />
+          <ScalarProperty Name="servsubcatID" ColumnName="servsubcatID" />
+          <ScalarProperty Name="packID" ColumnName="packID" />
+          <ScalarProperty Name="propaID" ColumnName="propaID" />
+          <ScalarProperty Name="vID" ColumnName="vID" />
+          <ScalarProperty Name="proprestID" ColumnName="proprestID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="TimeMeasurement" ColumnName="TimeMeasurement" />
+          <ScalarProperty Name="cartID" ColumnName="cartID" />
+          <ScalarProperty Name="carstID" ColumnName="carstID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Properties">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Property">
+        <MappingFragment StoreEntitySet="Properties">
+          <ScalarProperty Name="pID" ColumnName="pID" />
+          <ScalarProperty Name="vID" ColumnName="vID" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="cuID" ColumnName="cuID" />
+          <ScalarProperty Name="PTID" ColumnName="PTID" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="PlotNo" ColumnName="PlotNo" />
+          <ScalarProperty Name="PlotArea" ColumnName="PlotArea" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="PlotStatus" ColumnName="PlotStatus" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="TotalFloors" ColumnName="TotalFloors" />
+          <ScalarProperty Name="FloorNo" ColumnName="FloorNo" />
+          <ScalarProperty Name="RentAmount" ColumnName="RentAmount" />
+          <ScalarProperty Name="UseFor" ColumnName="UseFor" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PropertyAreas">
+      <EntityTypeMapping TypeName="db_TestUHSModel.PropertyArea">
+        <MappingFragment StoreEntitySet="PropertyArea">
+          <ScalarProperty Name="propaID" ColumnName="propaID" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PropertyResidenceTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.PropertyResidenceType">
+        <MappingFragment StoreEntitySet="PropertyResidenceType">
+          <ScalarProperty Name="proprestID" ColumnName="proprestID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="vID" ColumnName="vID" />
+          <ScalarProperty Name="propaID" ColumnName="propaID" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PropertyTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.PropertyType">
+        <MappingFragment StoreEntitySet="PropertyType">
+          <ScalarProperty Name="PTID" ColumnName="PTID" />
+          <ScalarProperty Name="PTypeName" ColumnName="PTypeName" />
+          <ScalarProperty Name="ventureType" ColumnName="ventureType" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RefIncExclus">
+      <EntityTypeMapping TypeName="db_TestUHSModel.RefIncExclu">
+        <MappingFragment StoreEntitySet="RefIncExclu">
+          <ScalarProperty Name="incexRefID" ColumnName="incexRefID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="incexID" ColumnName="incexID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RefServiceSlots">
+      <EntityTypeMapping TypeName="db_TestUHSModel.RefServiceSlot">
+        <MappingFragment StoreEntitySet="RefServiceSlots">
+          <ScalarProperty Name="ssrefID" ColumnName="ssrefID" />
+          <ScalarProperty Name="ssID" ColumnName="ssID" />
+          <ScalarProperty Name="Days" ColumnName="Days" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="rID" ColumnName="rID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServiceCategories">
+      <EntityTypeMapping TypeName="db_TestUHSModel.ServiceCategory">
+        <MappingFragment StoreEntitySet="ServiceCategory">
+          <ScalarProperty Name="servcatID" ColumnName="servcatID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServiceSlots">
+      <EntityTypeMapping TypeName="db_TestUHSModel.ServiceSlot">
+        <MappingFragment StoreEntitySet="ServiceSlots">
+          <ScalarProperty Name="ssID" ColumnName="ssID" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="servcatID" ColumnName="servcatID" />
+          <ScalarProperty Name="servsubcatID" ColumnName="servsubcatID" />
+          <ScalarProperty Name="stfID" ColumnName="stfID" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServiceSubCategories">
+      <EntityTypeMapping TypeName="db_TestUHSModel.ServiceSubCategory">
+        <MappingFragment StoreEntitySet="ServiceSubCategory">
+          <ScalarProperty Name="servsubcatID" ColumnName="servsubcatID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="servcatID" ColumnName="servcatID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Staffs">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Staff">
+        <MappingFragment StoreEntitySet="Staff">
+          <ScalarProperty Name="stfID" ColumnName="stfID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="PhoneCode" ColumnName="PhoneCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="logID" ColumnName="logID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffCustomerRatings">
+      <EntityTypeMapping TypeName="db_TestUHSModel.StaffCustomerRating">
+        <MappingFragment StoreEntitySet="StaffCustomerRating">
+          <ScalarProperty Name="custSTFRID" ColumnName="custSTFRID" />
+          <ScalarProperty Name="cuID" ColumnName="cuID" />
+          <ScalarProperty Name="custODID" ColumnName="custODID" />
+          <ScalarProperty Name="custTDID" ColumnName="custTDID" />
+          <ScalarProperty Name="stfID" ColumnName="stfID" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Review" ColumnName="Review" />
+          <ScalarProperty Name="OtherIssue" ColumnName="OtherIssue" />
+          <ScalarProperty Name="custCTID" ColumnName="custCTID" />
+          <ScalarProperty Name="custISID" ColumnName="custISID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffServices">
+      <EntityTypeMapping TypeName="db_TestUHSModel.StaffService">
+        <MappingFragment StoreEntitySet="StaffService">
+          <ScalarProperty Name="stfsID" ColumnName="stfsID" />
+          <ScalarProperty Name="stfID" ColumnName="stfID" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="servcatID" ColumnName="servcatID" />
+          <ScalarProperty Name="servsubcatID" ColumnName="servsubcatID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="teamID" ColumnName="teamID" />
+          <ScalarProperty Name="propaID" ColumnName="propaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffTeams">
+      <EntityTypeMapping TypeName="db_TestUHSModel.StaffTeam">
+        <MappingFragment StoreEntitySet="StaffTeams">
+          <ScalarProperty Name="stfTeID" ColumnName="stfTeID" />
+          <ScalarProperty Name="teamID" ColumnName="teamID" />
+          <ScalarProperty Name="stfID" ColumnName="stfID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubAreas">
+      <EntityTypeMapping TypeName="db_TestUHSModel.SubArea">
+        <MappingFragment StoreEntitySet="SubArea">
+          <ScalarProperty Name="subAreaID" ColumnName="subAreaID" />
+          <ScalarProperty Name="ScoreID" ColumnName="ScoreID" />
+          <ScalarProperty Name="propaID" ColumnName="propaID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubCategories">
+      <EntityTypeMapping TypeName="db_TestUHSModel.SubCategory">
+        <MappingFragment StoreEntitySet="SubCategory">
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Supports">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Support">
+        <MappingFragment StoreEntitySet="Support">
+          <ScalarProperty Name="stID" ColumnName="stID" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="stfID" ColumnName="stfID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Serverity" ColumnName="Serverity" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teams">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Team">
+        <MappingFragment StoreEntitySet="Teams">
+          <ScalarProperty Name="teamTyID" ColumnName="teamTyID" />
+          <ScalarProperty Name="teamID" ColumnName="teamID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="db_TestUHSModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="AlternativeMobileNo" ColumnName="AlternativeMobileNo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LandMark" ColumnName="LandMark" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="PhoneCode" ColumnName="PhoneCode" />
+          <ScalarProperty Name="IdentityProofName" ColumnName="IdentityProofName" />
+          <ScalarProperty Name="IdentityProofID" ColumnName="IdentityProofID" />
+          <ScalarProperty Name="CreatedRole" ColumnName="CreatedRole" />
+          <ScalarProperty Name="UpdatedRole" ColumnName="UpdatedRole" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="logID" ColumnName="logID" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VehicleColors">
+      <EntityTypeMapping TypeName="db_TestUHSModel.VehicleColor">
+        <MappingFragment StoreEntitySet="VehicleColors">
+          <ScalarProperty Name="VehicleColorsID" ColumnName="VehicleColorsID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VehicleTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.VehicleType">
+        <MappingFragment StoreEntitySet="VehicleTypes">
+          <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ventures">
+      <EntityTypeMapping TypeName="db_TestUHSModel.Venture">
+        <MappingFragment StoreEntitySet="Ventures">
+          <ScalarProperty Name="subAreaID" ColumnName="subAreaID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="vID" ColumnName="vID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UseFor" ColumnName="UseFor" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="parentID" ColumnName="parentID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="uID" ColumnName="uID" />
+          <ScalarProperty Name="suID" ColumnName="suID" />
+          <ScalarProperty Name="propaID" ColumnName="propaID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="procLogs_Insert" FunctionName="db_TestUHSModel.Store.procLogs_Insert" />
+    <FunctionImportMapping FunctionImportName="SPmyCreateCustomer" FunctionName="db_TestUHSModel.Store.SPmyCreateCustomer" />
+    <FunctionImportMapping FunctionImportName="SPmyCreateStaff" FunctionName="db_TestUHSModel.Store.SPmyCreateStaff" />
+    <FunctionImportMapping FunctionImportName="SPmyCreateSubUser" FunctionName="db_TestUHSModel.Store.SPmyCreateSubUser" />
+    <FunctionImportMapping FunctionImportName="SPmyCreateUser" FunctionName="db_TestUHSModel.Store.SPmyCreateUser" />
+    <FunctionImportMapping FunctionImportName="SPmyLogin" FunctionName="db_TestUHSModel.Store.SPmyLogin" />
+    <EntitySetMapping Name="CarWashTimeRanges">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CarWashTimeRange">
+        <MappingFragment StoreEntitySet="CarWashTimeRange">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Timing" ColumnName="Timing" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="carTRID" ColumnName="carTRID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TeamTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.TeamType">
+        <MappingFragment StoreEntitySet="TeamType">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="teamTyID" ColumnName="teamTyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ApprovalStatus">
+      <EntityTypeMapping TypeName="db_TestUHSModel.ApprovalStatu">
+        <MappingFragment StoreEntitySet="ApprovalStatus">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="custSSID" ColumnName="custSSID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerSupports">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerSupport">
+        <MappingFragment StoreEntitySet="CustomerSupport">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="ActionForOther" ColumnName="ActionForOther" />
+          <ScalarProperty Name="ServiceDate" ColumnName="ServiceDate" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="custSSID" ColumnName="custSSID" />
+          <ScalarProperty Name="custSAID" ColumnName="custSAID" />
+          <ScalarProperty Name="custSSTID" ColumnName="custSSTID" />
+          <ScalarProperty Name="custSTTID" ColumnName="custSTTID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="custSID" ColumnName="custSID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerSupportActionFors">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerSupportActionFor">
+        <MappingFragment StoreEntitySet="CustomerSupportActionFor">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="custSAID" ColumnName="custSAID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerSupportServiceTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerSupportServiceType">
+        <MappingFragment StoreEntitySet="CustomerSupportServiceType">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="custSSTID" ColumnName="custSSTID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerSupportTicketTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerSupportTicketType">
+        <MappingFragment StoreEntitySet="CustomerSupportTicketType">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="custSTTID" ColumnName="custSTTID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerAlerts">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerAlert">
+        <MappingFragment StoreEntitySet="CustomerAlerts">
+          <ScalarProperty Name="vID" ColumnName="vID" />
+          <ScalarProperty Name="catsubID" ColumnName="catsubID" />
+          <ScalarProperty Name="catID" ColumnName="catID" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="custATID" ColumnName="custATID" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="custAID" ColumnName="custAID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerAltersTypes">
+      <EntityTypeMapping TypeName="db_TestUHSModel.CustomerAltersType">
+        <MappingFragment StoreEntitySet="CustomerAltersType">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="custATID" ColumnName="custATID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

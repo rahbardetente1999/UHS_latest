@@ -1,0 +1,286 @@
+﻿
+@{
+    ViewBag.Title = "Gantt Chart";
+    Layout = "~/Areas/Operation/Views/Shared/_LayoutPage.cshtml";
+}
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<style>
+    [ng-cloak] {
+        display: none !important;
+    }
+
+    svg {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        margin-bottom: 30px;
+    }
+
+    .bar {
+        rx: 6;
+        cursor: pointer;
+        fill: #3F8CFF;
+        transition: fill 0.3s ease, transform 0.3s ease;
+    }
+
+        .bar:hover {
+            fill: #316FCC;
+            transform: translateY(-2px);
+        }
+
+    .free-slot {
+        rx: 6;
+        cursor: pointer;
+        transition: fill 0.3s ease, stroke 0.3s ease;
+    }
+
+        .free-slot.white {
+            fill: #EAF3FF;
+            stroke: #CCE1FF;
+            stroke-width: 1.5px;
+        }
+
+        .free-slot.red {
+            fill: #FF6B6B;
+            stroke: #FF6B6B;
+        }
+
+        .free-slot:hover {
+            stroke: #333;
+            transform: scale(1.05);
+        }
+
+    .axis path, .axis line {
+        stroke: #d3d3d3;
+    }
+
+    .tooltip {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.75);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        z-index: 10;
+    }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+    h2 {
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    @@media (max-width: 768px) {
+        svg {
+            width: 100%;
+        }
+    }
+
+    .free-slot.light-grey {
+        fill: #e0e0e0;
+        stroke: #b0b0b0;
+        stroke-width: 1.5px;
+    }
+
+    .card-title {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .card-text {
+        font-weight: 700;
+        color: #343a40;
+    }
+
+    .table {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* .table thead {
+                background-color: #343a40;
+                color: #fff;
+            }*/
+
+    /* .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f2f4f6;
+        }
+    */
+    select.form-select {
+        border-radius: 8px;
+    }
+
+
+
+    .chart-container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+    }
+</style>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="GantChartController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post" ng-cloak>
+        <!--begin::Container-->
+        <div id="kt_content_container-fluid" class="container-fluid">
+            <div class="row" ng-hide="SearchFGranddiv">
+                <!--begin::Form-->
+                <form name="SearchGrantForm" id="kt_searchGrant" novalidate>
+                    <!--begin::Card-->
+                    <div class="card mb-7">
+                        <!--begin::Card body-->
+                        <div class="card-body">
+
+                            <!--begin::Compact form-->
+                            <div class="d-flex align-items-center">
+                                <!--begin::Input group-->
+                                <div class="position-relative w-md-600px me-md-2">
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label class="required fs-6 fw-semibold mb-2">Select Date</label>
+                                            <!--end::Label-->
+                                            <div class="input-group" id="kt_ServiceDate" name="ServiceDate" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                <input id="kt_td_picker_basic_inputService" type="text" class="form-control" ng-model="txtServiceDate" data-td-target="#kt_td_picker_basic" required />
+                                                <span class="input-group-text" data-td-target="#kt_td_picker_basic_inputService" data-td-toggle="datetimepicker">
+                                                    <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                                </span>
+                                            </div>
+
+                                            <span ng-if="SearchGrantForm.$submitted && SearchGrantForm.ServiceDate.$invalid" style="color:red">field is required</span>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin:Action-->
+                                <div class="d-flex align-items-center" style="margin-top: 20px;">
+
+                                    <!--begin::Button-->
+                                    <button type="submit" id="kt_modal_add_customer_submit" ng-click="FilterGrandData(SearchGrantForm.$valid)" class="btn btn-primary">
+                                        <span class="indicator-label" id="btnGCsearch"><i class="bi bi-search"></i></span>
+                                        <span class="indicator-progress" id="btnGCloader">
+
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+                                    <!--end::Button-->
+                                    @*<button type="submit" class="btn btn-primary me-5" ng-click="FilterData()">Search</button>*@
+                                    <button type="button" class="btn btn-light btn-active-light-primary me-2" ng-click="resetGrantFields()">Reset</button>
+                                    @*<a href="#" id="kt_horizontal_search_advanced_link" class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#kt_advanced_search_form">Advanced Search</a>*@
+
+                                </div>
+                                <!--end:Action-->
+                            </div>
+                            <!--end::Compact form-->
+                            <!--begin::Advance form-->
+                            <div class="collapse" id="kt_advanced_search_form">
+
+
+
+                            </div>
+                            <!--end::Advance form-->
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Card-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <div class="row" id="spinnerdiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;display:none;">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div id="grantchar" style="display:none;">
+                @*<h5 class="card-title">Today's Date(Gantt Chart)</h5>*@
+                <svg id="ganttChart" class="chart"></svg>
+                <div class="tooltip" id="tooltip"></div>
+                <div class="row my-4">
+                    <div class="col-md-12">
+
+                        <!-- Begin::Accordion -->
+                        <div class="accordion" id="teamAccordion">
+                            <div class="accordion-item" ng-repeat="team in GrantTeam">
+                                <h2 class="accordion-header" id="heading-{{ $index }}">
+                                    <button class="accordion-button fs-4 fw-semibold" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-{{ $index }}"
+                                            aria-expanded="true" aria-controls="collapse-{{ $index }}">
+                                        {{ team.Team }}
+
+                                        <!-- Task Assignment Indicator -->
+                                        <span class="badge ms-2" ng-class="team.AreaBased.length > 0 ? 'bg-success' : 'bg-secondary'">
+                                            {{ team.AreaBased.length > 0 ? 'Tasks Assigned' : 'No Tasks' }}
+                                        </span>
+
+                                        <!-- Area Consistency Indicator -->
+                                        <span ng-if="!hasDifferentAreas(team.AreaBased) && team.AreaBased.length > 0" class="ms-2 text-success">
+                                            <i class="bi bi-check-circle-fill"></i> Same Area
+                                        </span>
+                                        <span ng-if="hasDifferentAreas(team.AreaBased)" class="ms-2 text-danger">
+                                            <i class="bi bi-exclamation-triangle-fill"></i> Different Areas
+                                        </span>
+                                    </button>
+                                </h2>
+
+                                <div id="collapse-{{ $index }}" class="accordion-collapse collapse"
+                                     aria-labelledby="heading-{{ $index }}" data-bs-parent="#teamAccordion">
+                                    <div class="accordion-body">
+                                        <table class="table table-bordered table-hover">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Area</th>
+                                                    <th>SubArea</th>
+                                                    <th>Time</th>
+                                                    <th>Service</th>
+                                                    <th>Property Code</th>
+                                                    <th>Area Comparison</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-if="team.AreaBased.length === 0">
+                                                    <td colspan="6" class="text-center text-muted">No tasks assigned</td>
+                                                </tr>
+                                                <tr ng-repeat="task in team.AreaBased">
+                                                    <td>{{ task.Area }}</td>
+                                                    <td>{{ task.SubArea }}</td>
+                                                    <td>{{ formatTime(task.Time.Start) }} - {{ formatTime(task.Time.End) }}</td>
+                                                    <td>{{ task.Service }}</td>
+                                                    <td>{{ task.PropertyCode || 'N/A' }}</td>
+                                                    <td>
+                                                        <span ng-show="$index > 0 && isSameArea(team.AreaBased[$index - 1], task)">
+                                                            <i class="bi bi-check-circle-fill text-success"></i>
+                                                        </span>
+                                                        <span ng-show="$index > 0 && !isSameArea(team.AreaBased[$index - 1], task)">
+                                                            <i class="bi bi-x-circle-fill text-danger"></i>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End::Accordion -->
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

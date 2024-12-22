@@ -1,0 +1,241 @@
+﻿@{
+ViewBag.Title = "Customer Support";
+Layout = "~/Areas/Customer/Views/Shared/_LayoutPage.cshtml";
+}
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="SupportController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::Card title-->
+                    <div class="card-title fw-medium">
+                        Support List
+                    </div>
+                    <!--begin::Card title-->
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+                            <!--begin::Export-->
+                            @*<button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
+                                data-bs-target="#kt_customers_export_modal">
+                                <i class="ki-outline ki-exit-up fs-2"></i>Export
+                            </button>*@
+                            <!--end::Export-->
+                            <!--begin::Add customer-->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#kt_modal_add_customer">
+                                Add Support
+                            </button>
+                            <!--end::Add customer-->
+                        </div>
+                        <!--end::Toolbar-->
+
+                    </div>
+                    <!--end::Card toolbar-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <div class="table-responsive" id="tbl_supportlist" style="display:none;">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-5"  datatable="ng" dt-options="dtOptions">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+                                    <th>Ticket Title</th>
+                                    <th style="cursor:pointer;">TicketType</th>
+                                    <th style="cursor:pointer;">
+                                        ServiceType
+                                    </th>
+                                    <th style="cursor:pointer;">ActionFor</th>
+                                    <th>Discription</th>
+                                    <th>Date of Creation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                <tr ng-repeat="support in customerSupportData">
+                                    <td ng-bind="support.index"></td>
+                                    <td ng-bind="support.Title"></td>
+                                    <td ng-bind="support.CustomerSupportServiceTicketType"></td>
+                                    <td ng-bind="support.CustomerSupportServiceType"></td>
+                                    <td ng-bind="support.CustomerSupportActionFor || support.ActionForOther"></td>
+                                    <td ng-bind="support.Remarks"></td>
+                                    <td ng-bind="support.CreatedOn| customDate"></td>
+                                    <td>
+                                        <span class="badge"
+                                              ng-class="{'badge-light-warning': support.CustomerSupportTaskStatus === 'Opening', 'badge-light-success': support.CustomerSupportTaskStatus === 'Resolved'}"
+                                              ng-bind="support.CustomerSupportTaskStatus"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--end::Table-->
+                    </div>
+
+                    <div id="tbl_dummysupport">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Ticket Title</th>
+                                    <th style="cursor:pointer;">Ticket Type</th>
+                                    <th style="cursor:pointer;">
+                                        Service Type
+                                    </th>
+                                    <th style="cursor:pointer;">Action For</th>
+                                    <th>Discription</th>
+                                    <th>Date of Creation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="color:blue;" id="spanLoader">
+                                        <span><b>Loading...</b></span>
+                                    </td>
+                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords">
+                                        <span>
+                                            No
+                                            records found!
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+
+        </div>
+
+
+        <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-850px">
+                <div class="modal-content">
+                    <!-- Form -->
+                    <form class="form" name="ticketForm" novalidate>
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h2 class="fw-bold">Customer Support</h2>
+                            <button type="button" data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary" ng-click="resetForm()">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </button>
+                        </div>
+
+                        <!-- Modal Body -->
+                        <div class="modal-body py-10 px-lg-17">
+                            <div class="row">
+                                <!-- Ticket Title -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="required fs-6 fw-semibold mb-2">Ticket Title</label>
+                                    <input type="text" name="ticketTitle" ng-model="ticketTitle" class="form-control" required />
+                                    <span ng-if="ticketForm.$submitted && ticketForm.ticketTitle.$invalid" class="text-danger">Ticket Title is required</span>
+                                </div>
+
+                                <!-- Ticket Type -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="required fs-6 fw-semibold mb-2">Ticket Type</label>
+                                    <select name="ticketType" id="TicketTypediv" ng-model="ticketType" ng-change="updateFields()" class="form-select" data-control="select2" required>
+                                        <option value="">Select Ticket Type...</option>
+                                        <option ng-repeat="type in ticketTypeList" value="{{type.id}}">{{type.name}}</option>
+                                    </select>
+                                    <span ng-if="ticketForm.$submitted && ticketForm.ticketType.$invalid" class="text-danger">Ticket Type is required</span>
+                                </div>
+
+                            </div>
+
+                           
+
+                            <!-- Service Ticket Fields -->
+                            <div ng-hide="Service">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="required fs-6 fw-semibold mb-2">Service Type</label>
+                                        <select name="serviceType" id="serviceTypediv" ng-model="serviceType" ng-change="ServiceTy()"  class="form-select" data-control="select2">
+                                            <option value="">Select Service Type...</option>
+                                            <option ng-repeat="service in serviceTypeList" value="{{service.id}}">
+                                                {{service.name}}
+                                            </option>
+                                        </select>
+                                        <span style="color:red;" ng-bind="msgVserviceType"></span>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="fs-6 fw-semibold mb-2">Service Date</label>
+                                        <input type="date" name="serviceDate" ng-model="serviceDate" class="form-control" />
+                                        
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="fs-6 fw-semibold mb-2">Action At</label>
+                                        <select name="serviceAction" id="actiondiv" ng-model="serviceAction" ng-change="ActionChange()" class="form-select" data-control="select2">
+                                            <option value="">Select Action...</option>
+                                            <option ng-repeat="action in actionForList" value="{{action.id}}">
+                                                {{action.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3" ng-hide="otherdiv">
+                                        <label class="fs-6 fw-semibold mb-2">Other</label>
+                                        <input type="text" name="otherAction" ng-model="otherAction" class="form-control" placeholder="Add other details" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- File Upload -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="fs-6 fw-semibold mb-2">Description</label>
+                                    <textarea name="generalDescription" ng-model="txtDescription" rows="3" cols="3" class="form-control"></textarea>
+                                    <!-- <span ng-if="ticketForm.$submitted && ticketForm.generalDescription.$invalid" class="text-danger">Description is required</span> -->
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="fs-6 fw-semibold mb-2">File Upload</label>
+                                    <div class="dropzone" id="kt_ticket_files">
+                                        <div class="dz-message needsclick">
+                                            <i class="ki-duotone ki-file-up fs-3x text-primary"></i>
+                                            <div class="ms-4">
+                                                <h3 class="fs-5 fw-bold text-gray-900 mb-1">Upload Files</h3>
+                                                <span class="fs-7 fw-semibold text-gray-400">Upload up to 2 files</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <div class="modal-footer">
+                            <button type="reset" ng-click="resetForm()" data-bs-dismiss="modal" class="btn btn-light">Discard</button>
+                            <!--begin::Button-->
+                            <button type="submit" ng-click="submitTicket(ticketForm.$valid)" class="btn btn-primary">
+                                <span class="indicator-label" id="btncustomersave">Submit</span>
+                                <span class="indicator-progress" id="btncustomerloader">
+                                    Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                            <!--end::Button-->
+                           
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+                </div>
+            </div>

@@ -1,0 +1,488 @@
+﻿@{ ViewBag.Title = "CustomerReport"; Layout =
+"~/Areas/Admin/Views/Shared/_LayoutPage.cshtml"; }
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<style>
+  [ng-cloak] {
+    display: none !important;
+  }
+  svg {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    margin-bottom: 30px;
+  }
+
+  .bar {
+    rx: 6;
+    cursor: pointer;
+    fill: #3f8cff;
+    transition: fill 0.3s ease, transform 0.3s ease;
+  }
+
+  .bar:hover {
+    fill: #316fcc;
+    transform: translateY(-2px);
+  }
+
+  .free-slot {
+    rx: 6;
+    cursor: pointer;
+    transition: fill 0.3s ease, stroke 0.3s ease;
+  }
+
+  .free-slot.white {
+    fill: #eaf3ff;
+    stroke: #cce1ff;
+    stroke-width: 1.5px;
+  }
+
+  .free-slot.red {
+    fill: #ff6b6b;
+    stroke: #ff6b6b;
+  }
+
+  .free-slot:hover {
+    stroke: #333;
+    transform: scale(1.05);
+  }
+
+  .axis path,
+  .axis line {
+    stroke: #d3d3d3;
+  }
+
+  .tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+  }
+
+  .tooltip.show {
+    opacity: 1;
+  }
+
+  h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .numbers-vertical {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: start;
+                  }
+                  .dot {
+                    width: 8px;
+                    height: 8px;
+                    display: inline-block;
+                  }
+                  .rounded-circle {
+                    border-radius: 50% !important;
+                  }
+
+  @@media (max-width: 768px) {
+    svg {
+      width: 100%;
+    }
+  }
+
+  .free-slot.light-grey {
+    fill: #e0e0e0;
+    stroke: #b0b0b0;
+    stroke-width: 1.5px;
+  }
+
+  .card-title {
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .card-text {
+    font-weight: 700;
+    color: #343a40;
+  }
+
+  .table {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* .table thead {
+                background-color: #343a40;
+                color: #fff;
+            }*/
+
+  /* .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f2f4f6;
+        }
+    */
+  select.form-select {
+    border-radius: 8px;
+  }
+
+  .chart-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+  }
+
+  .loader-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+</style>
+<div
+  class="content d-flex flex-column flex-column-fluid"
+  id="kt_content"
+  ng-controller="CustomerReportController"
+>
+  <!--begin::Post-->
+  <div class="post d-flex flex-column-fluid" id="kt_post" ng-cloak>
+    <!--begin::Container-->
+    <div id="kt_content_container-fluid" class="container-fluid">
+      <div class="card">
+        <div class="card-header">
+          <!--begin::Navs-->
+          <ul
+            class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold"
+          >
+            <li class="nav-item mt-2">
+              <!-- <a
+                class="nav-link text-active-primary ms-0 me-10 py-5"
+                data-bs-toggle="pill"
+                href="#overview"
+                >Customer Report</a
+              > -->
+              <h2 class="mt-5">Customer Report</h2>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="row mb-5 justify-content-center">
+              <div class="col-md-12">
+                <div
+                  class="card shadow-sm border-0"
+                  style="background-color: #f0f4f7"
+                >
+                  <div class="card-body p-4 text-center">
+                    <h5
+                      class="card-title mb-3 text-uppercase fw-bold"
+                      style="color: #1e3a8a"
+                    >
+                      Total Customer
+                    </h5>
+                    <h6 class="text-muted mb-4">(Up to Today)</h6>
+                    <p
+                      class="card-text display-4 fw-bold"
+                      style="color: #3b82f6"
+                      ng-bind="totalCustomerCount"
+                    ></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Overview Tab -->
+            <div class="tab-pane fade show active" id="overview">
+              <!-- Filters Section -->
+              <form name="SearchForm" id="kt_searchassets" novalidate>
+                <div class="card mb-5">
+                  <div class="card-body">
+                    <div class="row">
+                      <!-- Date Range Picker -->
+                      <div class="col-md-4 mb-5">
+                        <label class="form-label required"
+                          >Range selections</label
+                        >
+                        <input
+                          class="form-control"
+                          name="Range"
+                          ng-model="rangewise"
+                          placeholder="Pick date"
+                          id="kt_datepicker_7"
+                          required
+                        />
+                        <span
+                          ng-if="SearchForm.$submitted && SearchForm.Range.$invalid"
+                          style="color: red"
+                          >Field is required</span>
+                      </div>
+
+                      <!-- Area Selection -->
+                      <div class="col-md-4">
+                        <label for="areaSelect" class="form-label required"
+                          >Select Area</label
+                        >
+                        <select
+                          name="ItemType"
+                          id="dltAreaID"
+                          required
+                          aria-label="Select an Area"
+                          ng-model="ddlArea"
+                          data-control="select2"
+                          data-placeholder="Select an Area..."
+                          data-dropdown-parent="#kt_searchassets"
+                          ng-change="GetPropertybyArea()"
+                          class="form-select"
+                        >
+                          <option value="">Select an Area...</option>
+                          <option value="All">All</option>
+                          <option
+                            value="{{ area.ID }}"
+                            ng-repeat="area in AreaDropdown"
+                            ng-bind="area.Value"
+                          ></option>
+                        </select>
+                        <span
+                          ng-if="
+                            SearchForm.$submitted &&
+                            SearchForm.ItemType.$invalid
+                          "
+                          style="color: red"
+                          >Field is required</span
+                        >
+                      </div>
+
+                      <!-- Property/Tower Selection -->
+                      <div class="col-md-4">
+                        <label for="towerSelect" class="form-label required"
+                          >Select Tower</label
+                        >
+                        <select
+                          name="PropertyType"
+                          required
+                          ng-disabled="propertyDisable"
+                          id="dltPropertyID"
+                          aria-label="Select a Property"
+                          ng-model="ddlProperty"
+                          data-control="select2"
+                          data-placeholder="Select a Property..."
+                          data-dropdown-parent="#kt_searchassets"
+                          class="form-select"
+                        >
+                          <option value="">Select a Property...</option>
+                          <option value="All">All</option>
+                          <option
+                            value="{{ prop.ID }}"
+                            ng-repeat="prop in PropertyDropdown"
+                            ng-bind="prop.Value"
+                          ></option>
+                        </select>
+                        <span
+                          ng-if="
+                            SearchForm.$submitted &&
+                            SearchForm.PropertyType.$invalid
+                          "
+                          style="color: red"
+                          >Field is required</span
+                        >
+                      </div>
+
+                      <!-- Status Selection -->
+                      <div class="col-md-4">
+                        <label for="statusSelect" class="form-label"
+                          >Select Status</label
+                        >
+                        <select
+                        name="StatusType"
+                        required
+                        ng-disabled="propertyDisable"
+                        id="dltStatusID"
+                        aria-label="Select a Status"
+                        ng-model="ddlStatus"
+                        data-control="select2"
+                        data-placeholder="Select a Status..."
+                        data-dropdown-parent="#kt_searchassets"
+                        class="form-select"
+                    >
+                        <option value="">Select a Status...</option>
+                        <option value="All" selected>All</option>
+                        <option value="1">New Customer</option>
+                        <option value="2">Existing Customer</option>
+                        <option value="3">Suspended Customer</option>
+                    </select>
+                    
+                      
+                      </div>
+                    </div>
+                    <!-- Submit and Reset Buttons -->
+                    <div class="d-flex align-items-center mt-4">
+                      <button
+                      type="submit"
+                      ng-click="FilterData(SearchForm.$valid)"
+                      class="btn btn-primary me-2"
+                      [disabled]="isLoading"
+                  >
+                  <span ng-show="isLoading" id="btnloader" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+                      <span id="btnsearch">Search</span>
+                  </button>
+                  
+                      <button
+                        type="button"
+                        class="btn btn-light"
+                        ng-click="resetfields()"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+<!-- Loader overlay -->
+<div ng-show="isLoading" class="loader-overlay">
+  <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<!-- Error message -->
+<div ng-show="isError" class="alert alert-warning" role="alert">
+  No records available under the filter.
+</div>
+
+<!-- Your table or content here -->
+<div ng-show="!isLoading && !isError">
+<div class="row g mb-3" ng-show="showCustomerCount">
+  <!-- <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Total Customer</h5>
+        <p class="card-text display-6" ng-bind="CustomerReport.CustomerPerArea"></p>
+      </div>
+    </div>
+  </div> -->
+  <div class="col-md-4">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">New Customer</h5>
+        <p
+          class="card-text display-6"
+          ng-bind="customerCount.NewCustomer"
+        ></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Existing Customer</h5>
+        <p
+          class="card-text display-6"
+          ng-bind="customerCount.ExistingCustomer"
+        ></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Suspended Customer</h5>
+        <p
+          class="card-text display-6"
+          ng-bind="customerCount.SuspendCustomer"
+        ></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Customer Details Section -->
+<div id="customerDetails">
+  <div class="col-md-12 chart-container" ng-show="showCustomerGraph">
+    <h5 class="text-center">Customer Breakdown by Month</h5>
+    <!-- <canvas id="towerRevenueChart"></canvas> -->
+    <!-- HTML -->
+    <!-- <div>
+      <canvas id="towerRevenueChart"></canvas>
+    </div> -->
+    <canvas id="customerLineChart"></canvas>
+  </div>
+
+  <div class="card mt-4" ng-show="showCustomerTable">
+    <div class="container">
+      <div class="d-flex justify-content-end mt-3">
+        <button type="button" ng-click="exportData('CustomerTableData', 'xlsx', customerTableData)" class="btn btn-primary">
+            Export
+        </button>
+    </div>
+    </div>
+  
+    <div class="card-body">
+    
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" datatable="ng" dt-options="vm.dtOptions">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Time Period</th>
+                        <!-- Dynamically generate column headers for each tower -->
+                        <th ng-repeat="(towerName, _) in customerTableData[0].towers">
+                            {{ towerName }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in customerTableData">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ item.timePeriod }}</td>
+                        <!-- Display data for each tower in this date row -->
+                        <td ng-repeat="(towerName, customerData) in item.towers">
+                            <div class="numbers-vertical">
+                                <span>
+                                    <span class="dot me-1 rounded-circle ml-2" style="background-color: #3f8cff"></span>
+                                    {{ customerData.newCustomers }}
+                                </span>
+                                <span>
+                                    <span class="dot me-1 rounded-circle ml-2" style="background-color: #ffce56"></span>
+                                    {{ customerData.existingCustomers }}
+                                </span>
+                                <span>
+                                    <span class="dot me-1 rounded-circle ml-2" style="background-color: #ff6b6b"></span>
+                                    {{ customerData.stoppedCustomers }}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+            
+
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section scripts {
+
+<script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+<script src="~/Scripts/Content/xlsx.core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+}

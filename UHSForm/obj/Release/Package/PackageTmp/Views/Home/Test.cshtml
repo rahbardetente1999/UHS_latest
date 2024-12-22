@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Chart with Fixed Times and Scrollable Teams</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .time-axis {
+            position: sticky;
+            top: 0; /* Stick the time-axis at the top */
+            z-index: 10; /* Ensure it stays on top of other elements */
+            background-color: white; /* Prevent background bleed */
+            border-bottom: 1px solid #ccc; /* Optional: add a divider */
+        }
+
+        .chart-container {
+            overflow-y: auto; /* Scrollable container */
+            height: 600px; /* Set the height of the scrollable area */
+            border: 1px solid #ccc; /* Optional: visual boundary */
+            margin-top: 0; /* No margin needed since the time-axis is above */
+            position: relative;
+        }
+
+        #ganttChart {
+            position: relative;
+            width: 100%;
+        }
+
+        .task-bar {
+            position: absolute;
+            cursor: pointer;
+            transition: opacity 0.2s ease-in-out;
+            fill: lightgray; /* Default bar color */
+        }
+
+        .team-row {
+            height: 60px; /* Each row's height */
+            position: relative;
+            border-bottom: 1px solid #eaeaea; /* Optional: separator */
+            display: flex;
+            align-items: center;
+        }
+
+        .bar-text {
+            fill: white;
+            font-size: 12px;
+            text-anchor: middle;
+            alignment-baseline: middle;
+            font-weight: bold;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            pointer-events: none; /* Avoid interference with hover */
+            visibility: hidden;
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="chart-wrapper">
+        <!-- Sticky Time Axis -->
+        <div class="time-axis">
+            <svg id="timeAxis" height="40" width="1000"></svg>
+        </div>
+
+        <!-- Scrollable Chart Container -->
+        <div class="chart-container">
+            <svg id="ganttChart" width="1000"></svg>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip"></div>
+
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip"></div>
+
+
+
+    <script>
+        const data = [
+            {
+                "TeamName": "Team1",
+                "AreaBased": [
+                    { "TowerName": "Tower A", "Code": "T1", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 10, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower B", "Code": "T2", "Time": [{ "Start": { "Hours": 12, "Minutes": 0 }, "End": { "Hours": 14, "Minutes": 0 } }], "AreaName": "Doha" }
+                ]
+            },
+            {
+                "TeamName": "Team2",
+                "AreaBased": [
+                    { "TowerName": "Tower C", "Code": "T3", "Time": [{ "Start": { "Hours": 9, "Minutes": 0 }, "End": { "Hours": 11, "Minutes": 0 } }], "AreaName": "Doha" },
+                    { "TowerName": "Tower D", "Code": "T4", "Time": [{ "Start": { "Hours": 13, "Minutes": 0 }, "End": { "Hours": 15, "Minutes": 0 } }], "AreaName": "Doha" }
+                ]
+            },
+            {
+                "TeamName": "Team3",
+                "AreaBased": [
+                    { "TowerName": "Tower E", "Code": "T5", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 9, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower F", "Code": "T6", "Time": [{ "Start": { "Hours": 11, "Minutes": 0 }, "End": { "Hours": 13, "Minutes": 0 } }], "AreaName": "Lusail" }
+                ]
+            },
+            {
+                "TeamName": "Team4",
+                "AreaBased": [
+                    { "TowerName": "Tower E", "Code": "T5", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 9, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower F", "Code": "T6", "Time": [{ "Start": { "Hours": 11, "Minutes": 0 }, "End": { "Hours": 13, "Minutes": 0 } }], "AreaName": "Lusail" }
+                ]
+            },
+            {
+                "TeamName": "Team5",
+                "AreaBased": [
+                    { "TowerName": "Tower E", "Code": "T5", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 9, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower F", "Code": "T6", "Time": [{ "Start": { "Hours": 11, "Minutes": 0 }, "End": { "Hours": 13, "Minutes": 0 } }], "AreaName": "Lusail" }
+                ]
+            },
+            {
+                "TeamName": "Team6",
+                "AreaBased": [
+                    { "TowerName": "Tower E", "Code": "T5", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 9, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower F", "Code": "T6", "Time": [{ "Start": { "Hours": 11, "Minutes": 0 }, "End": { "Hours": 13, "Minutes": 0 } }], "AreaName": "Lusail" }
+                ]
+            },
+            {
+                "TeamName": "Team7",
+                "AreaBased": [
+                    { "TowerName": "Tower E", "Code": "T5", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 9, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower F", "Code": "T6", "Time": [{ "Start": { "Hours": 11, "Minutes": 0 }, "End": { "Hours": 13, "Minutes": 0 } }], "AreaName": "Lusail" }
+                ]
+            },
+            {
+                "TeamName": "Team8",
+                "AreaBased": [
+                    { "TowerName": "Tower E", "Code": "T5", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 9, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower F", "Code": "T6", "Time": [{ "Start": { "Hours": 11, "Minutes": 0 }, "End": { "Hours": 13, "Minutes": 0 } }], "AreaName": "Lusail" }
+                ]
+            },
+            {
+                "TeamName": "Team9",
+                "AreaBased": [
+                    { "TowerName": "Tower E", "Code": "T5", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 9, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower F", "Code": "T6", "Time": [{ "Start": { "Hours": 11, "Minutes": 0 }, "End": { "Hours": 13, "Minutes": 0 } }], "AreaName": "Lusail" }
+                ]
+            },
+            {
+                "TeamName": "Team10",
+                "AreaBased": [
+                    { "TowerName": "Tower E", "Code": "T5", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 9, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower F", "Code": "T6", "Time": [{ "Start": { "Hours": 11, "Minutes": 0 }, "End": { "Hours": 13, "Minutes": 0 } }], "AreaName": "Lusail" }
+                ]
+            },
+            {
+                "TeamName": "Team11",
+                "AreaBased": [
+                    { "TowerName": "Tower E", "Code": "T5", "Time": [{ "Start": { "Hours": 8, "Minutes": 0 }, "End": { "Hours": 9, "Minutes": 0 } }], "AreaName": "Lusail" },
+                    { "TowerName": "Tower F", "Code": "T6", "Time": [{ "Start": { "Hours": 11, "Minutes": 0 }, "End": { "Hours": 13, "Minutes": 0 } }], "AreaName": "Lusail" }
+                ]
+            }
+        ];
+
+        const width = 1000, height = data.length * 80 + 50;
+        const svg = d3.select("#ganttChart").attr("width", width).attr("height", height);
+
+        const yScale = d3.scaleBand()
+            .domain(data.map(d => d.TeamName))
+            .range([50, height - 50])
+            .padding(0.5);
+
+        const timeScale = d3.scaleLinear()
+            .domain([8 * 60, 18 * 60]) // 08:00 to 18:00 in minutes
+            .range([150, width - 50]);
+
+        const xAxis = d3.axisTop(timeScale)
+            .tickValues(d3.range(8 * 60, 18 * 60 + 1, 60)) // Hourly ticks
+            .tickFormat(d => `${Math.floor(d / 60)}:${d % 60 < 10 ? '0' : ''}${d % 60}`);
+
+        const yAxis = d3.axisLeft(yScale);
+
+        // Create time axis (fixed at the top)
+        svg.append("g").attr("class", "time-axis").attr("transform", "translate(0, 40)").call(xAxis);
+        svg.append("g").attr("transform", "translate(150, 0)").call(yAxis);
+
+        const tooltip = d3.select("#tooltip");
+
+        function renderTask(start, end, teamName, towerName, code, areaName, color, isGap = false) {
+            const barWidth = timeScale(end) - timeScale(start);
+            const yPosition = yScale(teamName) + 10;
+
+            const bar = svg.append("rect")
+                .attr("x", timeScale(start))
+                .attr("y", yPosition)
+                .attr("width", barWidth)
+                .attr("height", 20)
+                .attr("class", "bar")
+                .attr("fill", color);
+
+            if (!isGap) {
+                svg.append("text")
+                    .attr("x", timeScale(start) + barWidth / 2)
+                    .attr("y", yPosition + 12)
+                    .attr("class", "bar-text")
+                    .text(`${towerName} (${code})`);
+            }
+
+            // Add tooltip on hover
+            bar.on("mouseover", () => {
+                tooltip.style("visibility", "visible")
+                    .html(
+                        isGap
+                            ? `Gap: ${formatTime(start)} - ${formatTime(end)}`
+                            : `Tower: ${towerName}<br>Code: ${code}<br>Area: ${areaName}<br>Time: ${formatTime(start)} - ${formatTime(end)}`
+                    );
+            })
+                .on("mousemove", (event) => {
+                    tooltip.style("top", `${event.pageY + 10}px`)
+                        .style("left", `${event.pageX + 10}px`);
+                })
+                .on("mouseout", () => {
+                    tooltip.style("visibility", "hidden");
+                });
+        }
+
+        function formatTime(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${hours}:${mins < 10 ? '0' : ''}${mins}`;
+        }
+
+        function renderGanttChart() {
+            data.forEach(team => {
+                let previousEnd = 8 * 60;
+                let previousArea = null;
+                let isFirstGap = true; // Flag for the first gap in each team
+
+                const tasks = team.AreaBased.flatMap(area => area.Time.map(time => ({
+                    start: time.Start.Hours * 60 + time.Start.Minutes,
+                    end: time.End.Hours * 60 + time.End.Minutes,
+                    areaName: area.AreaName,
+                    towerName: area.TowerName,
+                    code: area.Code
+                })));
+
+                tasks.sort((a, b) => a.start - b.start);
+
+                tasks.forEach((task, index) => {
+                    // Render initial gap in grey
+                    if (index === 0 && task.start > previousEnd && isFirstGap) {
+                        renderTask(previousEnd, task.start, team.TeamName, null, null, null, "#D3D3D3", true);
+                        isFirstGap = false;
+                    }
+
+                    // Render intermediate gaps with logic for color change
+                    if (task.start > previousEnd && index > 0) {
+                        const gapColor = previousArea !== task.areaName ? "#FF6666" : "#D3D3D3"; // Red for area change, grey otherwise
+                        renderTask(previousEnd, task.start, team.TeamName, null, null, null, gapColor, true);
+                    }
+
+                    // Render the task bar
+                    renderTask(task.start, task.end, team.TeamName, task.towerName, task.code, task.areaName, "#4A4A4A");
+
+                    previousEnd = task.end;
+                    previousArea = task.areaName;
+                });
+
+                // Render the gap after the last task if necessary
+                if (previousEnd < 18 * 60) {
+                    renderTask(previousEnd, 18 * 60, team.TeamName, null, null, null, "#D3D3D3", true);
+                }
+            });
+        }
+
+        renderGanttChart();
+    </script>
+</body>
+</html>

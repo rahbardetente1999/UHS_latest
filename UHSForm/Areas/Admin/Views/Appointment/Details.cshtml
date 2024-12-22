@@ -1,0 +1,173 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+<style>
+    .freq .form-check {
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem;
+        /* border-bottom: 1px solid #e0e0e0; */
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+
+        .freq .form-check:hover {
+            background-color: #f1f1f1;
+        }
+
+    .freq .form-check-input {
+        margin-right: 1rem;
+        margin-left: 0;
+    }
+
+    .freq .form-check-label {
+        flex-grow: 1;
+        margin: 0;
+        color: #000;
+        font-size: 15px;
+    }
+
+    .freq .price {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-left: auto;
+    }
+</style>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="ServiceBookingController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+
+            <div class="card">
+                <div class="card-body">
+                    <form name="kt_UpdateDetailsForm" id="kt_UpdateDetails" novalidate>
+                        <div class="row mb-3">
+                            <div class="col-md-4 mb-2">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-semibold mb-2">Customer ID</label>
+                                <!--end::Label-->
+                                <select name="Customer" id="DdlCustomerID" aria-label="Select a Customer" ng-change="GetCustomerDetails()" ng-model="ddlcustomerID" data-control="select2" data-placeholder="Select a Customer..." data-dropdown-parent="#kt_UpdateDetails" class="form-select">
+                                    <option value="">Select a Customer...</option>
+                                    <option value="{{customer.ID}}" ng-repeat="customer in CustomerIDDropdown" ng-bind="'UHS_CT_'+customer.Value"></option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-semibold mb-2 required">Team</label>
+                                <!--end::Label-->
+                                <select name="Team" id="DTeamID" aria-label="Select a Team" ng-model="ddlTeam" ng-options="team.ID as team.Value for team in TeamDropdown" data-control="select2" data-placeholder="Select a Team..." data-dropdown-parent="#kt_UpdateDetails" class="form-select">
+                                    <option value="">Select a Team...</option>
+
+
+                                </select>
+                            </div>
+                            <!-- Begin::Label -->
+                            <div class="col-md-4 mb-2" ng-show="PackagesDetails.length != 0">
+                                <label class="required fw-semibold fs-6 mb-2">Select Frequency</label>
+                                <select data-control="select2"
+                                        data-placeholder="Select a Frequency..."
+                                        data-dropdown-parent="#kt_UpdateDetails"
+                                        name="Frequency"
+                                        class="form-select"
+                                        ng-model="ddlFrequency"
+                                        ng-options="detail as (detail.PackageName + ', Duration: ' + formatTimeDuration(detail.Duration, detail.TimeMeasurement) + ', Price: ' + detail.Price + ' QR') for detail in PackagesDetails | orderBy:'RecursiveTime'"
+                                        ng-change="selectFrequency(ddlFrequency)">
+                                    <option value="" disabled selected>Select a frequency</option>
+                                </select>
+                                <span ng-if="kt_UpdateDetailsForm.$submitted && kt_UpdateDetailsForm.Frequency.$invalid" style="color:red">field is required</span>
+
+                            </div>
+                            <!-- End::Label -->
+                            <!-- Select No Of Months -->
+                            <div class="col-md-4 mb-4" ng-hide="BasedOnNoOfMonths">
+                                <label class="form-label Is-required">Select No Of Months</label>
+                                <select name="Months" id="Monthd" aria-label="Select a Month" ng-model="ddlNoOfMonths" ng-change="onMonthSelection()" ng-options="service.value as service.text for service in serviceOptions" data-control="select2" data-placeholder="Select a Month..." data-dropdown-parent="#kt_UpdateDetails" class="form-select">
+                                    <option value="">Select Type</option>
+                                    @*<option ng-repeat="option in serviceOptions" value="{{option.value}}">{{option.text}}</option>*@
+                                </select>
+                                @*<span style="color:red" ng-bind="msgVNoOfMonths"></span>*@
+                            </div>
+
+
+
+
+
+                        </div>
+                        <div class="card" ng-show="MultipleTime">
+                            <div class="card shadow-lg">
+                                <div class="card-body">
+
+                                    <div ng-repeat="row in rows track by $index" class="mb-3">
+                                        <div class="row align-items-center">
+                                            <!-- Title under each row -->
+                                            <div class="col-md-3">
+                                                <h6 ng-bind="($index + 1) + '. ' + PackageName + ' (' + numRows + ' services)'"></h6>
+                                            </div>
+                                            <!-- Start Date Field -->
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">Select Start Date</label>
+                                                <input class="form-control" placeholder="Pick a date" ng-model="startDates[$index]" id="kt_speciClenDate{{ $index }}" ng-init="initFlatpickr($index)" />
+                                            </div>
+
+                                            <!-- Time Field -->
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">Select Time</label>
+                                                <select name="Time{{ $index + 1 }}" id="DTimeID{{ $index + 1 }}" ng-model="selectedTimes[$index]" ng-options="time for time in timeOptions"  class="form-select" ng-init="initSelect2($index)">
+                                                    <option value="">Select a Time...</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="form-label">Select End Time</label>
+                                                <select name="EndTime{{ $index + 1 }}" id="EDTimeID{{ $index + 1 }}" ng-model="selectedEndTimes[$index]" ng-options="time for time in endTimeOptions" class="form-select" ng-init="initSelectEnd2($index)">
+                                                    <option value="">Select a End Time...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Add an extra space at the end for good spacing -->
+                                    <div class="text-center">
+                                        <button ng-click="saveData()" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                       
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+@section scripts {
+    <script src="https://flatpickr.js.org/themer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.js"></script>
+    <script>
+      
+        flatpickr('#kt_speciClenDate', {
+            inline: false,
+            enableTime: false,
+            dateFormat: "Y-m-d",  // Date format (Year-Month-Day)
+            allowInput: true,  // Allow manual input
+            clickOpens: true  // Ensure the picker opens on click
+        });
+    </script>
+    }

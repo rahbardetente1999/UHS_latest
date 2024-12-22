@@ -1,0 +1,789 @@
+﻿
+@{
+    ViewBag.Title = "Notification";
+    Layout = "~/Areas/CustomerSupport/Views/Shared/_LayoutPage.cshtml";
+}
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<style>
+    .card-active {
+        background-color: transparent;
+        color: var(--bs-primary);
+        border: 1px solid var(--bs-primary);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transition: background-color 0.3s ease, color 0.3s ease;
+        cursor: pointer;
+    }
+
+        .card-active .card-title,
+        .card-active .card-text {
+            cursor: pointer;
+        }
+</style>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="StaffRatingController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::Navs-->
+                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="pill" href="#notification">Staff Notification</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="RescheduleList()" data-bs-toggle="pill" href="#reschedule">Reschedule List</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="GetRenewalList()" data-bs-toggle="pill" href="#renewal">Renewal List</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="CustomerSupport()" data-bs-toggle="pill" href="#customersupport">Customer Support</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="GetSpecialList()" data-bs-toggle="pill" href="#specialinstruction">Special Instruction</a>
+                        </li>
+                        <!--end::Nav item-->
+
+
+                    </ul>
+                    <!--begin::Navs-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="notification">
+                            <div class="table-responsive" id="tbl_packageslist" style="display:none;">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                    <thead>
+                                        <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                            <th>S.No</th>
+                                            <th class="min-w-125px">Customer Name</th>
+                                            <th class="min-w-125px">Main Category</th>
+                                            <th class="min-w-125px">Sub Category</th>
+                                            <th class="min-w-100px">Service Date</th>
+                                            <th>Staff Name</th>
+                                            <th class="min-w-100px">Comment</th>
+                                            <th>Files</th>
+                                            <th>Added On</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fw-semibold text-gray-600">
+                                        <tr ng-repeat="not in NotificationList">
+                                            <td ng-bind="$index+1"></td>
+                                            <td>
+                                                <a href="" ng-bind="not.CustomerName" data-bs-toggle="modal" data-bs-target="#kt_modal_remilist" ng-click="GetPersonalDtls(not.custID,not.custODID)"></a>
+                                            </td>
+                                            <td ng-bind="not.MainCategory || 'N/A'"></td>
+                                            <td ng-bind="not.SubCategory || 'N/A'"></td>
+                                            <td>
+                                                <a href="" ng-bind="getFormattedDate(not.ServiceDate)" data-bs-toggle="modal" data-bs-target="#kt_modal_alldetails" ng-click="GetAllDetails(not.custID,not.custODID,not.custTDID)"></a>
+                                            </td>
+                                            <td ng-bind="not.StaffName|| 'N/A'"></td>
+                                            <td ng-bind="not.Review || 'N/A'"></td>
+                                            <td>
+                                                <a href="" data-bs-toggle="modal" ng-click="FilesList(not.Files)" data-bs-target="#kt_modal_files" ng-bind="not.Files!=null?not.Files.length:'N/A'"></a>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="text-gray-800  mb-1" ng-bind="not.CreatedOn| customDate"></a>
+                                            </td>
+
+
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                                <!--end::Table-->
+                            </div>
+
+                            <div id="tbl_dummypacakges">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th class="min-w-125px">Name</th>
+                                            <th>Added By</th>
+                                            <th>Added On</th>
+                                            <th class="min-w-70px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                            <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="reschedule">
+
+                            <div class="table-responsive" id="tbl_reschedulelist" style="display:none;">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                    <thead>
+                                        <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                            <th>S.No</th>
+                                            <th class="min-w-125px">Customer Name</th>
+                                            <th class="min-w-125px">Alert Type</th>
+                                            <th class="min-w-125px">Property</th>
+                                            <th class="min-w-100px">Main Category</th>
+                                            <th class="min-w-100px">Subcategory</th>
+                                            <th>Message</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fw-semibold text-gray-600">
+                                        <tr ng-repeat="res in rescheduleList">
+                                            <td ng-bind="$index+1"></td>
+                                            <td>
+                                                <a href="" ng-bind="res.CustomerName || 'N/A'"></a>
+                                            </td>
+                                            <td ng-bind="res.AlertType || 'N/A'"></td>
+                                            <td ng-bind="res.PropertyName|| 'N/A'"></td>
+                                            <td ng-bind="res.MainCategroy || 'N/A'"></td>
+                                            <td ng-bind="res.SubCategory || 'N/A'"></td>
+                                            <td ng-bind="res.Message|| 'N/A'"></td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                                <!--end::Table-->
+                            </div>
+
+                            <div id="tbl_dummyreschedule">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th class="min-w-125px">Name</th>
+                                            <th>Added By</th>
+                                            <th>Added On</th>
+                                            <th class="min-w-70px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="8" style="color:blue;" id="spanrescheduleLoader"><span><b>Loading...</b></span></td>
+                                            <td colspan="8" style="color:red;display:none;" id="spanEmptyrescheduleRecords"><span>No records found!</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="renewal">
+                            <!--begin::Card header-->
+                            <div class="card-header border-0 pt-6">
+                                <!--begin::Card title-->
+                                <div class="card-title fw-medium">
+                                    Renewal List
+                                </div>
+                            </div>
+                            <!--end::Card header-->
+                            <div class="table-responsive" id="tbl_renewallist" style="display:none;">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                    <thead>
+                                        <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                            <th>S.No</th>
+                                            <th>Customer Name</th>
+                                            <th>Alert Type</th>
+                                            <th>Property</th>
+                                            <th>Main Category</th>
+                                            <th>Subcategory</th>
+                                            <th class="min-w-125px">Message</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fw-semibold text-gray-600">
+                                        <tr ng-repeat="rnl in RenewalList">
+                                            <td ng-bind="$index+1"></td>
+                                            <td>
+                                                <a href="" ng-bind="rnl.CustomerName"></a>
+                                            </td>
+                                            <td ng-bind="rnl.AlertType || 'N/A'"></td>
+                                            <td ng-bind="rnl.PropertyName|| 'N/A'"></td>
+                                            <td ng-bind="rnl.MainCategroy || 'N/A'"></td>
+                                            <td ng-bind="rnl.SubCategory || 'N/A'"></td>
+                                            <td ng-bind="rnl.Message|| 'N/A'"></td>
+
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                                <!--end::Table-->
+                            </div>
+
+                            <div id="tbl_dummyrenewal">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th class="min-w-125px">Name</th>
+                                            <th>Added By</th>
+                                            <th>Added On</th>
+                                            <th class="min-w-70px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="8" style="color:blue;" id="spanrenewalLoader"><span><b>Loading...</b></span></td>
+                                            <td colspan="8" style="color:red;display:none;" id="spanEmptyrenewalRecords"><span>No records found!</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="customersupport">
+                            <div class="row mb-4 mt-4" ng-if="SupportList">
+                                <div class="col-md-4">
+                                    <div class="card text-center p-4" ng-class="{'card-active': activeCard === 'Opening'}" ng-click="setActiveCard('Opening')">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Open</h5>
+                                            <p class="card-text fs-4">{{ openCount }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card text-center p-4"
+                                         ng-class="{'card-active': activeCard === 'Pending'}"
+                                         ng-click="setActiveCard('Pending')">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Pending</h5>
+                                            <p class="card-text fs-4">{{ pendingCount }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card text-center p-4"
+                                         ng-class="{'card-active': activeCard === 'Closed'}"
+                                         ng-click="setActiveCard('Closed')">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Closed</h5>
+                                            <p class="card-text fs-4">{{ closeCount }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mt-3 mb-3" id="datepickerFilter">
+                                <!--begin::Card header-->
+                                <div class="card-header border-0 pt-6">
+                                    <!--begin::Card title-->
+                                    <div class="card-title fw-medium">
+                                        Filter List
+                                    </div>
+                                </div>
+                                <!--end::Card header-->
+                                <div class="row mx-4 my-2" ng-show="SupportList.length!=0">
+                                    <!-- Date Range Picker -->
+                                    <div class="col-md-5 mb-3">
+                                        <label class="form-label required">Range Selection</label>
+                                        <input class="form-control"
+                                               name="Range"
+                                               ng-model="rangewise"
+                                               placeholder="Pick date"
+                                               id="kt_datepicker_71"
+                                               required />
+                                        <span ng-if="SearchForm.$submitted && SearchForm.Range.$invalid"
+                                              style="color: red">Field is required</span>
+                                    </div>
+                                    <div class="col-md-2 mt-4 d-flex">
+                                        <button type="button" class="btn btn-primary mt-2" ng-click="filterSupportListByDate()">Filter</button>
+                                        <button type="button" class="btn btn-secondary mt-2 mx-3" ng-click="resetFilter()">Reset</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--begin::Card-->
+                            <div class="card">
+
+                                <!--begin::Card header-->
+                                <div class="card-header border-0 pt-6">
+                                    <!--begin::Card title-->
+                                    <div class="card-title fw-medium">
+                                        Support List
+                                    </div>
+                                </div>
+                                <!--end::Card header-->
+                                <!--begin::Card body-->
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive" id="tbl_supportlist" style="display:none;">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                            <thead>
+                                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                                    <th>S.No</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Ticket Title</th>
+                                                    <th style="cursor:pointer;">TicketType</th>
+                                                    <th style="cursor:pointer;">
+                                                        ServiceType
+                                                    </th>
+                                                    <th style="cursor:pointer;">ActionFor</th>
+                                                    <th>Discription</th>
+                                                    <th>Files</th>
+                                                    <th>Added On</th>
+                                                    <th>Status</th>
+                                                    <th ng-if="activeCard != 'Closed'">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="fw-semibold text-gray-600">
+                                                <tr ng-repeat="support in SupportList">
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td ng-bind="support.CustomerName"></td>
+                                                    <td ng-bind="support.Title"></td>
+                                                    <td ng-bind="support.CustomerSupportServiceTicketType"></td>
+                                                    <td ng-bind="support.CustomerSupportServiceType"></td>
+                                                    <td ng-bind="support.CustomerSupportActionFor || support.ActionForOther"></td>
+                                                    <td ng-bind="support.Remarks"></td>
+                                                    <td>
+                                                        <a href="" data-bs-toggle="modal" ng-click="FilesList(support.Files)" data-bs-target="#kt_modal_files" ng-bind="support.Files!=null?support.Files.length:'0'"></a>
+                                                    </td>
+                                                    <td ng-bind="support.CreatedOn| customDate"></td>
+                                                    <td>
+                                                        <span class="badge" ng-class="{'badge-light-warning': support.CustomerSupportTaskStatus === 'Pending','badge-light-primary': support.CustomerSupportTaskStatus === 'Opening','badge-light-success': support.CustomerSupportTaskStatus === 'Closed'}" ng-bind="support.CustomerSupportTaskStatus"></span>
+                                                    </td>
+                                                    <td ng-if="activeCard != 'Closed'">
+                                                        <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disable="support.CustomerSupportTaskStatus === 'Closed'">
+                                                            Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                                            @*<a class="dropdown-item" href="#" data-bs-toggle="modal"  ng-click="updateAction(support, 1)">Open</a>*@
+                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" ng-show="support.CustomerSupportTaskStatus === 'Opening'" ng-click="updateAction(support, 2)">Pending</a>
+                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" ng-click="updateAction(support, 3)">Close</a>
+
+
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+
+                                    <div id="tbl_dummysupport">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Ticket Title</th>
+                                                    <th style="cursor:pointer;">TicketType</th>
+                                                    <th style="cursor:pointer;">
+                                                        ServiceType
+                                                    </th>
+                                                    <th style="cursor:pointer;">ActionFor</th>
+                                                    <th style="cursor:pointer;">ActionForDetails</th>
+                                                    <th>Discription</th>
+                                                    <th>Date of Creation</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8" style="color:blue;" id="spanLoader">
+                                                        <span><b>Loading...</b></span>
+                                                    </td>
+                                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords">
+                                                        <span>
+                                                            No
+                                                            records found!
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Card-->
+                        </div>
+                        <div class="tab-pane fade" id="specialinstruction">
+                            <!--begin::Card header-->
+                            <div class="card-header border-0 pt-6">
+                                <!--begin::Card title-->
+                                <div class="card-title fw-medium">
+                                    Special Instruction List
+                                </div>
+                            </div>
+                            <!--end::Card header-->
+                            <div class="table-responsive" id="tbl_speciallist" style="display:none;">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                    <thead>
+                                        <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                            <th>S.No</th>
+                                            <th class="min-w-125px">Customer Name</th>
+                                            <th class="min-w-125px">Alert Type</th>
+                                            <th class="min-w-125px">Property</th>
+                                            <th class="min-w-100px">Main Category</th>
+                                            <th class="min-w-100px">Subcategory</th>
+                                            <th>Message</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fw-semibold text-gray-600">
+                                        <tr ng-repeat="spl in SpecialList">
+                                            <td ng-bind="$index+1"></td>
+                                            <td>
+                                                <a href="" ng-bind="spl.CustomerName"></a>
+                                            </td>
+                                            <td ng-bind="spl.AlertType || 'N/A'"></td>
+                                            <td ng-bind="spl.PropertyName|| 'N/A'"></td>
+                                            <td ng-bind="spl.MainCategroy || 'N/A'"></td>
+                                            <td ng-bind="spl.SubCategory || 'N/A'"></td>
+                                            <td ng-bind="spl.Message|| 'N/A'"></td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                                <!--end::Table-->
+                            </div>
+
+                            <div id="tbl_dummyspecial">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th class="min-w-125px">Name</th>
+                                            <th>Added By</th>
+                                            <th>Added On</th>
+                                            <th class="min-w-70px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="8" style="color:blue;" id="spanspecialLoader"><span><b>Loading...</b></span></td>
+                                            <td colspan="8" style="color:red;display:none;" id="spanEmptyspecialRecords"><span>No records found!</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+
+            <div class="modal fade" id="kt_modal_remilist" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Customer Details</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Customer Name:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.Name"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Contact Number</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.Mobile || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">WhatsApp Number</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.WhatsAppNo || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Alternate Number</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.AlternativeNo || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Email ID</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.Email || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Area</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.Area || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Property Name</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.PropertyName|| 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Residential Type</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.PropertyResidencyType || 'N/A'"></label>
+                                </div>
+
+
+                            </div>
+                            <div class="row" ng-if="GetDetails.IsCarWash != false && GetDetails.IsCarWash != null">
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Car Type</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.CarType"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Car Service Type</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.CarServiceType"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Parking Level</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.CustomCarDetails.ParkingLevel"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Parking Number</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.CustomCarDetails.ParkingNumber"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Vehicle Brand</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.CustomCarDetails.VehicleBrand"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Vehicle Color</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.CustomCarDetails.VehicleColor"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Vehicle Number</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.CustomCarDetails.VehicleNumber"></label>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="GetDetails.OtherLocation != null">
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Tower Name:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.OtherLocation.TowerName"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Building Number</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.OtherLocation.BuildingName"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Street Number</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.OtherLocation.StreetNumber"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Zone Number</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.OtherLocation.ZoneNumber"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Location</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.OtherLocation.Loacation"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Location URL</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;">
+                                        <a href="{{GetDetails.OtherLocation.LocationLink}}" ng-bind="GetDetails.OtherLocation.LocationLink || 'N/A'"></a>
+                                    </label>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="kt_modal_alldetails" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Issues Details</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+
+                            <div class="table-responsive" id="kt_Issuedetails" style="display:none;">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_Issuedetailsd" datatable="ng" dt-options="vm.dtOptions">
+                                    <thead>
+                                        <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                            <th>S.No</th>
+
+                                            <th class="min-w-100px">Issue Type</th>
+                                            <th class="min-w-100px">Condition Type</th>
+                                            <th>Other Issue</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fw-semibold text-gray-600">
+                                        <tr ng-repeat="not in DetailsNotificationList">
+                                            <td ng-bind="$index+1"></td>
+                                            <td ng-bind="not.CustomerIssue || 'N/A'"></td>
+                                            <td ng-bind="not.CustomerConditionalType || 'N/A'"></td>
+                                            <td ng-bind="not.OtherCustomerIssue|| 'N/A'"></td>
+
+
+
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                                <!--end::Table-->
+                            </div>
+
+                            <div id="tbl_dummyotherdetails">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+
+                                            <th class="min-w-100px">Issue Type</th>
+                                            <th class="min-w-100px">Condition Type</th>
+                                            <th>Other Issue</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="8" style="color:blue;" id="spanODLoader"><span><b>Loading...</b></span></td>
+                                            <td colspan="8" style="color:red;display:none;" id="spanEmptyORecords"><span>No records found!</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="kt_modal_files" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Files Details</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <div class="row" ng-if="arrFiles == null">
+                                <div class="col-sm-12">
+
+                                    <span>No files are available</span>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="arrFiles != null">
+                                <div class="col-sm-12">
+
+                                    <a href="{{image.Value}}" class="mr-2" ng-repeat="image in arrFiles" data-toggle="lightbox" data-gallery="img-gallery" data-title="Incident Images" data-max-width="600">
+                                        <img class="img-responsive" ng-src="{{image.Value}}" style="width:200px;height:200px;" />
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold" ng-bind="CustomerName + ' Update Status'"></h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!-- Form -->
+                        <form class="form" name="UpdateStatusForm" novalidate>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="required fs-6 fw-semibold mb-2">Status</label>
+                                        <select name="Status" id="TStatus" ng-model="Status" class="form-select" data-control="select2" required>
+                                            <option value="">Select Status...</option>
+                                            <option ng-repeat="type in StatusList" value="{{type.ID}}">{{type.name}}</option>
+                                        </select>
+                                        <span ng-if="UpdateStatusForm.$submitted && UpdateStatusForm.Status.$invalid" class="text-danger">field is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Footer -->
+                            <div class="modal-footer">
+                                <button type="reset" ng-click="resetForm()" data-bs-dismiss="modal"
+                                        class="btn btn-light">
+                                    Discard
+                                </button>
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="updateAction(UpdateStatusForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnActionsave">Submit</span>
+                                    <span class="indicator-progress" id="btnActionloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

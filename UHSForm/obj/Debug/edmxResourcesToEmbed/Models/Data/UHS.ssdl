@@ -1,0 +1,4050 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_TestUHSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin_Sub">
+    <Key>
+      <PropertyRef Name="suID" />
+    </Key>
+    <Property Name="suID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="70" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="15" />
+    <Property Name="AlternativeMobileNo" Type="nvarchar" MaxLength="15" />
+    <Property Name="Email" Type="varchar" MaxLength="120" />
+    <Property Name="Gender" Type="varchar" MaxLength="10" />
+    <Property Name="Address" Type="varchar" MaxLength="160" />
+    <Property Name="LandMark" Type="varchar" MaxLength="30" />
+    <Property Name="City" Type="varchar" MaxLength="20" />
+    <Property Name="State" Type="varchar" MaxLength="20" />
+    <Property Name="Pincode" Type="int" />
+    <Property Name="Country" Type="varchar" MaxLength="20" />
+    <Property Name="PhoneCode" Type="int" />
+    <Property Name="IdentityProofName" Type="varchar" MaxLength="20" />
+    <Property Name="IdentityProofID" Type="varchar" MaxLength="100" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="uID" Type="int" />
+    <Property Name="logID" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ApprovalStatus">
+    <Key>
+      <PropertyRef Name="custSSID" />
+    </Key>
+    <Property Name="custSSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CarServiceTypes">
+    <Key>
+      <PropertyRef Name="carstID" />
+    </Key>
+    <Property Name="carstID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="200" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CarTypes">
+    <Key>
+      <PropertyRef Name="cartID" />
+    </Key>
+    <Property Name="cartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="200" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CarWashTimeRange">
+    <Key>
+      <PropertyRef Name="carTRID" />
+    </Key>
+    <Property Name="carTRID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="Timing" Type="varchar" MaxLength="40" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ISO" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="CountryNicename" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="ISO3" Type="char" MaxLength="3" />
+    <Property Name="Numcode" Type="smallint" />
+    <Property Name="Phonecode" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="cuID" />
+    </Key>
+    <Property Name="cuID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="70" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="15" />
+    <Property Name="AlternativeNo" Type="nvarchar" MaxLength="15" />
+    <Property Name="Email" Type="varchar" MaxLength="90" />
+    <Property Name="Gender" Type="varchar" MaxLength="10" />
+    <Property Name="Address" Type="varchar" MaxLength="160" />
+    <Property Name="Landmark" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="20" />
+    <Property Name="State" Type="varchar" MaxLength="20" />
+    <Property Name="Country" Type="varchar" MaxLength="20" />
+    <Property Name="Pincode" Type="int" />
+    <Property Name="PhoneCode" Type="int" />
+    <Property Name="IdentityProveName" Type="varchar" MaxLength="20" />
+    <Property Name="IdentityProveID" Type="varchar" MaxLength="30" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="logID" Type="int" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="Salutaion" Type="varchar" MaxLength="10" />
+    <Property Name="WhatsAppNo" Type="nvarchar" MaxLength="15" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="CustomerType" Type="int" />
+    <Property Name="IsMobile" Type="bit" />
+    <Property Name="IsEmail" Type="bit" />
+    <Property Name="CustomerTypeOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CustomerAlerts">
+    <Key>
+      <PropertyRef Name="custAID" />
+    </Key>
+    <Property Name="custAID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="varchar" MaxLength="300" />
+    <Property Name="custATID" Type="int" />
+    <Property Name="custID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="catID" Type="int" />
+    <Property Name="catsubID" Type="int" />
+    <Property Name="vID" Type="int" />
+  </EntityType>
+  <EntityType Name="CustomerAltersType">
+    <Key>
+      <PropertyRef Name="custATID" />
+    </Key>
+    <Property Name="custATID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerAvailability">
+    <Key>
+      <PropertyRef Name="custSCID" />
+    </Key>
+    <Property Name="custSCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="custID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="Availability" Type="bit" />
+    <Property Name="KeyCollection" Type="bit" />
+    <Property Name="AccessProperty" Type="varchar" MaxLength="300" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="ReceptionDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CustomerCarServiceDetails">
+    <Key>
+      <PropertyRef Name="custCarsDID" />
+    </Key>
+    <Property Name="custCarsDID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="custID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="ParkingLevel" Type="varchar" MaxLength="30" />
+    <Property Name="ParkingNumber" Type="varchar" MaxLength="30" />
+    <Property Name="VehicleBrand" Type="varchar" MaxLength="30" />
+    <Property Name="VehicleColor" Type="varchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="VehicleNumber" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="CustomerComplaint">
+    <Key>
+      <PropertyRef Name="custComID" />
+    </Key>
+    <Property Name="custComID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Remarks" Type="varchar" MaxLength="250" />
+    <Property Name="cuID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CustomerConditionalType">
+    <Key>
+      <PropertyRef Name="custCTID" />
+    </Key>
+    <Property Name="custCTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="60" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CustomerCustomDateTime">
+    <Key>
+      <PropertyRef Name="custDTID" />
+    </Key>
+    <Property Name="custDTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cuID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="CustomStartDate" Type="datetime" />
+    <Property Name="CustomStartTime" Type="varchar" MaxLength="30" />
+    <Property Name="CustomEndTime" Type="varchar" MaxLength="30" />
+    <Property Name="CustomDays" Type="varchar" MaxLength="60" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerDateBlock">
+    <Key>
+      <PropertyRef Name="custDBID" />
+    </Key>
+    <Property Name="custDBID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="custID" Type="int" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="StartTime" Type="varchar" MaxLength="20" />
+    <Property Name="EndTime" Type="varchar" MaxLength="20" />
+    <Property Name="packID" Type="int" />
+    <Property Name="parkID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="teamID" Type="int" />
+  </EntityType>
+  <EntityType Name="CustomerFeedback">
+    <Key>
+      <PropertyRef Name="custfdbID" />
+    </Key>
+    <Property Name="custfdbID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Feedback" Type="varchar" MaxLength="250" />
+    <Property Name="cuID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdaatedOn" Type="datetime" />
+    <Property Name="Rating" Type="int" />
+    <Property Name="custTDID" Type="int" />
+  </EntityType>
+  <EntityType Name="CustomerInovice">
+    <Key>
+      <PropertyRef Name="custInID" />
+    </Key>
+    <Property Name="custInID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceNumber" Type="varchar" MaxLength="30" />
+    <Property Name="cuID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="custTrasID" Type="int" />
+  </EntityType>
+  <EntityType Name="CustomerIssueType">
+    <Key>
+      <PropertyRef Name="custISID" />
+    </Key>
+    <Property Name="custISID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerOfficalDetails">
+    <Key>
+      <PropertyRef Name="custODID" />
+    </Key>
+    <Property Name="custODID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="custID" Type="int" />
+    <Property Name="catID" Type="int" />
+    <Property Name="catsubID" Type="int" />
+    <Property Name="SpecialService" Type="bit" />
+    <Property Name="propaID" Type="int" />
+    <Property Name="propType" Type="int" />
+    <Property Name="vID" Type="int" />
+    <Property Name="proprestID" Type="int" />
+    <Property Name="Remarks" Type="nvarchar" MaxLength="300" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="AppartmentNumber" Type="varchar" MaxLength="30" />
+    <Property Name="stfID" Type="int" />
+    <Property Name="teamID" Type="int" />
+    <Property Name="StatusOfWork" Type="int" />
+    <Property Name="TaskNo" Type="int" />
+    <Property Name="ClosingRemarks" Type="varchar" MaxLength="250" />
+    <Property Name="BuldleDays" Type="varchar" MaxLength="60" />
+    <Property Name="ServiceStatus" Type="bit" />
+    <Property Name="NoOfMonths" Type="int" />
+    <Property Name="cartID" Type="int" />
+    <Property Name="carstID" Type="int" />
+    <Property Name="IsCarWash" Type="bit" />
+    <Property Name="subAreaID" Type="int" />
+    <Property Name="carTRID" Type="int" />
+  </EntityType>
+  <EntityType Name="CustomerOtherProperty">
+    <Key>
+      <PropertyRef Name="custOPID" />
+    </Key>
+    <Property Name="custOPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="custID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="TowerName" Type="varchar" MaxLength="50" />
+    <Property Name="BuildingName" Type="varchar" MaxLength="50" />
+    <Property Name="StreetNumber" Type="varchar" MaxLength="20" />
+    <Property Name="ZoneNumber" Type="varchar" MaxLength="20" />
+    <Property Name="Loacation" Type="varchar" MaxLength="30" />
+    <Property Name="LocationLink" Type="varchar" MaxLength="300" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CustomerPaymentStatus">
+    <Key>
+      <PropertyRef Name="custPSID" />
+    </Key>
+    <Property Name="custPSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerPricing">
+    <Key>
+      <PropertyRef Name="cupID" />
+    </Key>
+    <Property Name="cupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cuID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="packID" Type="int" />
+    <Property Name="parkID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerRenewalMonths">
+    <Key>
+      <PropertyRef Name="custrmID" />
+    </Key>
+    <Property Name="custrmID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="120" />
+    <Property Name="NoOfMonths" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerSpecializedCleaning">
+    <Key>
+      <PropertyRef Name="custSCID" />
+    </Key>
+    <Property Name="custSCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="custID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="servcatID" Type="int" />
+    <Property Name="servsubcatID" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CustomerSupport">
+    <Key>
+      <PropertyRef Name="custSID" />
+    </Key>
+    <Property Name="custSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="120" />
+    <Property Name="custSTTID" Type="int" />
+    <Property Name="custSSTID" Type="int" />
+    <Property Name="custSAID" Type="int" />
+    <Property Name="custSSID" Type="int" />
+    <Property Name="custID" Type="int" />
+    <Property Name="ServiceDate" Type="datetime" />
+    <Property Name="ActionForOther" Type="varchar" MaxLength="40" />
+    <Property Name="Remarks" Type="varchar" MaxLength="300" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerSupportActionFor">
+    <Key>
+      <PropertyRef Name="custSAID" />
+    </Key>
+    <Property Name="custSAID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerSupportServiceType">
+    <Key>
+      <PropertyRef Name="custSSTID" />
+    </Key>
+    <Property Name="custSSTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerSupportTicketType">
+    <Key>
+      <PropertyRef Name="custSTTID" />
+    </Key>
+    <Property Name="custSTTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerTimeBlock">
+    <Key>
+      <PropertyRef Name="custTBID" />
+    </Key>
+    <Property Name="custTBID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TempID" Type="int" />
+    <Property Name="Days" Type="varchar" MaxLength="30" />
+    <Property Name="Times" Type="varchar" MaxLength="70" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="StartTime" Type="varchar" MaxLength="70" />
+    <Property Name="EndTime" Type="varchar" MaxLength="70" />
+    <Property Name="teamID" Type="int" />
+    <Property Name="MobileNo" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="CustomerTimeline">
+    <Key>
+      <PropertyRef Name="custTDID" />
+    </Key>
+    <Property Name="custTDID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="custID" Type="int" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="StartTime" Type="varchar" MaxLength="20" />
+    <Property Name="EndTime" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="packID" Type="int" />
+    <Property Name="parkID" Type="int" />
+    <Property Name="StatusOfWork" Type="int" />
+    <Property Name="TaskNo" Type="int" />
+    <Property Name="ClosingRemarks" Type="varchar" MaxLength="250" />
+    <Property Name="ClosingDate" Type="datetime" />
+    <Property Name="teamID" Type="int" />
+  </EntityType>
+  <EntityType Name="CustomerTransaction">
+    <Key>
+      <PropertyRef Name="custTrasID" />
+    </Key>
+    <Property Name="custTrasID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cuID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="float" />
+    <Property Name="TotalPrice" Type="float" />
+    <Property Name="PayementID" Type="varchar" MaxLength="300" />
+    <Property Name="TransactionID" Type="varchar" MaxLength="300" />
+    <Property Name="PaymentStatus" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="CustomerType">
+    <Key>
+      <PropertyRef Name="custTyID" />
+    </Key>
+    <Property Name="custTyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Files">
+    <Key>
+      <PropertyRef Name="fileID" />
+    </Key>
+    <Property Name="fileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="stfID" Type="int" />
+    <Property Name="catID" Type="int" />
+    <Property Name="catsubID" Type="int" />
+    <Property Name="servcatID" Type="int" />
+    <Property Name="servsubcatID" Type="int" />
+    <Property Name="stID" Type="int" />
+    <Property Name="Filename" Type="varchar" MaxLength="300" />
+    <Property Name="FileContentType" Type="varchar" MaxLength="30" />
+    <Property Name="FileFieldName" Type="nvarchar" MaxLength="300" />
+    <Property Name="FileSize" Type="varchar" MaxLength="30" />
+    <Property Name="FileUse" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="cuiD" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="custSID" Type="int" />
+  </EntityType>
+  <EntityType Name="FileUse">
+    <Key>
+      <PropertyRef Name="fileUseID" />
+    </Key>
+    <Property Name="fileUseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="IncExclu">
+    <Key>
+      <PropertyRef Name="incexID" />
+    </Key>
+    <Property Name="incexID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="catID" Type="int" />
+    <Property Name="catsubID" Type="int" />
+    <Property Name="sercatID" Type="int" />
+    <Property Name="servsubcatID" Type="int" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="logID" />
+    </Key>
+    <Property Name="logID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="120" />
+    <Property Name="Password" Type="binary" MaxLength="64" />
+    <Property Name="Salt" Type="uniqueidentifier" />
+    <Property Name="LastTimeLogin" Type="datetime" />
+    <Property Name="rID" Type="int" />
+    <Property Name="parentID" Type="int" />
+    <Property Name="IsBlocked" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdateRole" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="70" />
+    <Property Name="logDate" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="logThread" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="logLevel" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="logSource" Type="varchar" MaxLength="300" Nullable="false" />
+    <Property Name="logMessage" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="exception" Type="varchar" MaxLength="4000" />
+    <Property Name="IPAddress" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <EntityType Name="MainCategory">
+    <Key>
+      <PropertyRef Name="catID" />
+    </Key>
+    <Property Name="catID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="IsFlag" Type="bit" />
+  </EntityType>
+  <EntityType Name="Packages">
+    <Key>
+      <PropertyRef Name="packID" />
+    </Key>
+    <Property Name="packID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="60" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="RecursiveTime" Type="int" />
+  </EntityType>
+  <EntityType Name="Pricing">
+    <Key>
+      <PropertyRef Name="parkID" />
+    </Key>
+    <Property Name="parkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="catID" Type="int" />
+    <Property Name="catsubID" Type="int" />
+    <Property Name="servcatID" Type="int" />
+    <Property Name="servsubcatID" Type="int" />
+    <Property Name="packID" Type="int" />
+    <Property Name="propaID" Type="int" />
+    <Property Name="vID" Type="int" />
+    <Property Name="proprestID" Type="int" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Duration" Type="varchar" MaxLength="30" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="TimeMeasurement" Type="varchar" MaxLength="20" />
+    <Property Name="cartID" Type="int" />
+    <Property Name="carstID" Type="int" />
+  </EntityType>
+  <EntityType Name="Properties">
+    <Key>
+      <PropertyRef Name="pID" />
+    </Key>
+    <Property Name="pID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="vID" Type="int" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="cuID" Type="int" />
+    <Property Name="PTID" Type="int" />
+    <Property Name="Longitude" Type="float" />
+    <Property Name="Latitude" Type="float" />
+    <Property Name="Address" Type="varchar" MaxLength="300" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Number" Type="nvarchar" MaxLength="40" />
+    <Property Name="PlotNo" Type="varchar" MaxLength="300" />
+    <Property Name="PlotArea" Type="varchar" MaxLength="50" />
+    <Property Name="Size" Type="varchar" MaxLength="30" />
+    <Property Name="PlotStatus" Type="varchar" MaxLength="10" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="TotalFloors" Type="int" />
+    <Property Name="FloorNo" Type="varchar" MaxLength="20" />
+    <Property Name="RentAmount" Type="nvarchar" MaxLength="20" />
+    <Property Name="UseFor" Type="varchar" MaxLength="10" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="PropertyArea">
+    <Key>
+      <PropertyRef Name="propaID" />
+    </Key>
+    <Property Name="propaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="OrderBy" Type="int" />
+  </EntityType>
+  <EntityType Name="PropertyResidenceType">
+    <Key>
+      <PropertyRef Name="proprestID" />
+    </Key>
+    <Property Name="proprestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="vID" Type="int" />
+    <Property Name="propaID" Type="int" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="OrderBy" Type="int" />
+  </EntityType>
+  <EntityType Name="PropertyType">
+    <Key>
+      <PropertyRef Name="PTID" />
+    </Key>
+    <Property Name="PTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PTypeName" Type="varchar" MaxLength="100" />
+    <Property Name="ventureType" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RefIncExclu">
+    <Key>
+      <PropertyRef Name="incexRefID" />
+    </Key>
+    <Property Name="incexRefID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="300" />
+    <Property Name="Type" Type="int" />
+    <Property Name="incexID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RefServiceSlots">
+    <Key>
+      <PropertyRef Name="ssrefID" />
+    </Key>
+    <Property Name="ssrefID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ssID" Type="int" />
+    <Property Name="Days" Type="varchar" MaxLength="20" />
+    <Property Name="StartTime" Type="varchar" MaxLength="20" />
+    <Property Name="EndTime" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="rID" />
+    </Key>
+    <Property Name="rID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="20" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="70" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="70" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+  </EntityType>
+  <EntityType Name="ServiceCategory">
+    <Key>
+      <PropertyRef Name="servcatID" />
+    </Key>
+    <Property Name="servcatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="catID" Type="int" />
+    <Property Name="catsubID" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="ServiceSlots">
+    <Key>
+      <PropertyRef Name="ssID" />
+    </Key>
+    <Property Name="ssID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="catID" Type="int" />
+    <Property Name="catsubID" Type="int" />
+    <Property Name="servcatID" Type="int" />
+    <Property Name="servsubcatID" Type="int" />
+    <Property Name="stfID" Type="int" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ServiceSubCategory">
+    <Key>
+      <PropertyRef Name="servsubcatID" />
+    </Key>
+    <Property Name="servsubcatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="catID" Type="int" />
+    <Property Name="catsubID" Type="int" />
+    <Property Name="servcatID" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="stfID" />
+    </Key>
+    <Property Name="stfID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="70" />
+    <Property Name="Email" Type="varchar" MaxLength="120" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="15" />
+    <Property Name="PhoneCode" Type="int" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="logID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="StaffCustomerRating">
+    <Key>
+      <PropertyRef Name="custSTFRID" />
+    </Key>
+    <Property Name="custSTFRID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cuID" Type="int" />
+    <Property Name="custODID" Type="int" />
+    <Property Name="custTDID" Type="int" />
+    <Property Name="stfID" Type="int" />
+    <Property Name="Rating" Type="int" />
+    <Property Name="Review" Type="varchar" MaxLength="250" />
+    <Property Name="OtherIssue" Type="nvarchar" MaxLength="100" />
+    <Property Name="custCTID" Type="int" />
+    <Property Name="custISID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="StaffService">
+    <Key>
+      <PropertyRef Name="stfsID" />
+    </Key>
+    <Property Name="stfsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="stfID" Type="int" />
+    <Property Name="catID" Type="int" />
+    <Property Name="catsubID" Type="int" />
+    <Property Name="servcatID" Type="int" />
+    <Property Name="servsubcatID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="teamID" Type="int" />
+    <Property Name="propaID" Type="int" />
+  </EntityType>
+  <EntityType Name="StaffTeams">
+    <Key>
+      <PropertyRef Name="stfTeID" />
+    </Key>
+    <Property Name="stfTeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="teamID" Type="int" />
+    <Property Name="stfID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SubArea">
+    <Key>
+      <PropertyRef Name="subAreaID" />
+    </Key>
+    <Property Name="subAreaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ScoreID" Type="int" />
+    <Property Name="propaID" Type="int" />
+    <Property Name="Name" Type="varchar" MaxLength="200" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="SubCategory">
+    <Key>
+      <PropertyRef Name="catsubID" />
+    </Key>
+    <Property Name="catsubID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="catID" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="Support">
+    <Key>
+      <PropertyRef Name="stID" />
+    </Key>
+    <Property Name="stID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="stfID" Type="int" />
+    <Property Name="Status" Type="varchar" MaxLength="20" />
+    <Property Name="Serverity" Type="int" />
+    <Property Name="Subject" Type="varchar" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+    <Property Name="Email" Type="varchar(max)" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="TicketID" Type="varchar" MaxLength="60" />
+  </EntityType>
+  <EntityType Name="Teams">
+    <Key>
+      <PropertyRef Name="teamID" />
+    </Key>
+    <Property Name="teamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="60" />
+    <Property Name="Remarks" Type="varchar" MaxLength="160" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="teamTyID" Type="int" />
+  </EntityType>
+  <EntityType Name="TeamType">
+    <Key>
+      <PropertyRef Name="teamTyID" />
+    </Key>
+    <Property Name="teamTyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="120" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="uID" />
+    </Key>
+    <Property Name="uID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="70" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="15" />
+    <Property Name="AlternativeMobileNo" Type="nvarchar" MaxLength="15" />
+    <Property Name="Email" Type="varchar" MaxLength="90" />
+    <Property Name="Gender" Type="varchar" MaxLength="10" />
+    <Property Name="Address" Type="varchar" MaxLength="160" />
+    <Property Name="LandMark" Type="varchar" MaxLength="30" />
+    <Property Name="City" Type="varchar" MaxLength="20" />
+    <Property Name="State" Type="varchar" MaxLength="20" />
+    <Property Name="Pincode" Type="int" />
+    <Property Name="Country" Type="varchar" MaxLength="20" />
+    <Property Name="PhoneCode" Type="int" />
+    <Property Name="IdentityProofName" Type="varchar" MaxLength="20" />
+    <Property Name="IdentityProofID" Type="varchar" MaxLength="100" />
+    <Property Name="CreatedRole" Type="int" />
+    <Property Name="UpdatedRole" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="logID" Type="int" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="VehicleColors">
+    <Key>
+      <PropertyRef Name="VehicleColorsID" />
+    </Key>
+    <Property Name="VehicleColorsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="200" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="VehicleTypes">
+    <Key>
+      <PropertyRef Name="VehicleID" />
+    </Key>
+    <Property Name="VehicleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="200" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <EntityType Name="Ventures">
+    <Key>
+      <PropertyRef Name="vID" />
+    </Key>
+    <Property Name="vID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="Category" Type="varchar" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="160" />
+    <Property Name="UseFor" Type="varchar" MaxLength="10" />
+    <Property Name="Address" Type="varchar" MaxLength="160" />
+    <Property Name="Pincode" Type="int" />
+    <Property Name="Landmark" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="20" />
+    <Property Name="State" Type="varchar" MaxLength="20" />
+    <Property Name="Country" Type="varchar" MaxLength="20" />
+    <Property Name="parentID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDelete" Type="bit" />
+    <Property Name="uID" Type="int" />
+    <Property Name="suID" Type="int" />
+    <Property Name="propaID" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedBy" Type="varchar" MaxLength="120" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="OrderBy" Type="int" />
+    <Property Name="Code" Type="varchar" MaxLength="25" />
+    <Property Name="subAreaID" Type="int" />
+  </EntityType>
+  <Association Name="FK_Admin_Sub_CarServiceTypes">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="CarServiceTypes" Type="Self.CarServiceTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="CarServiceTypes">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_CarTypes">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="CarTypes" Type="Self.CarTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="CarTypes">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_Customer">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_CustomerCarServiceDetails">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerCarServiceDetails" Type="Self.CustomerCarServiceDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerCarServiceDetails">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_CustomerInovice">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="CustomerInovice" Type="Self.CustomerInovice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="CustomerInovice">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_Login">
+    <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Login">
+        <PropertyRef Name="logID" />
+      </Principal>
+      <Dependent Role="Admin_Sub">
+        <PropertyRef Name="logID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_Staff">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_SubArea">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="SubArea" Type="Self.SubArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="SubArea">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_Teams">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="Teams">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Admin_Sub">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_VehicleColors">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="VehicleColors" Type="Self.VehicleColors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="VehicleColors">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Admin_Sub_VehicleTypes">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="VehicleTypes" Type="Self.VehicleTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="VehicleTypes">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarServiceTypes_CustomerOfficalDetails">
+    <End Role="CarServiceTypes" Type="Self.CarServiceTypes" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarServiceTypes">
+        <PropertyRef Name="carstID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="carstID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarServiceTypes_Pricing">
+    <End Role="CarServiceTypes" Type="Self.CarServiceTypes" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarServiceTypes">
+        <PropertyRef Name="carstID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="carstID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarTypes_CustomerOfficalDetails">
+    <End Role="CarTypes" Type="Self.CarTypes" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarTypes">
+        <PropertyRef Name="cartID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="cartID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarTypes_Pricing">
+    <End Role="CarTypes" Type="Self.CarTypes" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarTypes">
+        <PropertyRef Name="cartID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="cartID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarWashTimeRange_CustomerOfficalDetails">
+    <End Role="CarWashTimeRange" Type="Self.CarWashTimeRange" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarWashTimeRange">
+        <PropertyRef Name="carTRID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="carTRID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_CustomerCarServiceDetails">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerCarServiceDetails" Type="Self.CustomerCarServiceDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerCarServiceDetails">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_CustomerComplaint">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerComplaint" Type="Self.CustomerComplaint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerComplaint">
+        <PropertyRef Name="cuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_CustomerCustomDateTime">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerCustomDateTime" Type="Self.CustomerCustomDateTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerCustomDateTime">
+        <PropertyRef Name="cuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_CustomerFeedback">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerFeedback" Type="Self.CustomerFeedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerFeedback">
+        <PropertyRef Name="cuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_CustomerInovice">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerInovice" Type="Self.CustomerInovice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerInovice">
+        <PropertyRef Name="cuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_CustomerTransaction">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerTransaction" Type="Self.CustomerTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerTransaction">
+        <PropertyRef Name="cuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Login">
+    <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Login">
+        <PropertyRef Name="logID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="logID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_StaffCustomerRating">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="StaffCustomerRating" Type="Self.StaffCustomerRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="StaffCustomerRating">
+        <PropertyRef Name="cuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerAlerts_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerAlerts" Type="Self.CustomerAlerts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerAlerts">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerAlerts_CustomerAltersType">
+    <End Role="CustomerAltersType" Type="Self.CustomerAltersType" Multiplicity="0..1" />
+    <End Role="CustomerAlerts" Type="Self.CustomerAlerts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerAltersType">
+        <PropertyRef Name="custATID" />
+      </Principal>
+      <Dependent Role="CustomerAlerts">
+        <PropertyRef Name="custATID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerAvailability_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerAvailability" Type="Self.CustomerAvailability" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerAvailability">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerAvailability_CustomerOfficalDetails">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerAvailability" Type="Self.CustomerAvailability" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerAvailability">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerDateBlock_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerDateBlock" Type="Self.CustomerDateBlock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerDateBlock">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerDateBlock_CustomerOfficalDetails">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerDateBlock" Type="Self.CustomerDateBlock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerDateBlock">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerDateBlock_Packages">
+    <End Role="Packages" Type="Self.Packages" Multiplicity="0..1" />
+    <End Role="CustomerDateBlock" Type="Self.CustomerDateBlock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Packages">
+        <PropertyRef Name="packID" />
+      </Principal>
+      <Dependent Role="CustomerDateBlock">
+        <PropertyRef Name="packID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerDateBlock_Pricing">
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="0..1" />
+    <End Role="CustomerDateBlock" Type="Self.CustomerDateBlock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pricing">
+        <PropertyRef Name="parkID" />
+      </Principal>
+      <Dependent Role="CustomerDateBlock">
+        <PropertyRef Name="parkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerFeedback_CustomerTimeline">
+    <End Role="CustomerTimeline" Type="Self.CustomerTimeline" Multiplicity="0..1" />
+    <End Role="CustomerFeedback" Type="Self.CustomerFeedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTimeline">
+        <PropertyRef Name="custTDID" />
+      </Principal>
+      <Dependent Role="CustomerFeedback">
+        <PropertyRef Name="custTDID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_CustomerComplaint">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerComplaint" Type="Self.CustomerComplaint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerComplaint">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_CustomerCustomDateTime">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerCustomDateTime" Type="Self.CustomerCustomDateTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerCustomDateTime">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_CustomerFeedback">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerFeedback" Type="Self.CustomerFeedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerFeedback">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_CustomerInovice">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerInovice" Type="Self.CustomerInovice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerInovice">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_CustomerTransaction">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerTransaction" Type="Self.CustomerTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerTransaction">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_MainCategory">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_PropertyArea">
+    <End Role="PropertyArea" Type="Self.PropertyArea" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyArea">
+        <PropertyRef Name="propaID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="propaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_PropertyResidenceType">
+    <End Role="PropertyResidenceType" Type="Self.PropertyResidenceType" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyResidenceType">
+        <PropertyRef Name="proprestID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="proprestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_StaffCustomerRating">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="StaffCustomerRating" Type="Self.StaffCustomerRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="StaffCustomerRating">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_SubArea">
+    <End Role="SubArea" Type="Self.SubArea" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubArea">
+        <PropertyRef Name="subAreaID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="subAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="catsubID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="catsubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOfficalDetails_Ventures">
+    <End Role="Ventures" Type="Self.Ventures" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ventures">
+        <PropertyRef Name="vID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="vID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOtherProperty_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerOtherProperty" Type="Self.CustomerOtherProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerOtherProperty">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOtherProperty_CustomerOfficalDetails">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerOtherProperty" Type="Self.CustomerOtherProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerOtherProperty">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerPaymentStatus_CustomerTransaction">
+    <End Role="CustomerPaymentStatus" Type="Self.CustomerPaymentStatus" Multiplicity="0..1" />
+    <End Role="CustomerTransaction" Type="Self.CustomerTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerPaymentStatus">
+        <PropertyRef Name="custPSID" />
+      </Principal>
+      <Dependent Role="CustomerTransaction">
+        <PropertyRef Name="PaymentStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerPricing_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerPricing" Type="Self.CustomerPricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerPricing">
+        <PropertyRef Name="cuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerPricing_CustomerOfficalDetails">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerPricing" Type="Self.CustomerPricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerPricing">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerPricing_Packages">
+    <End Role="Packages" Type="Self.Packages" Multiplicity="0..1" />
+    <End Role="CustomerPricing" Type="Self.CustomerPricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Packages">
+        <PropertyRef Name="packID" />
+      </Principal>
+      <Dependent Role="CustomerPricing">
+        <PropertyRef Name="packID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerPricing_Pricing">
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="0..1" />
+    <End Role="CustomerPricing" Type="Self.CustomerPricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pricing">
+        <PropertyRef Name="parkID" />
+      </Principal>
+      <Dependent Role="CustomerPricing">
+        <PropertyRef Name="parkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerRenewalMonths_CustomerOfficalDetails">
+    <End Role="CustomerRenewalMonths" Type="Self.CustomerRenewalMonths" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerRenewalMonths">
+        <PropertyRef Name="custrmID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="NoOfMonths" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerSpecializedCleaning_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerSpecializedCleaning" Type="Self.CustomerSpecializedCleaning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerSpecializedCleaning">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerSpecializedCleaning_CustomerOfficalDetails">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerSpecializedCleaning" Type="Self.CustomerSpecializedCleaning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerSpecializedCleaning">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerSpecializedCleaning_ServiceCategory">
+    <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="0..1" />
+    <End Role="CustomerSpecializedCleaning" Type="Self.CustomerSpecializedCleaning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategory">
+        <PropertyRef Name="servcatID" />
+      </Principal>
+      <Dependent Role="CustomerSpecializedCleaning">
+        <PropertyRef Name="servcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerSpecializedCleaning_ServiceSubCategory">
+    <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="0..1" />
+    <End Role="CustomerSpecializedCleaning" Type="Self.CustomerSpecializedCleaning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceSubCategory">
+        <PropertyRef Name="servsubcatID" />
+      </Principal>
+      <Dependent Role="CustomerSpecializedCleaning">
+        <PropertyRef Name="servsubcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerSupport_ApprovalStatus">
+    <End Role="ApprovalStatus" Type="Self.ApprovalStatus" Multiplicity="0..1" />
+    <End Role="CustomerSupport" Type="Self.CustomerSupport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApprovalStatus">
+        <PropertyRef Name="custSSID" />
+      </Principal>
+      <Dependent Role="CustomerSupport">
+        <PropertyRef Name="custSSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerSupport_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerSupport" Type="Self.CustomerSupport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerSupport">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerSupport_CustomerSupportActionFor">
+    <End Role="CustomerSupportActionFor" Type="Self.CustomerSupportActionFor" Multiplicity="0..1" />
+    <End Role="CustomerSupport" Type="Self.CustomerSupport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerSupportActionFor">
+        <PropertyRef Name="custSAID" />
+      </Principal>
+      <Dependent Role="CustomerSupport">
+        <PropertyRef Name="custSAID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerSupport_CustomerSupportServiceType">
+    <End Role="CustomerSupportServiceType" Type="Self.CustomerSupportServiceType" Multiplicity="0..1" />
+    <End Role="CustomerSupport" Type="Self.CustomerSupport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerSupportServiceType">
+        <PropertyRef Name="custSSTID" />
+      </Principal>
+      <Dependent Role="CustomerSupport">
+        <PropertyRef Name="custSSTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerSupport_CustomerSupportTicketType">
+    <End Role="CustomerSupportTicketType" Type="Self.CustomerSupportTicketType" Multiplicity="0..1" />
+    <End Role="CustomerSupport" Type="Self.CustomerSupport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerSupportTicketType">
+        <PropertyRef Name="custSTTID" />
+      </Principal>
+      <Dependent Role="CustomerSupport">
+        <PropertyRef Name="custSTTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerTimeline_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerTimeline" Type="Self.CustomerTimeline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="CustomerTimeline">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerTimeline_CustomerOfficalDetails">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="CustomerTimeline" Type="Self.CustomerTimeline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="CustomerTimeline">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerTimeline_Packages">
+    <End Role="Packages" Type="Self.Packages" Multiplicity="0..1" />
+    <End Role="CustomerTimeline" Type="Self.CustomerTimeline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Packages">
+        <PropertyRef Name="packID" />
+      </Principal>
+      <Dependent Role="CustomerTimeline">
+        <PropertyRef Name="packID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerTimeline_Pricing">
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="0..1" />
+    <End Role="CustomerTimeline" Type="Self.CustomerTimeline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pricing">
+        <PropertyRef Name="parkID" />
+      </Principal>
+      <Dependent Role="CustomerTimeline">
+        <PropertyRef Name="parkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerTransaction_CustomerInovice">
+    <End Role="CustomerTransaction" Type="Self.CustomerTransaction" Multiplicity="0..1" />
+    <End Role="CustomerInovice" Type="Self.CustomerInovice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTransaction">
+        <PropertyRef Name="custTrasID" />
+      </Principal>
+      <Dependent Role="CustomerInovice">
+        <PropertyRef Name="custTrasID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerType_Customer">
+    <End Role="CustomerType" Type="Self.CustomerType" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerType">
+        <PropertyRef Name="custTyID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CustomerType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="cuiD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_CustomerOfficalDetails">
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOfficalDetails">
+        <PropertyRef Name="custODID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="custODID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_CustomerSupport">
+    <End Role="CustomerSupport" Type="Self.CustomerSupport" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerSupport">
+        <PropertyRef Name="custSID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="custSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_FileUse">
+    <End Role="FileUse" Type="Self.FileUse" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileUse">
+        <PropertyRef Name="fileUseID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="FileUse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_MainCategory">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_ServiceCategory">
+    <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategory">
+        <PropertyRef Name="servcatID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="servcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_ServiceSubCategory">
+    <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceSubCategory">
+        <PropertyRef Name="servsubcatID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="servsubcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_Staff">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="stfID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="stfID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="catsubID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="catsubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_Support">
+    <End Role="Support" Type="Self.Support" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Support">
+        <PropertyRef Name="stID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="stID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Files" Type="Self.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Files">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IncExclu_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="IncExclu" Type="Self.IncExclu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="IncExclu">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IncExclu_MainCategory">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="IncExclu" Type="Self.IncExclu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="IncExclu">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IncExclu_ServiceCategory">
+    <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="0..1" />
+    <End Role="IncExclu" Type="Self.IncExclu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategory">
+        <PropertyRef Name="servcatID" />
+      </Principal>
+      <Dependent Role="IncExclu">
+        <PropertyRef Name="sercatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IncExclu_ServiceSubCategory">
+    <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="0..1" />
+    <End Role="IncExclu" Type="Self.IncExclu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceSubCategory">
+        <PropertyRef Name="servsubcatID" />
+      </Principal>
+      <Dependent Role="IncExclu">
+        <PropertyRef Name="servsubcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IncExclu_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="IncExclu" Type="Self.IncExclu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="catsubID" />
+      </Principal>
+      <Dependent Role="IncExclu">
+        <PropertyRef Name="catsubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IncExclu_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="IncExclu" Type="Self.IncExclu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="IncExclu">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Login_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Login" Type="Self.Login" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="rID" />
+      </Principal>
+      <Dependent Role="Login">
+        <PropertyRef Name="rID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Login_Staff">
+    <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Login">
+        <PropertyRef Name="logID" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="logID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MainCategory_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="MainCategory">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MainCategory_CustomerAlerts">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="CustomerAlerts" Type="Self.CustomerAlerts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="CustomerAlerts">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MainCategory_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="MainCategory">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Packages_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="Packages" Type="Self.Packages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="Packages">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Packages_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Packages" Type="Self.Packages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Packages">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_MainCategory">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_Packages">
+    <End Role="Packages" Type="Self.Packages" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Packages">
+        <PropertyRef Name="packID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="packID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_PropertyArea">
+    <End Role="PropertyArea" Type="Self.PropertyArea" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyArea">
+        <PropertyRef Name="propaID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="propaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_PropertyResidenceType">
+    <End Role="PropertyResidenceType" Type="Self.PropertyResidenceType" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyResidenceType">
+        <PropertyRef Name="proprestID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="proprestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_ServiceCategory">
+    <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategory">
+        <PropertyRef Name="servcatID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="servcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_ServiceSubCategory">
+    <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceSubCategory">
+        <PropertyRef Name="servsubcatID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="servsubcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="catsubID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="catsubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pricing_Ventures">
+    <End Role="Ventures" Type="Self.Ventures" Multiplicity="0..1" />
+    <End Role="Pricing" Type="Self.Pricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ventures">
+        <PropertyRef Name="vID" />
+      </Principal>
+      <Dependent Role="Pricing">
+        <PropertyRef Name="vID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="cuID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="cuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_PropertyType">
+    <End Role="PropertyType" Type="Self.PropertyType" Multiplicity="0..1" />
+    <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyType">
+        <PropertyRef Name="PTID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="PTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_Ventures">
+    <End Role="Ventures" Type="Self.Ventures" Multiplicity="0..1" />
+    <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ventures">
+        <PropertyRef Name="vID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="vID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyArea_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="PropertyArea" Type="Self.PropertyArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="PropertyArea">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyArea_StaffService">
+    <End Role="PropertyArea" Type="Self.PropertyArea" Multiplicity="0..1" />
+    <End Role="StaffService" Type="Self.StaffService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyArea">
+        <PropertyRef Name="propaID" />
+      </Principal>
+      <Dependent Role="StaffService">
+        <PropertyRef Name="propaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyArea_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="PropertyArea" Type="Self.PropertyArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="PropertyArea">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyResidenceType_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="PropertyResidenceType" Type="Self.PropertyResidenceType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="PropertyResidenceType">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyResidenceType_PropertyArea">
+    <End Role="PropertyArea" Type="Self.PropertyArea" Multiplicity="0..1" />
+    <End Role="PropertyResidenceType" Type="Self.PropertyResidenceType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyArea">
+        <PropertyRef Name="propaID" />
+      </Principal>
+      <Dependent Role="PropertyResidenceType">
+        <PropertyRef Name="propaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyResidenceType_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="PropertyResidenceType" Type="Self.PropertyResidenceType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="PropertyResidenceType">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyResidenceType_Ventures">
+    <End Role="Ventures" Type="Self.Ventures" Multiplicity="0..1" />
+    <End Role="PropertyResidenceType" Type="Self.PropertyResidenceType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ventures">
+        <PropertyRef Name="vID" />
+      </Principal>
+      <Dependent Role="PropertyResidenceType">
+        <PropertyRef Name="vID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RefIncExclu_IncExclu">
+    <End Role="IncExclu" Type="Self.IncExclu" Multiplicity="0..1" />
+    <End Role="RefIncExclu" Type="Self.RefIncExclu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IncExclu">
+        <PropertyRef Name="incexID" />
+      </Principal>
+      <Dependent Role="RefIncExclu">
+        <PropertyRef Name="incexID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RefServiceSlots_ServiceSlots">
+    <End Role="ServiceSlots" Type="Self.ServiceSlots" Multiplicity="0..1" />
+    <End Role="RefServiceSlots" Type="Self.RefServiceSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceSlots">
+        <PropertyRef Name="ssID" />
+      </Principal>
+      <Dependent Role="RefServiceSlots">
+        <PropertyRef Name="ssID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceCategory_MainCategory">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="ServiceCategory">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceCategory_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="catsubID" />
+      </Principal>
+      <Dependent Role="ServiceCategory">
+        <PropertyRef Name="catsubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSlots_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="ServiceSlots" Type="Self.ServiceSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="ServiceSlots">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSlots_MainCategory">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="ServiceSlots" Type="Self.ServiceSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="ServiceSlots">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSlots_ServiceCategory">
+    <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="0..1" />
+    <End Role="ServiceSlots" Type="Self.ServiceSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategory">
+        <PropertyRef Name="servcatID" />
+      </Principal>
+      <Dependent Role="ServiceSlots">
+        <PropertyRef Name="servcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSlots_ServiceSubCategory">
+    <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="0..1" />
+    <End Role="ServiceSlots" Type="Self.ServiceSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceSubCategory">
+        <PropertyRef Name="servsubcatID" />
+      </Principal>
+      <Dependent Role="ServiceSlots">
+        <PropertyRef Name="servsubcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSlots_Staff">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="ServiceSlots" Type="Self.ServiceSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="stfID" />
+      </Principal>
+      <Dependent Role="ServiceSlots">
+        <PropertyRef Name="stfID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSlots_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="ServiceSlots" Type="Self.ServiceSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="catsubID" />
+      </Principal>
+      <Dependent Role="ServiceSlots">
+        <PropertyRef Name="catsubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSlots_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="ServiceSlots" Type="Self.ServiceSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="ServiceSlots">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSubCategory_MainCategory">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="ServiceSubCategory">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSubCategory_ServiceCategory">
+    <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="0..1" />
+    <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategory">
+        <PropertyRef Name="servcatID" />
+      </Principal>
+      <Dependent Role="ServiceSubCategory">
+        <PropertyRef Name="servcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceSubCategory_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="catsubID" />
+      </Principal>
+      <Dependent Role="ServiceSubCategory">
+        <PropertyRef Name="catsubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_CustomerOfficalDetails">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="stfID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="stfID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_StaffCustomerRating">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="StaffCustomerRating" Type="Self.StaffCustomerRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="stfID" />
+      </Principal>
+      <Dependent Role="StaffCustomerRating">
+        <PropertyRef Name="stfID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_StaffTeams">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="StaffTeams" Type="Self.StaffTeams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="stfID" />
+      </Principal>
+      <Dependent Role="StaffTeams">
+        <PropertyRef Name="stfID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffCustomerRating_CustomerConditionalType">
+    <End Role="CustomerConditionalType" Type="Self.CustomerConditionalType" Multiplicity="0..1" />
+    <End Role="StaffCustomerRating" Type="Self.StaffCustomerRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerConditionalType">
+        <PropertyRef Name="custCTID" />
+      </Principal>
+      <Dependent Role="StaffCustomerRating">
+        <PropertyRef Name="custCTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffCustomerRating_CustomerIssueType">
+    <End Role="CustomerIssueType" Type="Self.CustomerIssueType" Multiplicity="0..1" />
+    <End Role="StaffCustomerRating" Type="Self.StaffCustomerRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerIssueType">
+        <PropertyRef Name="custISID" />
+      </Principal>
+      <Dependent Role="StaffCustomerRating">
+        <PropertyRef Name="custISID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffCustomerRating_CustomerTimeline">
+    <End Role="CustomerTimeline" Type="Self.CustomerTimeline" Multiplicity="0..1" />
+    <End Role="StaffCustomerRating" Type="Self.StaffCustomerRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTimeline">
+        <PropertyRef Name="custTDID" />
+      </Principal>
+      <Dependent Role="StaffCustomerRating">
+        <PropertyRef Name="custTDID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffService_MainCategory">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="StaffService" Type="Self.StaffService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="StaffService">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffService_ServiceCategory">
+    <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="0..1" />
+    <End Role="StaffService" Type="Self.StaffService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategory">
+        <PropertyRef Name="servcatID" />
+      </Principal>
+      <Dependent Role="StaffService">
+        <PropertyRef Name="servcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffService_ServiceSubCategory">
+    <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="0..1" />
+    <End Role="StaffService" Type="Self.StaffService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceSubCategory">
+        <PropertyRef Name="servsubcatID" />
+      </Principal>
+      <Dependent Role="StaffService">
+        <PropertyRef Name="servsubcatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffService_Staff">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="StaffService" Type="Self.StaffService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="stfID" />
+      </Principal>
+      <Dependent Role="StaffService">
+        <PropertyRef Name="stfID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffService_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="StaffService" Type="Self.StaffService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="catsubID" />
+      </Principal>
+      <Dependent Role="StaffService">
+        <PropertyRef Name="catsubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubArea_PropertyArea">
+    <End Role="PropertyArea" Type="Self.PropertyArea" Multiplicity="0..1" />
+    <End Role="SubArea" Type="Self.SubArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyArea">
+        <PropertyRef Name="propaID" />
+      </Principal>
+      <Dependent Role="SubArea">
+        <PropertyRef Name="propaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubArea_Ventures">
+    <End Role="SubArea" Type="Self.SubArea" Multiplicity="0..1" />
+    <End Role="Ventures" Type="Self.Ventures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubArea">
+        <PropertyRef Name="subAreaID" />
+      </Principal>
+      <Dependent Role="Ventures">
+        <PropertyRef Name="subAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubCategory_CustomerAlerts">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="CustomerAlerts" Type="Self.CustomerAlerts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="catsubID" />
+      </Principal>
+      <Dependent Role="CustomerAlerts">
+        <PropertyRef Name="catsubID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubCategory_MainCategory">
+    <End Role="MainCategory" Type="Self.MainCategory" Multiplicity="0..1" />
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MainCategory">
+        <PropertyRef Name="catID" />
+      </Principal>
+      <Dependent Role="SubCategory">
+        <PropertyRef Name="catID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Support_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="Support" Type="Self.Support" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="Support">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Support_Staff">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Support" Type="Self.Support" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="stfID" />
+      </Principal>
+      <Dependent Role="Support">
+        <PropertyRef Name="stfID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Support_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Support" Type="Self.Support" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Support">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teams_CustomerDateBlock">
+    <End Role="Teams" Type="Self.Teams" Multiplicity="0..1" />
+    <End Role="CustomerDateBlock" Type="Self.CustomerDateBlock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teams">
+        <PropertyRef Name="teamID" />
+      </Principal>
+      <Dependent Role="CustomerDateBlock">
+        <PropertyRef Name="teamID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teams_CustomerOfficalDetails">
+    <End Role="Teams" Type="Self.Teams" Multiplicity="0..1" />
+    <End Role="CustomerOfficalDetails" Type="Self.CustomerOfficalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teams">
+        <PropertyRef Name="teamID" />
+      </Principal>
+      <Dependent Role="CustomerOfficalDetails">
+        <PropertyRef Name="teamID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teams_CustomerTimeBlock">
+    <End Role="Teams" Type="Self.Teams" Multiplicity="0..1" />
+    <End Role="CustomerTimeBlock" Type="Self.CustomerTimeBlock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teams">
+        <PropertyRef Name="teamID" />
+      </Principal>
+      <Dependent Role="CustomerTimeBlock">
+        <PropertyRef Name="teamID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teams_CustomerTimeline">
+    <End Role="Teams" Type="Self.Teams" Multiplicity="0..1" />
+    <End Role="CustomerTimeline" Type="Self.CustomerTimeline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teams">
+        <PropertyRef Name="teamID" />
+      </Principal>
+      <Dependent Role="CustomerTimeline">
+        <PropertyRef Name="teamID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teams_StaffService">
+    <End Role="Teams" Type="Self.Teams" Multiplicity="0..1" />
+    <End Role="StaffService" Type="Self.StaffService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teams">
+        <PropertyRef Name="teamID" />
+      </Principal>
+      <Dependent Role="StaffService">
+        <PropertyRef Name="teamID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teams_StaffTeams">
+    <End Role="Teams" Type="Self.Teams" Multiplicity="0..1" />
+    <End Role="StaffTeams" Type="Self.StaffTeams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teams">
+        <PropertyRef Name="teamID" />
+      </Principal>
+      <Dependent Role="StaffTeams">
+        <PropertyRef Name="teamID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeamType_Teams">
+    <End Role="TeamType" Type="Self.TeamType" Multiplicity="0..1" />
+    <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TeamType">
+        <PropertyRef Name="teamTyID" />
+      </Principal>
+      <Dependent Role="Teams">
+        <PropertyRef Name="teamTyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_CarServiceTypes">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="CarServiceTypes" Type="Self.CarServiceTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="CarServiceTypes">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_CarTypes">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="CarTypes" Type="Self.CarTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="CarTypes">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_CustomerInovice">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="CustomerInovice" Type="Self.CustomerInovice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="CustomerInovice">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Login">
+    <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Login">
+        <PropertyRef Name="logID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="logID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_SubArea">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="SubArea" Type="Self.SubArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="SubArea">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Teams">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Teams">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_VehicleColors">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="VehicleColors" Type="Self.VehicleColors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="VehicleColors">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_VehicleTypes">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="VehicleTypes" Type="Self.VehicleTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="VehicleTypes">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ventures_Admin_Sub">
+    <End Role="Admin_Sub" Type="Self.Admin_Sub" Multiplicity="0..1" />
+    <End Role="Ventures" Type="Self.Ventures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin_Sub">
+        <PropertyRef Name="suID" />
+      </Principal>
+      <Dependent Role="Ventures">
+        <PropertyRef Name="suID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ventures_CustomerAlerts">
+    <End Role="Ventures" Type="Self.Ventures" Multiplicity="0..1" />
+    <End Role="CustomerAlerts" Type="Self.CustomerAlerts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ventures">
+        <PropertyRef Name="vID" />
+      </Principal>
+      <Dependent Role="CustomerAlerts">
+        <PropertyRef Name="vID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ventures_PropertyArea">
+    <End Role="PropertyArea" Type="Self.PropertyArea" Multiplicity="0..1" />
+    <End Role="Ventures" Type="Self.Ventures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyArea">
+        <PropertyRef Name="propaID" />
+      </Principal>
+      <Dependent Role="Ventures">
+        <PropertyRef Name="propaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ventures_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Ventures" Type="Self.Ventures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uID" />
+      </Principal>
+      <Dependent Role="Ventures">
+        <PropertyRef Name="uID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="procLogs_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="therecrm_admin">
+    <Parameter Name="log_date" Type="datetime2" Mode="In" />
+    <Parameter Name="log_thread" Type="varchar" Mode="In" />
+    <Parameter Name="log_level" Type="varchar" Mode="In" />
+    <Parameter Name="log_source" Type="varchar" Mode="In" />
+    <Parameter Name="log_message" Type="varchar" Mode="In" />
+    <Parameter Name="Username" Type="varchar" Mode="In" />
+    <Parameter Name="IPAddress" Type="varchar" Mode="In" />
+    <Parameter Name="exception" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SPmyCreateCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="therecrm_admin">
+    <Parameter Name="password" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="nvarchar" Mode="In" />
+    <Parameter Name="alternativeNo" Type="nvarchar" Mode="In" />
+    <Parameter Name="whatsAppNo" Type="nvarchar" Mode="In" />
+    <Parameter Name="salutaion" Type="varchar" Mode="In" />
+    <Parameter Name="CreatedRole" Type="int" Mode="In" />
+    <Parameter Name="Role" Type="int" Mode="In" />
+    <Parameter Name="Gender" Type="varchar" Mode="In" />
+    <Parameter Name="uID" Type="int" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="SPmyCreateStaff" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="therecrm_admin">
+    <Parameter Name="userName" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="nvarchar" Mode="In" />
+    <Parameter Name="email" Type="nvarchar" Mode="In" />
+    <Parameter Name="country" Type="varchar" Mode="In" />
+    <Parameter Name="phonecode" Type="int" Mode="In" />
+    <Parameter Name="CreatedRole" Type="int" Mode="In" />
+    <Parameter Name="Role" Type="int" Mode="In" />
+    <Parameter Name="uID" Type="int" Mode="In" />
+    <Parameter Name="suID" Type="int" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="IsDelete" Type="bit" Mode="In" />
+    <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="SPmyCreateSubUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="therecrm_admin">
+    <Parameter Name="userName" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="nvarchar" Mode="In" />
+    <Parameter Name="country" Type="varchar" Mode="In" />
+    <Parameter Name="phonecode" Type="int" Mode="In" />
+    <Parameter Name="CreatedRole" Type="int" Mode="In" />
+    <Parameter Name="Role" Type="int" Mode="In" />
+    <Parameter Name="Gender" Type="varchar" Mode="In" />
+    <Parameter Name="uID" Type="int" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="SPmyCreateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="therecrm_admin">
+    <Parameter Name="userName" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="nvarchar" Mode="In" />
+    <Parameter Name="country" Type="varchar" Mode="In" />
+    <Parameter Name="phonecode" Type="int" Mode="In" />
+    <Parameter Name="CreatedRole" Type="int" Mode="In" />
+    <Parameter Name="Role" Type="int" Mode="In" />
+    <Parameter Name="Gender" Type="varchar" Mode="In" />
+    <Parameter Name="usertype" Type="varchar" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="SPmyLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="therecrm_admin">
+    <Parameter Name="pMode" Type="varchar" Mode="In" />
+    <Parameter Name="userName" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+    <Parameter Name="pOldPassword" Type="nvarchar" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <EntityContainer Name="db_TestUHSModelStoreContainer">
+    <EntitySet Name="Admin_Sub" EntityType="Self.Admin_Sub" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="ApprovalStatus" EntityType="Self.ApprovalStatus" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CarServiceTypes" EntityType="Self.CarServiceTypes" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CarTypes" EntityType="Self.CarTypes" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CarWashTimeRange" EntityType="Self.CarWashTimeRange" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerAlerts" EntityType="Self.CustomerAlerts" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerAltersType" EntityType="Self.CustomerAltersType" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerAvailability" EntityType="Self.CustomerAvailability" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerCarServiceDetails" EntityType="Self.CustomerCarServiceDetails" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerComplaint" EntityType="Self.CustomerComplaint" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerConditionalType" EntityType="Self.CustomerConditionalType" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerCustomDateTime" EntityType="Self.CustomerCustomDateTime" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerDateBlock" EntityType="Self.CustomerDateBlock" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerFeedback" EntityType="Self.CustomerFeedback" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerInovice" EntityType="Self.CustomerInovice" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerIssueType" EntityType="Self.CustomerIssueType" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerOfficalDetails" EntityType="Self.CustomerOfficalDetails" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerOtherProperty" EntityType="Self.CustomerOtherProperty" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerPaymentStatus" EntityType="Self.CustomerPaymentStatus" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerPricing" EntityType="Self.CustomerPricing" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerRenewalMonths" EntityType="Self.CustomerRenewalMonths" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerSpecializedCleaning" EntityType="Self.CustomerSpecializedCleaning" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerSupport" EntityType="Self.CustomerSupport" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerSupportActionFor" EntityType="Self.CustomerSupportActionFor" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerSupportServiceType" EntityType="Self.CustomerSupportServiceType" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerSupportTicketType" EntityType="Self.CustomerSupportTicketType" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerTimeBlock" EntityType="Self.CustomerTimeBlock" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerTimeline" EntityType="Self.CustomerTimeline" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerTransaction" EntityType="Self.CustomerTransaction" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="CustomerType" EntityType="Self.CustomerType" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Files" EntityType="Self.Files" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="FileUse" EntityType="Self.FileUse" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="IncExclu" EntityType="Self.IncExclu" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Login" EntityType="Self.Login" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="MainCategory" EntityType="Self.MainCategory" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Packages" EntityType="Self.Packages" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Pricing" EntityType="Self.Pricing" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Properties" EntityType="Self.Properties" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="PropertyArea" EntityType="Self.PropertyArea" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="PropertyResidenceType" EntityType="Self.PropertyResidenceType" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="PropertyType" EntityType="Self.PropertyType" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="RefIncExclu" EntityType="Self.RefIncExclu" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="RefServiceSlots" EntityType="Self.RefServiceSlots" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="ServiceCategory" EntityType="Self.ServiceCategory" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="ServiceSlots" EntityType="Self.ServiceSlots" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="ServiceSubCategory" EntityType="Self.ServiceSubCategory" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Staff" EntityType="Self.Staff" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="StaffCustomerRating" EntityType="Self.StaffCustomerRating" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="StaffService" EntityType="Self.StaffService" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="StaffTeams" EntityType="Self.StaffTeams" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="SubArea" EntityType="Self.SubArea" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Support" EntityType="Self.Support" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Teams" EntityType="Self.Teams" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="TeamType" EntityType="Self.TeamType" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="VehicleColors" EntityType="Self.VehicleColors" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="VehicleTypes" EntityType="Self.VehicleTypes" Schema="therecrm_admin" store:Type="Tables" />
+    <EntitySet Name="Ventures" EntityType="Self.Ventures" Schema="therecrm_admin" store:Type="Tables" />
+    <AssociationSet Name="FK_Admin_Sub_CarServiceTypes" Association="Self.FK_Admin_Sub_CarServiceTypes">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="CarServiceTypes" EntitySet="CarServiceTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_CarTypes" Association="Self.FK_Admin_Sub_CarTypes">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="CarTypes" EntitySet="CarTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_Customer" Association="Self.FK_Admin_Sub_Customer">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_CustomerCarServiceDetails" Association="Self.FK_Admin_Sub_CustomerCarServiceDetails">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerCarServiceDetails" EntitySet="CustomerCarServiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_CustomerInovice" Association="Self.FK_Admin_Sub_CustomerInovice">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="CustomerInovice" EntitySet="CustomerInovice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_Login" Association="Self.FK_Admin_Sub_Login">
+      <End Role="Login" EntitySet="Login" />
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_Staff" Association="Self.FK_Admin_Sub_Staff">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="Staff" EntitySet="Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_SubArea" Association="Self.FK_Admin_Sub_SubArea">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="SubArea" EntitySet="SubArea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_Teams" Association="Self.FK_Admin_Sub_Teams">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="Teams" EntitySet="Teams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_User" Association="Self.FK_Admin_Sub_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_VehicleColors" Association="Self.FK_Admin_Sub_VehicleColors">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="VehicleColors" EntitySet="VehicleColors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Admin_Sub_VehicleTypes" Association="Self.FK_Admin_Sub_VehicleTypes">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="VehicleTypes" EntitySet="VehicleTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarServiceTypes_CustomerOfficalDetails" Association="Self.FK_CarServiceTypes_CustomerOfficalDetails">
+      <End Role="CarServiceTypes" EntitySet="CarServiceTypes" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarServiceTypes_Pricing" Association="Self.FK_CarServiceTypes_Pricing">
+      <End Role="CarServiceTypes" EntitySet="CarServiceTypes" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarTypes_CustomerOfficalDetails" Association="Self.FK_CarTypes_CustomerOfficalDetails">
+      <End Role="CarTypes" EntitySet="CarTypes" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarTypes_Pricing" Association="Self.FK_CarTypes_Pricing">
+      <End Role="CarTypes" EntitySet="CarTypes" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarWashTimeRange_CustomerOfficalDetails" Association="Self.FK_CarWashTimeRange_CustomerOfficalDetails">
+      <End Role="CarWashTimeRange" EntitySet="CarWashTimeRange" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_CustomerCarServiceDetails" Association="Self.FK_Customer_CustomerCarServiceDetails">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerCarServiceDetails" EntitySet="CustomerCarServiceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_CustomerComplaint" Association="Self.FK_Customer_CustomerComplaint">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerComplaint" EntitySet="CustomerComplaint" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_CustomerCustomDateTime" Association="Self.FK_Customer_CustomerCustomDateTime">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerCustomDateTime" EntitySet="CustomerCustomDateTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_CustomerFeedback" Association="Self.FK_Customer_CustomerFeedback">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerFeedback" EntitySet="CustomerFeedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_CustomerInovice" Association="Self.FK_Customer_CustomerInovice">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerInovice" EntitySet="CustomerInovice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_CustomerTransaction" Association="Self.FK_Customer_CustomerTransaction">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerTransaction" EntitySet="CustomerTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Login" Association="Self.FK_Customer_Login">
+      <End Role="Login" EntitySet="Login" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_StaffCustomerRating" Association="Self.FK_Customer_StaffCustomerRating">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="StaffCustomerRating" EntitySet="StaffCustomerRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_User" Association="Self.FK_Customer_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerAlerts_Customer" Association="Self.FK_CustomerAlerts_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerAlerts" EntitySet="CustomerAlerts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerAlerts_CustomerAltersType" Association="Self.FK_CustomerAlerts_CustomerAltersType">
+      <End Role="CustomerAltersType" EntitySet="CustomerAltersType" />
+      <End Role="CustomerAlerts" EntitySet="CustomerAlerts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerAvailability_Customer" Association="Self.FK_CustomerAvailability_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerAvailability" EntitySet="CustomerAvailability" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerAvailability_CustomerOfficalDetails" Association="Self.FK_CustomerAvailability_CustomerOfficalDetails">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerAvailability" EntitySet="CustomerAvailability" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerDateBlock_Customer" Association="Self.FK_CustomerDateBlock_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerDateBlock" EntitySet="CustomerDateBlock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerDateBlock_CustomerOfficalDetails" Association="Self.FK_CustomerDateBlock_CustomerOfficalDetails">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerDateBlock" EntitySet="CustomerDateBlock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerDateBlock_Packages" Association="Self.FK_CustomerDateBlock_Packages">
+      <End Role="Packages" EntitySet="Packages" />
+      <End Role="CustomerDateBlock" EntitySet="CustomerDateBlock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerDateBlock_Pricing" Association="Self.FK_CustomerDateBlock_Pricing">
+      <End Role="Pricing" EntitySet="Pricing" />
+      <End Role="CustomerDateBlock" EntitySet="CustomerDateBlock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerFeedback_CustomerTimeline" Association="Self.FK_CustomerFeedback_CustomerTimeline">
+      <End Role="CustomerTimeline" EntitySet="CustomerTimeline" />
+      <End Role="CustomerFeedback" EntitySet="CustomerFeedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_Customer" Association="Self.FK_CustomerOfficalDetails_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_CustomerComplaint" Association="Self.FK_CustomerOfficalDetails_CustomerComplaint">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerComplaint" EntitySet="CustomerComplaint" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_CustomerCustomDateTime" Association="Self.FK_CustomerOfficalDetails_CustomerCustomDateTime">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerCustomDateTime" EntitySet="CustomerCustomDateTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_CustomerFeedback" Association="Self.FK_CustomerOfficalDetails_CustomerFeedback">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerFeedback" EntitySet="CustomerFeedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_CustomerInovice" Association="Self.FK_CustomerOfficalDetails_CustomerInovice">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerInovice" EntitySet="CustomerInovice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_CustomerTransaction" Association="Self.FK_CustomerOfficalDetails_CustomerTransaction">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerTransaction" EntitySet="CustomerTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_MainCategory" Association="Self.FK_CustomerOfficalDetails_MainCategory">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_PropertyArea" Association="Self.FK_CustomerOfficalDetails_PropertyArea">
+      <End Role="PropertyArea" EntitySet="PropertyArea" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_PropertyResidenceType" Association="Self.FK_CustomerOfficalDetails_PropertyResidenceType">
+      <End Role="PropertyResidenceType" EntitySet="PropertyResidenceType" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_StaffCustomerRating" Association="Self.FK_CustomerOfficalDetails_StaffCustomerRating">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="StaffCustomerRating" EntitySet="StaffCustomerRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_SubArea" Association="Self.FK_CustomerOfficalDetails_SubArea">
+      <End Role="SubArea" EntitySet="SubArea" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_SubCategory" Association="Self.FK_CustomerOfficalDetails_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOfficalDetails_Ventures" Association="Self.FK_CustomerOfficalDetails_Ventures">
+      <End Role="Ventures" EntitySet="Ventures" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOtherProperty_Customer" Association="Self.FK_CustomerOtherProperty_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerOtherProperty" EntitySet="CustomerOtherProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOtherProperty_CustomerOfficalDetails" Association="Self.FK_CustomerOtherProperty_CustomerOfficalDetails">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerOtherProperty" EntitySet="CustomerOtherProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerPaymentStatus_CustomerTransaction" Association="Self.FK_CustomerPaymentStatus_CustomerTransaction">
+      <End Role="CustomerPaymentStatus" EntitySet="CustomerPaymentStatus" />
+      <End Role="CustomerTransaction" EntitySet="CustomerTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerPricing_Customer" Association="Self.FK_CustomerPricing_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerPricing" EntitySet="CustomerPricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerPricing_CustomerOfficalDetails" Association="Self.FK_CustomerPricing_CustomerOfficalDetails">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerPricing" EntitySet="CustomerPricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerPricing_Packages" Association="Self.FK_CustomerPricing_Packages">
+      <End Role="Packages" EntitySet="Packages" />
+      <End Role="CustomerPricing" EntitySet="CustomerPricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerPricing_Pricing" Association="Self.FK_CustomerPricing_Pricing">
+      <End Role="Pricing" EntitySet="Pricing" />
+      <End Role="CustomerPricing" EntitySet="CustomerPricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerRenewalMonths_CustomerOfficalDetails" Association="Self.FK_CustomerRenewalMonths_CustomerOfficalDetails">
+      <End Role="CustomerRenewalMonths" EntitySet="CustomerRenewalMonths" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerSpecializedCleaning_Customer" Association="Self.FK_CustomerSpecializedCleaning_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerSpecializedCleaning" EntitySet="CustomerSpecializedCleaning" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerSpecializedCleaning_CustomerOfficalDetails" Association="Self.FK_CustomerSpecializedCleaning_CustomerOfficalDetails">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerSpecializedCleaning" EntitySet="CustomerSpecializedCleaning" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerSpecializedCleaning_ServiceCategory" Association="Self.FK_CustomerSpecializedCleaning_ServiceCategory">
+      <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+      <End Role="CustomerSpecializedCleaning" EntitySet="CustomerSpecializedCleaning" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerSpecializedCleaning_ServiceSubCategory" Association="Self.FK_CustomerSpecializedCleaning_ServiceSubCategory">
+      <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+      <End Role="CustomerSpecializedCleaning" EntitySet="CustomerSpecializedCleaning" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerSupport_ApprovalStatus" Association="Self.FK_CustomerSupport_ApprovalStatus">
+      <End Role="ApprovalStatus" EntitySet="ApprovalStatus" />
+      <End Role="CustomerSupport" EntitySet="CustomerSupport" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerSupport_Customer" Association="Self.FK_CustomerSupport_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerSupport" EntitySet="CustomerSupport" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerSupport_CustomerSupportActionFor" Association="Self.FK_CustomerSupport_CustomerSupportActionFor">
+      <End Role="CustomerSupportActionFor" EntitySet="CustomerSupportActionFor" />
+      <End Role="CustomerSupport" EntitySet="CustomerSupport" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerSupport_CustomerSupportServiceType" Association="Self.FK_CustomerSupport_CustomerSupportServiceType">
+      <End Role="CustomerSupportServiceType" EntitySet="CustomerSupportServiceType" />
+      <End Role="CustomerSupport" EntitySet="CustomerSupport" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerSupport_CustomerSupportTicketType" Association="Self.FK_CustomerSupport_CustomerSupportTicketType">
+      <End Role="CustomerSupportTicketType" EntitySet="CustomerSupportTicketType" />
+      <End Role="CustomerSupport" EntitySet="CustomerSupport" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerTimeline_Customer" Association="Self.FK_CustomerTimeline_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerTimeline" EntitySet="CustomerTimeline" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerTimeline_CustomerOfficalDetails" Association="Self.FK_CustomerTimeline_CustomerOfficalDetails">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="CustomerTimeline" EntitySet="CustomerTimeline" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerTimeline_Packages" Association="Self.FK_CustomerTimeline_Packages">
+      <End Role="Packages" EntitySet="Packages" />
+      <End Role="CustomerTimeline" EntitySet="CustomerTimeline" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerTimeline_Pricing" Association="Self.FK_CustomerTimeline_Pricing">
+      <End Role="Pricing" EntitySet="Pricing" />
+      <End Role="CustomerTimeline" EntitySet="CustomerTimeline" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerTransaction_CustomerInovice" Association="Self.FK_CustomerTransaction_CustomerInovice">
+      <End Role="CustomerTransaction" EntitySet="CustomerTransaction" />
+      <End Role="CustomerInovice" EntitySet="CustomerInovice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerType_Customer" Association="Self.FK_CustomerType_Customer">
+      <End Role="CustomerType" EntitySet="CustomerType" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_Admin_Sub" Association="Self.FK_Files_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_Customer" Association="Self.FK_Files_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_CustomerOfficalDetails" Association="Self.FK_Files_CustomerOfficalDetails">
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_CustomerSupport" Association="Self.FK_Files_CustomerSupport">
+      <End Role="CustomerSupport" EntitySet="CustomerSupport" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_FileUse" Association="Self.FK_Files_FileUse">
+      <End Role="FileUse" EntitySet="FileUse" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_MainCategory" Association="Self.FK_Files_MainCategory">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_ServiceCategory" Association="Self.FK_Files_ServiceCategory">
+      <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_ServiceSubCategory" Association="Self.FK_Files_ServiceSubCategory">
+      <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_Staff" Association="Self.FK_Files_Staff">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_SubCategory" Association="Self.FK_Files_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_Support" Association="Self.FK_Files_Support">
+      <End Role="Support" EntitySet="Support" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files_User" Association="Self.FK_Files_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Files" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IncExclu_Admin_Sub" Association="Self.FK_IncExclu_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="IncExclu" EntitySet="IncExclu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IncExclu_MainCategory" Association="Self.FK_IncExclu_MainCategory">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="IncExclu" EntitySet="IncExclu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IncExclu_ServiceCategory" Association="Self.FK_IncExclu_ServiceCategory">
+      <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+      <End Role="IncExclu" EntitySet="IncExclu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IncExclu_ServiceSubCategory" Association="Self.FK_IncExclu_ServiceSubCategory">
+      <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+      <End Role="IncExclu" EntitySet="IncExclu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IncExclu_SubCategory" Association="Self.FK_IncExclu_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="IncExclu" EntitySet="IncExclu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IncExclu_User" Association="Self.FK_IncExclu_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="IncExclu" EntitySet="IncExclu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Login_Role" Association="Self.FK_Login_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Login" EntitySet="Login" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Login_Staff" Association="Self.FK_Login_Staff">
+      <End Role="Login" EntitySet="Login" />
+      <End Role="Staff" EntitySet="Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MainCategory_Admin_Sub" Association="Self.FK_MainCategory_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="MainCategory" EntitySet="MainCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MainCategory_CustomerAlerts" Association="Self.FK_MainCategory_CustomerAlerts">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="CustomerAlerts" EntitySet="CustomerAlerts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MainCategory_User" Association="Self.FK_MainCategory_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="MainCategory" EntitySet="MainCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Packages_Admin_Sub" Association="Self.FK_Packages_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="Packages" EntitySet="Packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Packages_User" Association="Self.FK_Packages_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Packages" EntitySet="Packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_Admin_Sub" Association="Self.FK_Pricing_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_MainCategory" Association="Self.FK_Pricing_MainCategory">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_Packages" Association="Self.FK_Pricing_Packages">
+      <End Role="Packages" EntitySet="Packages" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_PropertyArea" Association="Self.FK_Pricing_PropertyArea">
+      <End Role="PropertyArea" EntitySet="PropertyArea" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_PropertyResidenceType" Association="Self.FK_Pricing_PropertyResidenceType">
+      <End Role="PropertyResidenceType" EntitySet="PropertyResidenceType" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_ServiceCategory" Association="Self.FK_Pricing_ServiceCategory">
+      <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_ServiceSubCategory" Association="Self.FK_Pricing_ServiceSubCategory">
+      <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_SubCategory" Association="Self.FK_Pricing_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_User" Association="Self.FK_Pricing_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pricing_Ventures" Association="Self.FK_Pricing_Ventures">
+      <End Role="Ventures" EntitySet="Ventures" />
+      <End Role="Pricing" EntitySet="Pricing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_Admin_Sub" Association="Self.FK_Properties_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_Customer" Association="Self.FK_Properties_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_PropertyType" Association="Self.FK_Properties_PropertyType">
+      <End Role="PropertyType" EntitySet="PropertyType" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_User" Association="Self.FK_Properties_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_Ventures" Association="Self.FK_Properties_Ventures">
+      <End Role="Ventures" EntitySet="Ventures" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyArea_Admin_Sub" Association="Self.FK_PropertyArea_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="PropertyArea" EntitySet="PropertyArea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyArea_StaffService" Association="Self.FK_PropertyArea_StaffService">
+      <End Role="PropertyArea" EntitySet="PropertyArea" />
+      <End Role="StaffService" EntitySet="StaffService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyArea_User" Association="Self.FK_PropertyArea_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="PropertyArea" EntitySet="PropertyArea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyResidenceType_Admin_Sub" Association="Self.FK_PropertyResidenceType_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="PropertyResidenceType" EntitySet="PropertyResidenceType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyResidenceType_PropertyArea" Association="Self.FK_PropertyResidenceType_PropertyArea">
+      <End Role="PropertyArea" EntitySet="PropertyArea" />
+      <End Role="PropertyResidenceType" EntitySet="PropertyResidenceType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyResidenceType_User" Association="Self.FK_PropertyResidenceType_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="PropertyResidenceType" EntitySet="PropertyResidenceType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyResidenceType_Ventures" Association="Self.FK_PropertyResidenceType_Ventures">
+      <End Role="Ventures" EntitySet="Ventures" />
+      <End Role="PropertyResidenceType" EntitySet="PropertyResidenceType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RefIncExclu_IncExclu" Association="Self.FK_RefIncExclu_IncExclu">
+      <End Role="IncExclu" EntitySet="IncExclu" />
+      <End Role="RefIncExclu" EntitySet="RefIncExclu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RefServiceSlots_ServiceSlots" Association="Self.FK_RefServiceSlots_ServiceSlots">
+      <End Role="ServiceSlots" EntitySet="ServiceSlots" />
+      <End Role="RefServiceSlots" EntitySet="RefServiceSlots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceCategory_MainCategory" Association="Self.FK_ServiceCategory_MainCategory">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceCategory_SubCategory" Association="Self.FK_ServiceCategory_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSlots_Admin_Sub" Association="Self.FK_ServiceSlots_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="ServiceSlots" EntitySet="ServiceSlots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSlots_MainCategory" Association="Self.FK_ServiceSlots_MainCategory">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="ServiceSlots" EntitySet="ServiceSlots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSlots_ServiceCategory" Association="Self.FK_ServiceSlots_ServiceCategory">
+      <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+      <End Role="ServiceSlots" EntitySet="ServiceSlots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSlots_ServiceSubCategory" Association="Self.FK_ServiceSlots_ServiceSubCategory">
+      <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+      <End Role="ServiceSlots" EntitySet="ServiceSlots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSlots_Staff" Association="Self.FK_ServiceSlots_Staff">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="ServiceSlots" EntitySet="ServiceSlots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSlots_SubCategory" Association="Self.FK_ServiceSlots_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="ServiceSlots" EntitySet="ServiceSlots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSlots_User" Association="Self.FK_ServiceSlots_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="ServiceSlots" EntitySet="ServiceSlots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSubCategory_MainCategory" Association="Self.FK_ServiceSubCategory_MainCategory">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSubCategory_ServiceCategory" Association="Self.FK_ServiceSubCategory_ServiceCategory">
+      <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+      <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceSubCategory_SubCategory" Association="Self.FK_ServiceSubCategory_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_CustomerOfficalDetails" Association="Self.FK_Staff_CustomerOfficalDetails">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_StaffCustomerRating" Association="Self.FK_Staff_StaffCustomerRating">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="StaffCustomerRating" EntitySet="StaffCustomerRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_StaffTeams" Association="Self.FK_Staff_StaffTeams">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="StaffTeams" EntitySet="StaffTeams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_User" Association="Self.FK_Staff_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Staff" EntitySet="Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffCustomerRating_CustomerConditionalType" Association="Self.FK_StaffCustomerRating_CustomerConditionalType">
+      <End Role="CustomerConditionalType" EntitySet="CustomerConditionalType" />
+      <End Role="StaffCustomerRating" EntitySet="StaffCustomerRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffCustomerRating_CustomerIssueType" Association="Self.FK_StaffCustomerRating_CustomerIssueType">
+      <End Role="CustomerIssueType" EntitySet="CustomerIssueType" />
+      <End Role="StaffCustomerRating" EntitySet="StaffCustomerRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffCustomerRating_CustomerTimeline" Association="Self.FK_StaffCustomerRating_CustomerTimeline">
+      <End Role="CustomerTimeline" EntitySet="CustomerTimeline" />
+      <End Role="StaffCustomerRating" EntitySet="StaffCustomerRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffService_MainCategory" Association="Self.FK_StaffService_MainCategory">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="StaffService" EntitySet="StaffService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffService_ServiceCategory" Association="Self.FK_StaffService_ServiceCategory">
+      <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+      <End Role="StaffService" EntitySet="StaffService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffService_ServiceSubCategory" Association="Self.FK_StaffService_ServiceSubCategory">
+      <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+      <End Role="StaffService" EntitySet="StaffService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffService_Staff" Association="Self.FK_StaffService_Staff">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="StaffService" EntitySet="StaffService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffService_SubCategory" Association="Self.FK_StaffService_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="StaffService" EntitySet="StaffService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubArea_PropertyArea" Association="Self.FK_SubArea_PropertyArea">
+      <End Role="PropertyArea" EntitySet="PropertyArea" />
+      <End Role="SubArea" EntitySet="SubArea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubArea_Ventures" Association="Self.FK_SubArea_Ventures">
+      <End Role="SubArea" EntitySet="SubArea" />
+      <End Role="Ventures" EntitySet="Ventures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubCategory_CustomerAlerts" Association="Self.FK_SubCategory_CustomerAlerts">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="CustomerAlerts" EntitySet="CustomerAlerts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubCategory_MainCategory" Association="Self.FK_SubCategory_MainCategory">
+      <End Role="MainCategory" EntitySet="MainCategory" />
+      <End Role="SubCategory" EntitySet="SubCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Support_Admin_Sub" Association="Self.FK_Support_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="Support" EntitySet="Support" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Support_Staff" Association="Self.FK_Support_Staff">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="Support" EntitySet="Support" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Support_User" Association="Self.FK_Support_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Support" EntitySet="Support" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teams_CustomerDateBlock" Association="Self.FK_Teams_CustomerDateBlock">
+      <End Role="Teams" EntitySet="Teams" />
+      <End Role="CustomerDateBlock" EntitySet="CustomerDateBlock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teams_CustomerOfficalDetails" Association="Self.FK_Teams_CustomerOfficalDetails">
+      <End Role="Teams" EntitySet="Teams" />
+      <End Role="CustomerOfficalDetails" EntitySet="CustomerOfficalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teams_CustomerTimeBlock" Association="Self.FK_Teams_CustomerTimeBlock">
+      <End Role="Teams" EntitySet="Teams" />
+      <End Role="CustomerTimeBlock" EntitySet="CustomerTimeBlock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teams_CustomerTimeline" Association="Self.FK_Teams_CustomerTimeline">
+      <End Role="Teams" EntitySet="Teams" />
+      <End Role="CustomerTimeline" EntitySet="CustomerTimeline" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teams_StaffService" Association="Self.FK_Teams_StaffService">
+      <End Role="Teams" EntitySet="Teams" />
+      <End Role="StaffService" EntitySet="StaffService" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teams_StaffTeams" Association="Self.FK_Teams_StaffTeams">
+      <End Role="Teams" EntitySet="Teams" />
+      <End Role="StaffTeams" EntitySet="StaffTeams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeamType_Teams" Association="Self.FK_TeamType_Teams">
+      <End Role="TeamType" EntitySet="TeamType" />
+      <End Role="Teams" EntitySet="Teams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_CarServiceTypes" Association="Self.FK_User_CarServiceTypes">
+      <End Role="User" EntitySet="User" />
+      <End Role="CarServiceTypes" EntitySet="CarServiceTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_CarTypes" Association="Self.FK_User_CarTypes">
+      <End Role="User" EntitySet="User" />
+      <End Role="CarTypes" EntitySet="CarTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_CustomerInovice" Association="Self.FK_User_CustomerInovice">
+      <End Role="User" EntitySet="User" />
+      <End Role="CustomerInovice" EntitySet="CustomerInovice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Login" Association="Self.FK_User_Login">
+      <End Role="Login" EntitySet="Login" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_SubArea" Association="Self.FK_User_SubArea">
+      <End Role="User" EntitySet="User" />
+      <End Role="SubArea" EntitySet="SubArea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Teams" Association="Self.FK_User_Teams">
+      <End Role="User" EntitySet="User" />
+      <End Role="Teams" EntitySet="Teams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_VehicleColors" Association="Self.FK_User_VehicleColors">
+      <End Role="User" EntitySet="User" />
+      <End Role="VehicleColors" EntitySet="VehicleColors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_VehicleTypes" Association="Self.FK_User_VehicleTypes">
+      <End Role="User" EntitySet="User" />
+      <End Role="VehicleTypes" EntitySet="VehicleTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ventures_Admin_Sub" Association="Self.FK_Ventures_Admin_Sub">
+      <End Role="Admin_Sub" EntitySet="Admin_Sub" />
+      <End Role="Ventures" EntitySet="Ventures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ventures_CustomerAlerts" Association="Self.FK_Ventures_CustomerAlerts">
+      <End Role="Ventures" EntitySet="Ventures" />
+      <End Role="CustomerAlerts" EntitySet="CustomerAlerts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ventures_PropertyArea" Association="Self.FK_Ventures_PropertyArea">
+      <End Role="PropertyArea" EntitySet="PropertyArea" />
+      <End Role="Ventures" EntitySet="Ventures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ventures_User" Association="Self.FK_Ventures_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Ventures" EntitySet="Ventures" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

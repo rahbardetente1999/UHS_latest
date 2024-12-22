@@ -1,0 +1,693 @@
+﻿
+@{
+    ViewBag.Title = "InclusionExclusion";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutPage.cshtml";
+}
+<style>
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .notes {
+        font-size: 0.9rem;
+        margin-top: 20px;
+    }
+
+        .notes ul {
+            padding-left: 20px;
+        }
+
+        .notes li {
+            margin-bottom: 10px;
+        }
+
+    .custom-header {
+        background-color: #cfcdc4;
+        color: black;
+        font-weight: bold;
+    }
+
+    .nav-pills .nav-link {
+        border-radius: 0;
+        color: #1a1d20;
+    }
+    .custom-header-row th {
+        background-color: #cfcdc4;
+    }
+        .nav-pills .nav-link.active {
+            background-color: #1a1d20;
+            color: #fff;
+        }
+  /* .Dservice th, td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .Dservice th {
+        font-size: 1.1rem;
+    }
+
+    .Dservice td {
+        font-size: 0.9rem;
+    }*/
+
+  
+</style>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <div class="card shadow-sm">
+               
+                <div class="card-body">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Regular Cleaning</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Deep Cleaning</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Specialized Cleaning</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-service-tab" data-bs-toggle="pill" data-bs-target="#pills-service" type="button" role="tab" aria-controls="pills-service" aria-selected="false">Service Comparison</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+                            <div class="table-responsive">
+                                <h3 class="text-center mb-4">REGULAR CLEANING</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr style="text-align:center;">
+                                            <th>Room/Area</th>
+                                            <th>Inclusions</th>
+                                            <th>Exclusions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Living Room</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Dusting furniture and surfaces</li>
+                                                    <li>Vacuuming carpets</li>
+                                                    <li>Mopping floors</li>
+                                                    <li>Internal window cleaning</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li><strong>Deep Stain Removal:</strong> Does not include tackling deep or set-in stains on carpets, upholstery, or walls.</li>
+                                                    <li><strong>Outdoor Cleaning:</strong> Excludes services like lawn mowing, gardening, or exterior window washing.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Corridor</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Dusting surfaces</li>
+                                                    <li>Vacuuming/mopping floors</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li><strong>Heavy Lifting:</strong> Moving large furniture or heavy appliances for cleaning purposes is not covered.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Stairs</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Vacuuming steps</li>
+                                                    <li>Dusting railings</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li><strong>Pest Control:</strong> Does not deal with infestations or pest-related issues.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kitchen</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Cleaning countertops and sink</li>
+                                                    <li>Mopping floors</li>
+                                                    <li>Wiping down exterior of major appliances and cabinets</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li><strong>High Areas:</strong> Cleaning of areas that require more than a step ladder, such as high ceilings and chandeliers.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bathrooms</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Cleaning sinks, toilets, tubs/showers</li>
+                                                    <li>Mopping floors</li>
+                                                    <li>Wiping down mirrors</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li><strong>Specialized Treatments:</strong> Treatments such as steam cleaning, carpet shampooing, or mattress sanitization are not included.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Balcony</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Sweeping floors</li>
+                                                    <li>Wiping down railings</li>
+                                                    <li>Cleaning glass windows or door</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li><strong>Biohazards:</strong> Excludes the removal of substances that pose a health risk, including mold, blood, or bodily fluids.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bedroom</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Dusting furniture and surfaces</li>
+                                                    <li>Vacuuming carpets/mopping floors</li>
+                                                    <li>Making the bed</li>
+                                                    <li>Internal window cleaning</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li><strong>Dishwashing:</strong> Excludes dishwashing and arranging dishes in the dishwasher.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>General</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Garbage removal from all areas</li>
+                                                    <li>Cleaning of the waste bins</li>
+                                                </ul>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="note">
+                                    <strong>Notes:</strong>
+                                    <ul>
+                                        <li>Customers are responsible for ensuring access to electrical outlets and water supply.</li>
+                                        <li>We are not liable for damages caused by improper use or handling after the service.</li>
+                                        <li>We do not move heavy furniture; please ensure the area is clear.</li>
+                                        <li>Customers can request staff to remove shoes, but shoes are required in some areas for safety.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+
+                            <div class="table-responsive">
+                                <h2 class="text-center mb-4">Deep Cleaning</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr style="text-align:center;">
+                                                <th>Room/Area</th>
+                                                <th>Inclusions</th>
+                                                <th>Exclusions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Living Room -->
+                                            <tr>
+                                                <td>Living Room</td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item">Includes Regular Cleaning plus:</li>
+                                                        <li class="list-group-item">Under furniture and behind TV cleaning</li>
+                                                        <li class="list-group-item">Detailed cleaning of light fixtures and AC Surfaces</li>
+                                                    </ul>
+                                                </td>
+                                                <td colspan="1">
+                                                    <ul>
+                                                        <li class="list-group-item"><b>Structural Repairs:</b> Does not cover structural changes or repairs like fixing broken tiles or patching walls.</li>
+                                                        <li class="list-group-item"><b>Restoration:</b> Excludes restoration of property damaged by water, fire, or smoke.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <!-- Corridor -->
+                                            <tr>
+                                                <td>Corridor</td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item">Includes Regular Cleaning plus:</li>
+                                                        <li class="list-group-item">Wiping down doors and frames</li>
+                                                        <li class="list-group-item">Detailed cleaning of wall hangings</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item"><b>High Areas:</b> Cleaning of areas that require more than a step ladder, such as high ceilings and chandeliers.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <!-- Stairs -->
+                                            <tr>
+                                                <td>Stairs</td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item">Includes Regular Cleaning plus:</li>
+                                                        <li class="list-group-item">Detailed scrubbing of steps and edges</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item"><b>Specialized Treatments:</b> Steam cleaning, carpet shampooing, or mattress sanitization are not included.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <!-- Kitchen -->
+                                            <tr>
+                                                <td>Kitchen</td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item">Includes Regular Cleaning plus:</li>
+                                                        <li class="list-group-item">Cleaning inside of cabinets and drawers</li>
+                                                        <li class="list-group-item">Cleaning of oven and refrigerator interiors</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item"><b>External Areas:</b> Does not include yard work or siding cleaning.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <!-- Bathrooms -->
+                                            <tr>
+                                                <td>Bathrooms</td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item">Includes Regular Cleaning plus:</li>
+                                                        <li class="list-group-item">Descale shower heads and faucets</li>
+                                                        <li class="list-group-item">Scrubbing tile grout</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item"><b>Industrial Cleaning Equipment:</b> Use of heavy-duty or industrial equipment not standard for residential services is excluded.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <!-- Balcony -->
+                                            <tr>
+                                                <td>Balcony</td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item">Includes Regular Cleaning plus:</li>
+                                                        <li class="list-group-item">Washing down floors</li>
+                                                        <li class="list-group-item">Washing exterior windows</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item"><b>Hazardous Materials:</b> Handling or disposal of hazardous materials like asbestos or lead-based products is not included.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <!-- Bedroom -->
+                                            <tr>
+                                                <td>Bedroom</td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item">Includes Regular Cleaning plus:</li>
+                                                        <li class="list-group-item">Cleaning under and behind furniture</li>
+                                                        <li class="list-group-item">Detailed cleaning of light fixtures and fan</li>
+                                                    </ul>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <!-- General -->
+                                            <tr>
+                                                <td>General</td>
+                                                <td>
+                                                    <ul>
+                                                        <li class="list-group-item">Garbage removal from all areas</li>
+                                                        <li class="list-group-item">Cleaning of the waste bins</li>
+                                                    </ul>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Notes Section -->
+                                <div class="notes">
+                                    <p><b>Notes:</b></p>
+                                    <ul>
+                                        <li>Preferable scheduling is before the afternoon.</li>
+                                        <li>Customers are responsible for ensuring access to electrical outlets and water supply.</li>
+                                        <li>We are not liable for damages caused by improper use or handling after the service.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
+                            <div class="table-responsive mt-5">
+                                <h2 class="text-center card-title  p-3">SPECIALISED CLEANING</h2>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr style="text-align:center;">
+                                            <th scope="col">Activity</th>
+                                            <th scope="col">Inclusions</th>
+                                            <th scope="col">Exclusions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Carpet Cleaning</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Spot clean stains</li>
+                                                    <li>Shampoo the carpet</li>
+                                                    <li>Steam-clean the carpet</li>
+                                                    <li>Dry the carpet</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>Removing ink stains</li>
+                                                    <li>Removal of heavy furniture</li>
+                                                    <li>Repairing damaged carpets</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sofa Cleaning</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Spot clean stains</li>
+                                                    <li>Shampoo the sofa</li>
+                                                    <li>Steam-clean the sofa</li>
+                                                    <li>Dry the sofa</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>Removing ink stains</li>
+                                                    <li>Repairing damaged upholstery</li>
+                                                    <li>Removal of heavy furniture</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mattress Cleaning</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Spot clean stains</li>
+                                                    <li>Shampoo the mattress</li>
+                                                    <li>Steam-clean the mattress</li>
+                                                    <li>Dry the mattress</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>Removing ink stains</li>
+                                                    <li>Repairing damaged mattresses</li>
+                                                    <li>Cleaning mattresses with pet urine damage</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Curtain Sanitization</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Steam-clean the curtains</li>
+                                                    <li>Sanitize the curtains</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>Shampooing or laundry for curtains</li>
+                                                    <li>Repairing damaged curtains</li>
+                                                    <li>Removing curtains and re-hanging them after cleaning</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="notes">
+                                    <strong>Notes:</strong>
+                                    <ul>
+                                        <li>Cleaning is performed indoors at customer premises.</li>
+                                        <li>After service, surfaces should be left to dry for 4-5 hours.</li>
+                                        <li>Preferable scheduling is before the afternoon.</li>
+                                        <li>Customers are responsible for ensuring access to electrical outlets and water supply.</li>
+                                        <li>We do not move heavy furniture; please ensure the area is clear.</li>
+                                        <li>We are not liable for damages caused by improper use or handling after the service.</li>
+                                        <li>Customers can request staff to remove shoes, but shoes are required in some areas for safety.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-service" role="tabpanel" aria-labelledby="pills-service-tab">
+                            <div class="table-responsive Dservice">
+                                <h2 class="text-center mb-4">Cleaning Services Comparison</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr style="text-align:center;">
+                                                <th>Aspect</th>
+                                                <th>Service</th>
+                                                <th>Regular Cleaning</th>
+                                                <th>Deep Cleaning</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Living Room -->
+                                            <tr>
+                                                <td rowspan="5">Living Room</td>
+                                                <td>Dusting furniture and surfaces</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Vacuuming carpets</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mopping floors</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Internal window cleaning</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Under furniture and behind TV cleaning</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <!-- Corridor -->
+                                            <tr>
+                                                <td rowspan="4">Corridor</td>
+                                                <td>Vacuuming/mopping floors</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Wiping down doors and frames</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Detailed cleaning of light fixtures and AC surfaces</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dusting surfaces</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <!-- Stairs -->
+                                            <tr>
+                                                <td rowspan="3">Stairs</td>
+                                                <td>Vacuuming steps</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dusting railings</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Detailed scrubbing of steps and edges</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <!-- Kitchen -->
+                                            <tr>
+                                                <td rowspan="6">Kitchen</td>
+                                                <td>Cleaning countertops and sink</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mopping floors</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Wiping down exterior of major appliances and cabinets</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cleaning inside of cabinets and drawers</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cleaning of oven and refrigerator interiors</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cleaning sinks, toilets, tubs/showers</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <!-- Bathrooms -->
+                                            <tr>
+                                                <td rowspan="6">Bathrooms</td>
+                                                <td>Mopping floors</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Wiping down mirrors</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Descale shower heads and faucets</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Scrubbing tile grout</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sweeping floors</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Wiping down railings</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <!-- Balcony -->
+                                            <tr>
+                                                <td rowspan="4">Balcony</td>
+                                                <td>Cleaning glass windows or door</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Washing down floors</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cleaning exterior balcony windows</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dusting furniture and surfaces</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <!-- Bedroom -->
+                                            <tr>
+                                                <td rowspan="5">Bedroom</td>
+                                                <td>Vacuuming carpets/mopping floors</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Making the bed</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Internal window cleaning</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cleaning under and behind furniture</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Detailed cleaning of light fixtures and fans</td>
+                                                <td style="text-align:center;">X</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <!-- General -->
+                                            <tr>
+                                                <td>General</td>
+                                                <td>Garbage removal from all areas</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                            <tr>
+                                                <td>General</td>
+                                                <td>Cleaning of the waste bins</td>
+                                                <td style="text-align:center;">✓</td>
+                                                <td style="text-align:center;">✓</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+            </div>
+            </div>
+        </div>
+    </div>
+

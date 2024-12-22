@@ -1,0 +1,367 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<link rel="stylesheet" href="~/Styles/Content/custom.css" />
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="BookingDetailsController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Name:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="CustomerDetails[0].Saluation + ' '+ CustomerDetails[0].Name"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Email:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="CustomerDetails[0].Email || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Mobile:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="CustomerDetails[0].Mobile || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">WhatsAppNo:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="CustomerDetails[0].WhatsAppNo || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Alternate No:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="CustomerDetails[0].WhatsAppNo || 'N/A'"></label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!--begin::Card-->
+                    <div class="card">
+
+                        <div class="card-body">
+                            <div class="row mb-10">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="grid-wrapper grid-col-auto" id="MainService">
+
+                                            <!-- Repeat for each card -->
+                                            <label class="radio-card" ng-repeat="type in MainCategoryDropdown" id="{{type.ID}}" ng-attr-for="{{'radio-cardST-' + $index}}">
+                                                <input type="radio" name="servicetype" ng-model="$parent.selectedMainCategory" value="{{type.ID}}" ng-true-value="{{type.ID}}" ng-false-value="false" id="{{'radio-cardST-' + $index}}" ng-change="GetSubCategoryByID()" />
+                                                <div class="card-content-wrapper" id="servicetypeID">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <img ng-src="{{type.Images[0].Value}}" style="height:100px;" alt="" /> <!-- Adjust image width -->
+                                                        <h4 ng-bind="type.Value"></h4>
+
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <!-- Repeat for each card -->
+
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="SubCategoryDropdown.length != 0">
+                                        <h5 style="text-align: center; margin-top: 20px;">Sub Category</h5>
+                                        <div class="grid-wrapper grid-col-auto" id="MainService">
+
+                                            <!-- Repeat for each card -->
+                                            <label class="radio-card" ng-repeat="cleaning in SubCategoryDropdown" ng-attr-for="{{'radio-card-' + $index}}">
+                                                <input type="radio" name="subcategory" ng-model="$parent.selectedSubCategory" value="{{cleaning.ID}}" ng-true-value="{{cleaning.ID}}" ng-false-value="false" id="{{'radio-card-' + $index}}" ng-change="cleaning.NextServices != 0 ? GetServiceCategoryByID() : GetServiceDetails()" />
+                                                <div class="card-content-wrapper" id="subcategoryID">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <img ng-src="{{cleaning.Images[0].Value}}" style="height:100px;" alt="" /> <!-- Adjust image width -->
+                                                        <h4 ng-bind="cleaning.Value"></h4>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <!-- Repeat for each card -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3" ng-if="AllServDetails.length != 0">
+                                <div class="col-md-12">
+                                    <div class="card mb-5 mb-xl-10">
+                                        <div class="card-body">
+                                            <div class="table-responsive" id="tbl_serviceslist">
+                                                <!--begin::Table-->
+                                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                                    <thead>
+                                                        <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+
+                                                            <th class="min-w-175px">Sub Category Name</th>
+                                                            <th>Area</th>
+                                                            <th>Property Name</th>
+                                                            <th ng-hide="ServiceCat">Residential Type</th>
+                                                            <th>Services</th>
+                                                            <th>Packages</th>
+                                                            <th>Customer Availability</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="srv in AllServDetails | filter: searchbook">
+                                                            <td class="min-w-175px" ng-bind="srv.SubCategory"></td>
+                                                            <td ng-bind="srv.Area"></td>
+                                                            <td ng-bind="srv.PropertyName"></td>
+                                                            <td ng-hide="ServiceCat" ng-bind="srv.PropertyResidencyType"></td>
+                                                            <td>
+                                                                <a href="" ng-bind="srv.GetServices.length" data-bs-toggle="modal" data-bs-target="#kt_modal_serviceslist" ng-click="GetServiceDetails(srv.GetServices)"></a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="" ng-bind="srv.Packages.length" data-bs-toggle="modal" data-bs-target="#kt_modal_packagelist" ng-click="GetPackageDetails(srv.Packages)"></a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="" ng-bind="srv.GetCustomerAvailability.Availability == true ? 'Yes': 'No'" data-bs-toggle="modal" data-bs-target="#kt_modal_availability" ng-click="GetAvailability(srv.GetCustomerAvailability)"></a>
+                                                            </td>
+                                                        </tr>
+
+
+                                                    </tbody>
+                                                </table>
+                                                <!--end::Table-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="kt_modal_serviceslist" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Services List</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_servicesList" style="display:none;">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Service Category</th>
+                                                    <th class="min-w-175px">Sub Category</th>
+                                                    <th class="min-w-70px">Quantity</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="" ng-repeat="servs in ServiceList">
+                                                    <td ng-bind="servs.ServiceCategoryName"></td>
+                                                    <td ng-bind="servs.ServiceSubCategoryName"></td>
+                                                    <td ng-bind="servs.Quantity"></td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_dummyservices">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Service Category</th>
+                                                    <th class="min-w-175px">Sub Category</th>
+                                                    <th class="min-w-70px">Quantity</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8" style="color:blue;" id="spanservLoader"><span><b>Loading...</b></span></td>
+                                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyservRecords"><span>No records found!</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--begin::Scroll-->
+                            <!--end::Input group-->
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_packagelist" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Packages List</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_packageList" style="display:none;">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Package Name</th>
+                                                    <th class="min-w-100px">Date</th>
+                                                    <th class="min-w-100px">Duration</th>
+
+                                                    <th class="min-w-100px">Price</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="" ng-repeat="package in PackagesList">
+                                                    <td ng-bind="package.PackageName"></td>
+                                                    <td ng-bind="package.Date"></td>
+                                                    <td ng-bind="package.Duration + ' ' + package.Measurement "></td>
+                                                    <td ng-bind="package.Price"></td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_dummypackage">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Package Name</th>
+                                                    <th class="min-w-100px">Date</th>
+                                                    <th class="min-w-100px">Duration</th>
+
+                                                    <th class="min-w-100px">Price</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8" style="color:blue;" id="spanpackLoader"><span><b>Loading...</b></span></td>
+                                                    <td colspan="8" style="color:red;display:none;" id="spanEmptypackRecords"><span>No records found!</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--begin::Scroll-->
+                            <!--end::Input group-->
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="modal fade" id="kt_modal_availability" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-850px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header" id="kt_modal_add_customer_header">
+                    <!--begin::Modal title-->
+                    <h2 class="fw-bold">Availability Details</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                        <i class="ki-outline ki-cross fs-1"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body py-10 px-lg-17">
+
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <label for="phone" class="control-label">Key Collection:</label><br />
+                            <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList != null ? (AvailabilityList.KeyCollection != null ? 'Yes' : 'No') : ''"></label>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label for="phone" class="control-label">Access Details</label><br />
+                            <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList.AccessProperty || 'N/A'"></label>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label for="phone" class="control-label">Date:</label><br />
+                            <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList.ReceptionDate==null ? 'N/A' : AvailabilityList.ReceptionDate.replace('/Date(','').replace(')/','') | date"></label>
+                        </div>
+
+
+                    </div>
+
+
+                    <!--begin::Scroll-->
+                    <!--end::Input group-->
+
+
+                </div>
+                <!--end::Modal body-->
+
+            </div>
+        </div>
+    </div>
+
+</div>
+

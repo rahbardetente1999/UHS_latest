@@ -1,0 +1,1049 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Staff/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="NewDashboardController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post" ng-cloak>
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+
+            <div class="row mb-5">
+                <div class="card">
+                    <div class="card-header">
+                        <!--begin::Navs-->
+                        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="pill" href="#overview">Total Task</a>
+                            </li>
+                            <!--end::Nav item-->
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="GetPendingTask()" data-bs-toggle="pill" href="#pendingtask">Total Pending Task</a>
+                            </li>
+                            <!--end::Nav item-->
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="pill" ng-click="GetCompletedTask()" href="#completedtask">Total Completed Task</a>
+                            </li>
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="pill" ng-click="GetAverageRating()" href="#averageRating">Rating</a>
+                            </li>
+                            <!--end::Nav item-->
+
+                        </ul>
+                        <!--begin::Navs-->
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="overview">
+                                <!--begin::Form-->
+                                <form name="SearchTotalForm" id="totalCustomerdiv" style="display:none;">
+                                    <!--begin::Card-->
+                                    <div class="card mb-7">
+                                        <!--begin::Card body-->
+                                        <div class="card-body">
+
+                                            <!--begin::Compact form-->
+                                            <div class="d-flex align-items-center">
+                                                <!--begin::Input group-->
+                                                <div class="position-relative w-md-800px me-md-2">
+
+                                                    <div class="row">
+
+                                                        <div class="col-md-4  mb-5">
+                                                            <!--begin::Label-->
+                                                            <label class="fs-6 fw-semibold mb-2">Service Date</label>
+                                                            <!--end::Label-->
+                                                            <div class="input-group" id="kt_ServiceDate" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                                <input id="kt_td_picker_basic_input1" type="text" class="form-control" ng-model="txtServiceDate" data-td-target="#kt_td_picker_basic" />
+                                                                <span class="input-group-text" data-td-target="#kt_td_picker_basic" data-td-toggle="datetimepicker">
+                                                                    <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-4 mb-5">
+                                                            <!--begin::Label-->
+                                                            <label class="fs-6 fw-semibold mb-2">Area</label>
+                                                            <!--end::Label-->
+                                                            <select name="ItemType" id="dltAreaID" ng-change="GetSubArea()" aria-label="Select a Area" ng-model="ddlArea" data-control="select2" data-placeholder="Select a Area..." data-dropdown-parent="#totalCustomerdiv" class="form-select">
+                                                                <option value="">Select a Area ...</option>
+                                                                <option value="{{area.ID}}" ng-repeat="area in AreaDropdown" ng-bind="area.Value"></option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4 mb-5">
+                                                            <!--begin::Label-->
+                                                            <label class="fs-6 fw-semibold mb-2">Sub Area</label>
+                                                            <!--end::Label-->
+                                                            <select name="ItemType" id="dlsubtAreaID" aria-label="Select a Area" ng-disabled="subareadisable"  ng-model="ddlsubArea" data-control="select2" data-placeholder="Select Sub Area..." data-dropdown-parent="#totalCustomerdiv" class="form-select">
+                                                                <option value="">Select a District ...</option>
+                                                                <option value="{{subarea.ID}}" ng-repeat="subarea in SubAreaDropdown" ng-bind="subarea.Value"></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin:Action-->
+                                                <div class="d-flex align-items-center">
+
+                                                    <!--begin::Button-->
+                                                    <button type="submit" ng-click="FilterTotalData()" class="btn btn-primary">
+                                                        <span class="indicator-label" id="btnsearch">Search</span>
+                                                        <span class="indicator-progress" id="btnloader">
+                                                            Please wait...
+                                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                        </span>
+                                                    </button>
+                                                    <!--end::Button-->
+                                                    @*<button type="submit" class="btn btn-primary me-5" ng-click="FilterData()">Search</button>*@
+                                                    @*<button  class="btn btn-light btn-active-light-primary me-2" ng-click="resetTotalfields()">Reset</button>*@
+                                                    <a href="#" id="kt_horizontal_search_advanced_link" class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#kt_advanced_search_form">Advanced Search</a>
+
+                                                </div>
+                                                <!--end:Action-->
+                                            </div>
+                                            <!--end::Compact form-->
+                                            <!--begin::Advance form-->
+                                            <div class="collapse" id="kt_advanced_search_form">
+
+                                                <!--begin::Row-->
+                                                <div class="row g-8">
+
+                                                    <div class="col-md-4 mb-5">
+                                                        <!--begin::Label-->
+                                                        <label class="fs-6 fw-semibold mb-2">Select Residential</label>
+                                                        <select name="ResidentialA" id="dltRestID" aria-label="Select a Property" ng-model="ddlResidential" ng-options="resd.ID as resd.Value for resd in ResidentialDropdown" data-control="select2" data-placeholder="Select a Residential Type..." data-dropdown-parent="#totalCustomerdiv" class="form-select">
+                                                            <option value="">Select a  Type...</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-5">
+
+                                                        <label class="required fs-6 fw-semibold mb-2">Service Type</label>
+
+                                                        <select name="ServiceType" id="ServiceID" aria-label="Service type" ng-options="service.catsubID as service.Value for service in ServicesTypeDropdown" ng-model="ddlservicetype" ng-change="GetMonths()" data-control="select2" data-placeholder="Service type..." data-dropdown-parent="#totalCustomerdiv" class="form-select">
+                                                            <option value="">Select a Type ...</option>
+
+                                                        </select>
+
+                                                    </div>
+
+                                                </div>
+                                                <!--end::Row-->
+
+                                            </div>
+                                            <!--end::Advance form-->
+                                        </div>
+                                        <!--end::Card body-->
+                                    </div>
+                                    <!--end::Card-->
+                                </form>
+                                <!--end::Form-->
+                                <div class="table-responsive" id="tbl_bookinglist" style="display:none;">
+                                    <!--begin::Table-->
+                                    <table class="table table-bordered gs-7 gy-7 gx-7" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th class="min-w-20px">S.No</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Area</th>
+                                                <th class="min-w-50px">SubArea</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-50px">Service Date</th>
+                                                <th class="min-w-50px">Service Time</th>
+                                                <th class="min-w-50px">Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="book in TotalTasks | filter: searchbook">
+                                                <td ng-bind="$index+1"></td>
+                                                <td>
+                                                    <a href="" ng-bind="book.CustomerName" data-bs-toggle="modal" data-bs-target="#kt_modal_remilist" ng-click="GetPersonalDtls(book)"></a>
+                                                </td>
+                                                <td ng-bind="book.Area"></td>
+                                                <td ng-bind="book.SubArea"></td>
+                                                <td ng-bind="book.CustomerAddress"></td>
+
+                                                <td ng-bind="book.AppartmentType"></td>
+                                                <td ng-bind="book.ServiceType"></td>
+                                                <td ng-bind="::book.StartDate | customDate"></td>
+                                                <td ng-bind="book.ServiceTime">
+                                                </td>
+                                                <td>
+                                                    <span class="badge py-3 px-4 fs-7" ng-class="{ 'badge-light-info':book.StatusOfWork== 1,
+        'badge-light-primary': book.StatusOfWork
+ == 2,
+        'badge-light-success': book.StatusOfWork
+ == 3}" ng-bind="book.StatusOfWork
+==1?'Open':book.StatusOfWork
+==2?'Pending':book.StatusOfWork
+
+==3?'Closed':'N/A'"></span>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" ng-if="shouldShowCloseTask(book)" data-bs-target="#reportIssue" ng-click="IssueModal(book)">Report Issue</a>
+                                                        <a class="dropdown-item" ng-if="book.StatusOfWork != 3 && shouldShowCloseTask(book)" href="#" data-bs-toggle="modal" data-bs-target="#closedTask" ng-click="ClosedModal(book)">Close Task</a>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <div id="tbl_dummybooking">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-50px">S.no</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-100px">Service Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="10" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                                <td colspan="10" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="pendingtask">
+                                <div class="row">
+                                    <!--begin::Form-->
+                                    <form name="SearchForm" id="kt_searchassets" novalidate>
+                                        <!--begin::Card-->
+                                        <div class="card mb-7">
+                                            <!--begin::Card body-->
+                                            <div class="card-body">
+
+                                                <!--begin::Compact form-->
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Input group-->
+                                                    <div class="position-relative w-md-700px me-md-2">
+
+                                                        <div class="row">
+
+
+                                                            <div class="col-md-4 mb-5" style="margin-top: 10px;" ng-if="MonDropdownths.length == 1">
+                                                                <!--begin::Label-->
+                                                                <label class="fs-6 fw-semibold mb-2">Month</label><br />
+                                                                <!--end::Label-->
+                                                                <span ng-bind="MonDropdownths[0].Name"></span>
+                                                            </div>
+                                                            <div class="col-md-4 mb-5" ng-show="MonDropdownths.length > 1">
+                                                                <!--begin::Label-->
+                                                                <label class="required fs-6 fw-semibold mb-2">Months</label>
+                                                                <select name="ResidentialA" id="dltMonthID" aria-label="Select a Months" ng-model="ddlMonths" ng-change="GetDatesbyMonth()" data-control="select2" data-placeholder="Select a Month..." data-dropdown-parent="#kt_searchassets" class="form-select">
+                                                                    <option value="">Select a  Type...</option>
+                                                                    <option ng-repeat="Month in MonDropdownths" value="{{Month.Name}}" ng-bind="Month.Name"></option>
+                                                                </select>
+                                                                <span style="color:red" ng-bind="msgVMonths"></span>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <!--begin::Label-->
+                                                                <label class="required fs-6 fw-semibold mb-2">Dates</label>
+                                                                <select name="Dates" id="dltDatesID" ng-disabled="datesdropdisable" aria-label="Select a Date" required ng-model="ddlDates" data-control="select2" data-placeholder="Select a Date..." data-dropdown-parent="#kt_searchassets" class="form-select">
+                                                                    <option value="">Select a Date...</option>
+                                                                    <option ng-repeat="date in DatesDropdown" value="{{date.StartDate}}" ng-bind="date.FormattedDate"></option>
+                                                                </select>
+                                                                <span ng-if="SearchForm.$submitted && SearchForm.Dates.$invalid" style="color:red">Field is required</span>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin:Action-->
+                                                    <div class="d-flex align-items-center">
+
+                                                        <!--begin::Button-->
+                                                        <button type="submit" id="kt_modal_add_customer_submit" ng-click="FilterData(SearchForm.$valid)" class="btn btn-primary">
+                                                            <span class="indicator-label" id="btnPsearch"><i class="bi bi-search"></i></span>
+                                                            <span class="indicator-progress" id="btnPloader">
+
+                                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                            </span>
+                                                        </button>
+                                                        <!--end::Button-->
+                                                        @*<button type="submit" class="btn btn-primary me-5" ng-click="FilterData()">Search</button>*@
+                                                        <button type="button" class="btn btn-light btn-active-light-primary me-2" ng-click="resetfields()">Reset</button>
+                                                        @*<a href="#" id="kt_horizontal_search_advanced_link" class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#kt_advanced_search_form">Advanced Search</a>*@
+
+                                                    </div>
+                                                    <!--end:Action-->
+                                                </div>
+                                                <!--end::Compact form-->
+                                                <!--begin::Advance form-->
+                                                <div class="collapse" id="kt_advanced_search_form">
+
+
+
+                                                </div>
+                                                <!--end::Advance form-->
+                                            </div>
+                                            <!--end::Card body-->
+                                        </div>
+                                        <!--end::Card-->
+                                    </form>
+                                    <!--end::Form-->
+                                </div>
+                                <div class="table-responsive" id="tbl_bookingpendinglist" style="display:none;">
+                                    <!--begin::Table-->
+                                    <table class="table table-bordered gs-7 gy-7 gx-7" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th class="min-w-20px">S.No</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Area</th>
+                                                <th class="min-w-50px">SubArea</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-50px">Service Date</th>
+                                                <th class="min-w-50px">Service Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="book in PendingList | filter: searchbook">
+                                                <td ng-bind="$index+1"></td>
+                                                <td>
+                                                    <a href="" ng-bind="book.CustomerName" data-bs-toggle="modal" data-bs-target="#kt_modal_remilist" ng-click="GetPersonalDtls(book)"></a>
+                                                </td>
+                                                <td ng-bind="book.Area"></td>
+                                                <td ng-bind="book.SubArea"></td>
+                                                <td ng-bind="book.CustomerAddress">
+                                                </td>
+                                                <td ng-bind="book.AppartmentType"></td>
+                                                <td ng-bind="book.ServiceType"></td>
+                                                <td ng-bind="::book.StartDate | customDate"></td>
+                                                <td ng-bind="book.ServiceTime">
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" ng-if="shouldShowCloseTask(book)" data-bs-target="#reportIssue" ng-click="IssueModal(book)">Report Issue</a>
+                                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#closedTask" ng-click="ClosedModal(book)" ng-if="shouldShowCloseTask(book)">Close Task</a>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <div id="tbl_dummybookingpending" style="display:none;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-50px">S.no</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-100px">Service Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="10" style="color:blue;" id="spanPeLoader"><span><b>Loading...</b></span></td>
+                                                <td colspan="10" style="color:red;display:none;" id="spanEmptyPenRecords"><span>No records found!</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="completedtask">
+
+                                <div class="table-responsive" id="tbl_bookingComplist" style="display:none;">
+                                    <!--begin::Table-->
+                                    <table class="table table-bordered gs-7 gy-7 gx-7" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th class="min-w-20px">S.No</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Area</th>
+                                                <th class="min-w-50px">SubArea</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-50px">Service Date</th>
+                                                <th class="min-w-70px">Rating</th>
+                                                <th class="min-w-70px">Feedback</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="book in CompletedTasks | filter: searchbook">
+                                                <td ng-bind="$index+1"></td>
+                                                <td>
+                                                    <a href="" ng-bind="book.CustomerName" data-bs-toggle="modal" data-bs-target="#kt_modal_remilist" ng-click="GetPersonalDtls(book)"></a>
+                                                </td>
+                                                <td ng-bind="book.Area"></td>
+                                                <td ng-bind="book.SubArea"></td>
+                                                <td ng-bind="book.CustomerAddress">
+                                                </td>
+                                                <td ng-bind="book.AppartmentType"></td>
+                                                <td ng-bind="book.ServiceType"></td>
+                                                <td ng-bind="::book.StartDate | customDate"></td>
+                                                <td ng-if="book.CustomerRating !=null">
+                                                    <div class="rating">
+                                                        <div class="rating-label checked" ng-repeat="star in getStars(book.CustomerRating.Rating) track by $index">
+                                                            <i class="ki-duotone ki-star fs-1"></i>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                                <td ng-if="book.CustomerRating == null">
+                                                    N/A
+                                                </td>
+                                                <td ng-if="book.CustomerRating !=null" ng-bind="book.CustomerRating.Feedback">
+                                                </td>
+                                                <td ng-if="book.CustomerRating == null">
+                                                    N/A
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <div id="tbl_dummyCompbooking">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-50px">S.no</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-100px">Service Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="10" style="color:blue;" id="spanCompLoader"><span><b>Loading...</b></span></td>
+                                                <td colspan="10" style="color:red;display:none;" id="spanCompEmptyRecords"><span>No records found!</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="averageRating">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Average Rating</h5>
+                                        <div class="row" id="spinnerdiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;display:none;">
+                                            <div class="spinner-border" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4" id="averagrating" style="display:none;">
+                                            <div class="col-md-4">
+                                                <a class="card flex-column justfiy-content-center align-items-center text-center w-100 text-gray-800 text-hover-primary p-10" href="">
+                                                    <span class="fs-4 fw-bold">
+                                                        Regular Cleaning
+                                                    </span>
+                                                    <span ng-if="RegularCleaning ==null" style="font-size: 16px; margin-top: 10px;">0</span>
+                                                    <div class="rating" ng-if="RegularCleaning != null">
+                                                        <!-- Full stars -->
+                                                        <div class="rating-label checked" ng-repeat="star in getDStars(RegularCleaning).fullStars track by $index">
+                                                            <!-- Full star icon -->
+                                                            <i class="fa fa-star fs-1" style="color: orange;"></i>
+                                                        </div>
+
+                                                        <!-- Half star -->
+                                                        <div class="rating-label checked" ng-if="getDStars(RegularCleaning).halfStar">
+                                                            <!-- Half star icon -->
+                                                            <i class="fa fa-star-half-alt fs-1" style="color: orange;"></i>
+                                                        </div>
+
+                                                        <!-- Empty stars -->
+                                                        <div class="rating-label" ng-repeat="star in getDStars(RegularCleaning).emptyStars track by $index">
+                                                            <!-- Empty star icon -->
+                                                            <i class="fa fa-star fs-1" style="color: lightgray;"></i>
+                                                        </div>
+                                                    </div>
+
+
+                                                    @*<span ng-if="RegularCleaning !=null" style="font-size: 16px; margin-top: 10px;" ng-bind="RegularCleaning"></span>*@
+
+
+                                                </a>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <a class="card flex-column justify-content-center align-items-center text-center w-100 text-gray-800 text-hover-primary p-10" href="">
+                                                    <span class="fs-4 fw-bold">
+                                                        Deep Cleaning
+                                                    </span>
+                                                    <span ng-if="DeepCleaning == null" style="font-size:16px; margin-top: 10px;">0</span>
+                                                    <div class="rating" ng-if="DeepCleaning != null">
+                                                        <!-- Full stars -->
+                                                        <div class="rating-label checked" ng-repeat="star in getDStars(DeepCleaning).fullStars track by $index">
+                                                            <!-- Full star icon -->
+                                                            <i class="fa fa-star fs-1" style="color: orange;"></i>
+                                                        </div>
+
+                                                        <!-- Half star -->
+                                                        <div class="rating-label checked" ng-if="getDStars(DeepCleaning).halfStar">
+                                                            <!-- Half star icon -->
+                                                            <i class="fa fa-star-half-alt fs-1" style="color: orange;"></i>
+                                                        </div>
+
+                                                        <!-- Empty stars -->
+                                                        <div class="rating-label" ng-repeat="star in getDStars(DeepCleaning).emptyStars track by $index">
+                                                            <!-- Empty star icon -->
+                                                            <i class="fa fa-star fs-1" style="color: lightgray;"></i>
+                                                        </div>
+                                                    </div>
+
+                                                </a>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <a class="card flex-column justify-content-center align-items-center text-center w-100 text-gray-800 text-hover-primary p-10" href="">
+                                                    <span class="fs-4 fw-bold">
+                                                        Specialize Cleaning
+                                                    </span>
+                                                    <span ng-if="SpecializeCleaning ==null" style="font-size:16px;">0</span>
+                                                    <div class="rating" ng-if="SpecializeCleaning != null">
+                                                        <!-- Full stars -->
+                                                        <div class="rating-label checked" ng-repeat="star in getDStars(SpecializeCleaning).fullStars track by $index">
+                                                            <!-- Full star icon -->
+                                                            <i class="fa fa-star fs-1" style="color: orange;"></i>
+                                                        </div>
+
+                                                        <!-- Half star -->
+                                                        <div class="rating-label checked" ng-if="getDStars(SpecializeCleaning).halfStar">
+                                                            <!-- Half star icon -->
+                                                            <i class="fa fa-star-half-alt fs-1" style="color: orange;"></i>
+                                                        </div>
+
+                                                        <!-- Empty stars -->
+                                                        <div class="rating-label" ng-repeat="star in getDStars(SpecializeCleaning).emptyStars track by $index">
+                                                            <!-- Empty star icon -->
+                                                            <i class="fa fa-star fs-1" style="color: lightgray;"></i>
+                                                        </div>
+                                                    </div>
+
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_serviceslist" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Services List</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_servicesList" style="display:none;">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Service Category</th>
+                                                    <th class="min-w-175px">Sub Category</th>
+                                                    <th class="min-w-70px">Quantity</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="" ng-repeat="servs in ServiceList">
+                                                    <td ng-bind="servs.ServiceCategoryName"></td>
+                                                    <td ng-bind="servs.ServiceSubCategoryName"></td>
+                                                    <td ng-bind="servs.Quantity"></td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_dummyservices">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Service Category</th>
+                                                    <th class="min-w-175px">Sub Category</th>
+                                                    <th class="min-w-70px">Quantity</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8" style="color:blue;" id="spanservLoader"><span><b>Loading...</b></span></td>
+                                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyservRecords"><span>No records found!</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--begin::Scroll-->
+                            <!--end::Input group-->
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_remilist" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold" ng-bind="GetDetails.CustomerName + ' Details'"></h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+
+
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Special Instruction</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.SpecialInstruction || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Availability in the Apartment:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList != null ? (AvailabilityList.Availability == true ? 'Yes' : 'No') : ''"></label>
+                                </div>
+                                <div class="col-md-4 mb-4" ng-if="AvailabilityList.Availability == false">
+                                    <label for="phone" class="control-label">Key Collection:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList != null ? (AvailabilityList.KeyCollection == true ? 'Yes' : 'No') : ''"></label>
+                                </div>
+                                <div class="col-md-4 mb-4" ng-if="AvailabilityList.Availability == false">
+                                    <label for="phone" class="control-label">Access Details</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList.AccessProperty || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4" ng-if="AvailabilityList.Availability == false">
+                                    <label for="phone" class="control-label">Date:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="getFormattedDate(AvailabilityList.ReceptionDate)"></label>
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="row" ng-if="GetDetails.Files != null">
+                                <div class="col-sm-12">
+
+                                    <a href="{{image.Value}}" class="mr-2" ng-repeat="image in GetDetails.Files" data-toggle="lightbox" data-gallery="img-gallery" data-title="Incident Images" data-max-width="600">
+                                        <img class="img-responsive" ng-src="{{image.Value}}" style="width:200px;height:200px;" />
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="reportIssue" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <form class="form" name="ReportTaskForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Report Issues</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" ng-click="InitIssueForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <!--begin::Input group-->
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mb-4">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Issues</label>
+                                        <!--end::Label-->
+                                        <select class="form-select" id="issuedropdown" ng-model="ddlissuetype" ng-change="ChangeIssueType()" name="IssueType" required data-control="select2" data-placeholder="Select an option" multiple="multiple">
+                                            <option></option>
+                                            <option value="1">Breakages</option>
+                                            <option value="2">Stains</option>
+                                            <option value="3">Damages </option>
+                                            <option value="4">Others</option>
+                                        </select>
+                                        <span ng-if="ReportTaskForm.$submitted && ReportTaskForm.IssueType.$invalid" style="color:red">Field is required</span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4" ng-show="ddlotherdiv">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Other</label>
+                                        <!--end::Label-->
+                                        <input type="text" id="Othertxt" class="form-control" ng-model="ddlOthertext" />
+                                        <span style="color:red;" ng-bind="msgVother"></span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Conditional Type</label>
+                                        <!--end::Label-->
+                                        <select class="form-select" id="ConditionTypeDiv" name="Conditiontype" ng-model="ddlConditiontype" data-control="select2" data-placeholder="Select an option" required>
+                                            <option></option>
+                                            <option value="1">Pre-existing Condition</option>
+                                            <option value="2">Accidental Damage</option>
+
+                                        </select>
+                                        <span ng-if="ReportTaskForm.$submitted && ReportTaskForm.Conditiontype.$invalid" style="color:red">field is required</span>
+
+                                    </div>
+
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">Comment</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <textarea type="text" class="form-control" ng-model="txtcomment" rows="3" cols="3" placeholder="" name="Name"></textarea>
+                                        <!--end::Input-->
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <!--begin::Label-->
+                                        <label class="col-form-label text-lg-right">Upload Files:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Dropzone-->
+                                        <div class="dropzone" id="kt_dropzonejs_example_2">
+
+                                            <!--begin::Message-->
+                                            <div class="dz-message needsclick">
+                                                <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+
+                                                <!--begin::Info-->
+                                                <div class="ms-4">
+                                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
+                                                    <span class="fs-7 fw-semibold text-gray-500">Upload up to 1 files</span>
+                                                </div>
+                                                <!--end::Info-->
+                                            </div>
+                                        </div>
+                                        <!--end::Dropzone-->
+                                    </div>
+
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <!--end::Input group-->
+
+
+
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" ng-click="InitIssueForm()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="CreateIssueTask(ReportTaskForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnCisTsave">Submit</span>
+                                    <span class="indicator-progress" id="btnCisTCloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_availability" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Availability Details</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Key Collection:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList != null ? (AvailabilityList.KeyCollection != null ? 'Yes' : 'No') : ''"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Access Details</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList.AccessProperty || 'N/A'"></label>
+                                </div>
+
+
+
+                            </div>
+
+
+                            <!--begin::Scroll-->
+                            <!--end::Input group-->
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="closedTask" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <form class="form" name="ClosedTaskForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Closed The Task</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" ng-click="initCForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <div class="text-center">
+                                    <h4>Are you sure you want to close the task for <span ng-bind="CustomerName"></span>?</h4>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" ng-click="initCForm()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="ClosedTask(ClosedTaskForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnCTsave">Submit</span>
+                                    <span class="indicator-progress" id="btnCTCloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="rating" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <form class="form" name="AddRatingForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Rate Our Service</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <span style="font-size:20px;">Rating:</span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <jk-rating-stars max-rating="5"
+                                                         rating="secondRate"
+                                                         on-rating="onItemRating(rating)">
+                                        </jk-rating-stars>
+                                        <span style="color:red; display:none;" id="spanRatingReqMsg">Rating is required!</span>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span><b>Reviews:</b></span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>
+                                            Thank you for Rating {{secondRate}} stars
+                                        </p>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="comment" class="form-label">Comment</label>
+                                        <textarea class="form-control" name="review" rows="3" cols="3" maxlength="160" placeholder="Review" ng-model="review"></textarea>
+
+                                        @*<span ng-if="ratingForm.$submitted && ratingForm.review.$invalid" style="color:red" ng-bind="msgVrating"></span>*@
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="SaveRating()" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnsave">Submit</span>
+                                    <span class="indicator-progress" id="btnloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+    <script src="~/Scripts/Content/xlsx.core.min.js"></script>
+    <script>
+       
+        new tempusDominus.TempusDominus(document.getElementById("kt_ServiceDate"), {
+            //put your config here
+            display: {
+                viewMode: "calendar",
+                components: {
+                    decades: true,
+                    year: true,
+                    month: true,
+                    date: true,
+                    hours: false,
+                    minutes: false,
+                    seconds: false
+                }
+            },
+            localization: {
+                format: 'dd/MM/yyyy' // Set the format here to your preferred date format
+            }
+        });
+      
+
+
+    </script>
+
+}

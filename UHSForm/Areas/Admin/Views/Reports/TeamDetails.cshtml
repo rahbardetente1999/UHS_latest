@@ -1,0 +1,628 @@
+﻿
+@{
+    ViewBag.Title = "TeamDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+<style>
+    .pagination > li > a, .pagination > li > span {
+        position: relative;
+        float: left;
+        padding: 6px 12px;
+        line-height: 1.42857;
+        text-decoration: none;
+        color: #337ab7;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        margin-left: -1px;
+    }
+    #logistics .previous-service {
+        background-color: #e9f7fd; /* Light blue color for previous service */
+    }
+    #logistics .teamstatus {
+        background-color: #eee;
+    }
+    #logistics .next-service {
+        background-color: #d4edda; /* Light green color for next service */
+    }
+
+    /*#teamroasters .table th {
+        background-color: #f8f9fa;*/ /* Light background for headers */
+    /*}*/
+
+   
+
+
+  
+
+</style>
+
+
+
+<div class="content" id="kt_content" ng-controller="TeamDetailController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card">
+                <div class="card-header" style="padding: 10px;">
+                    <!-- Tabs -->
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="overview-tab" data-bs-toggle="pill" data-bs-target="#overview1" type="button" role="tab">Team Roster</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="medical-logistic-tab" data-bs-toggle="pill" data-bs-target="#logistics" ng-click="GetLogistics()" type="button" role="tab">Logistics</button>
+                        </li>
+                        @*<li class="nav-item" role="presentation">
+                            <button class="nav-link" id="medical-reports-tab"  ng-click="TeamRnewDesign()" data-bs-toggle="pill" data-bs-target="#teamroasters" type="button" role="tab">Team Roster</button>
+                        </li>*@
+
+                    </ul>
+                </div>
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="overview1" role="tabpanel">
+                            <form name="searchteam">
+                                <div class="row w-100">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Select Date</label>
+                                        <input class="form-control" type="date" name="Range" ng-model="rangewise" />
+                                    </div>
+
+                                    <div class="col-md-4" style="margin-top:20px;">
+                                        <!--begin::Button-->
+                                        <button type="submit" ng-click="Searchwithdate()" class="btn btn-primary">
+                                            <span class="indicator-label" id="btnteamsearch">Search</span>
+                                            <span class="indicator-progress" id="btnteamloader">
+                                                Please wait...
+                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            </span>
+                                        </button>
+                                        <!--end::Button-->
+
+                                        <a class="btn btn-secondary" ng-click="Reset()">Reset</a>
+                                    </div>
+
+                                </div>
+                                <div class="row mb-5">
+                                    <!-- Area Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="areaSelect" class="form-label">Select Team</label>
+                                        <select name="ItemType"
+                                                id="dltDTeamID"
+                                                aria-label="Select an Team"
+                                                ng-model="ddlTeam"
+                                                data-control="select2"
+                                                data-placeholder="Select an Team..."
+                                                class="form-select" multiple="multiple" ng-change="filterGroupedData()">
+                                            <option value="">Select an Team...</option>
+                                            <option value="All">All</option>
+                                            <option value="{{ team.Value }}"
+                                                    ng-repeat="team in TeamDropdown"
+                                                    ng-bind="team.Value"></option>
+                                        </select>
+
+                                    </div>
+                                    <!-- Area Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="areaSelect" class="form-label">Select Area</label>
+                                        <select name="AreaType" id="dltDAreaID" aria-label="Select an Area" ng-model="ddlArea" data-control="select2" data-placeholder="Select an Area..." ng-change="filterGroupedData()" class="form-select">
+                                            <option value="">Select an Area...</option>
+                                            <option value="{{ area.Value }}" ng-repeat="area in AreaDropdown" ng-bind="area.Value"></option>
+                                        </select>
+
+                                    </div>
+                                    <!-- Area Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="areaSelect" class="form-label">Select SubArea</label>
+                                        <select name="SubArea"
+                                                id="dltsubareaID"
+                                                aria-label="Select an SubArea"
+                                                ng-model="ddlsubarea"
+                                                data-control="select2"
+                                                data-placeholder="Select an SubArea..."
+                                                class="form-select" ng-change="filterGroupedData()">
+                                            <option value="">Select Type...</option>
+                                            <option value="{{ subarea.Value }}"
+                                                    ng-repeat="subarea in SubAreaDropdown"
+                                                    ng-bind="subarea.Value"></option>
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Property/Tower Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="towerSelect" class="form-label">Select Tower</label>
+                                        <select name="PropertyType"
+                                                id="dltDPropertyID"
+                                                aria-label="Select a Property"
+                                                ng-model="ddlProperty"
+                                                data-control="select2"
+                                                data-placeholder="Select a Property..."
+                                                class="form-select" ng-change="filterGroupedData()">
+                                            <option value="">Select a Property...</option>
+                                            <option value="{{ prop.Value }}"
+                                                    ng-repeat="prop in PropertyDropdown"
+                                                    ng-bind="prop.Value"></option>
+                                        </select>
+
+                                    </div>
+                                    <!-- Date Range Picker -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="startTime" class="form-label">Start Time</label>
+                                        <select id="startTime" data-control="select2" class="form-select" ng-model="startTime" ng-options="time for time in timeOptions">
+                                            <option value="" disabled>Select Start Time</option>
+                                        </select>
+                                    </div>
+                                    <!-- End Time Dropdown -->
+                                  
+                                  
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="areaSelect" class="form-label">Select Status</label>
+                                        <select name="Status"
+                                                id="dltStatus"
+                                                aria-label="Select an Status"
+                                                ng-model="ddlstatus"
+                                                data-control="select2"
+                                                data-placeholder="Select an Status..."
+                                                class="form-select" ng-change="filterGroupedData()">
+                                            <option value="">Select Type...</option>
+                                            <option value="All">All</option>
+                                            <option value="Same">Same</option>
+                                            <option value="Different">Different</option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+                            </form>
+
+                            <!-- Task Cards Section -->
+                            <div class="table-responsive mt-4" id="tbl_teamDetaillist">
+                                <table class="table table-hover mt-4 mb-2" datatable="ng" dt-options="vm.dtOptions">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="text-align:center;">S.No</th>
+                                            <th style="text-align:center;">Team</th>
+                                            <th style="text-align:center;">Time</th>
+                                            <th style="text-align:center;">Service</th>
+                                            <th style="text-align:center;">Area</th>
+                                            <th style="text-align:center;">Sub Area</th>
+                                            <th style="text-align:center;">Tower</th>
+                                            <th style="text-align:center;">Apartment No</th>
+                                            <th style="text-align:center;">Apartment Type</th>
+                                            <th style="text-align:center;">Status</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in filteredData">
+                                            <td>{{$index + 1}}</td>
+                                            <td style="text-align:center;" ng-bind="item.Teams"></td>
+                                            @*<td style="text-align:center;">
+            <span ng-if="item.ServiceStatus === 'Pervious'" class="badge" style="color: #ffffff;" ng-class="{'bg-danger': item.ServiceStatus === 'Pervious'}">Previous</span>
+        </td>*@
+                                            <td style="text-align:center;" ng-bind="item.ServiceTimings"></td>
+                                            <td style="text-align:center;" ng-bind="item.Service"></td>
+                                            <td style="text-align:center;" ng-bind="item.Area"></td>
+                                            <td style="text-align:center;" ng-bind="item.SubArea"></td>
+                                            <td style="text-align:center;" ng-bind="item.Tower + ' ' + ((item.PropertyCode != 'N/A' && item.PropertyCode != null) ? item.PropertyCode : '')"></td>
+                                            <td style="text-align:center;" ng-bind="item.AppartmentName"></td>
+                                            <td style="text-align:center;" ng-bind="item.AppartmentType"></td>
+                                            <td style="text-align:center;">
+                                                <span class="badge" style="color: #ffffff;" ng-class="{
+    'bg-success': item.LocationStatus === 'Same',
+    'bg-danger': item.LocationStatus === 'Different'
+}">
+                                                    {{ item.LocationStatus }}
+                                                </span>
+                                            </td>
+
+                                            @*<td>
+                                                <button class="btn btn-secondary btn-sm d-flex align-items-center" ng-click="openMessageModal(team)">
+                                                    <div class="nav-icon">
+                                                        <i class="ki-duotone ki-send fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                                    </div>
+                                                </button>
+                                            </td>*@
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+
+
+
+                            <div id="tbl_dummyteamdetail" style="display:none;">
+                                <table class="table">
+                                    <thead>
+                                        <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                            <th>Team</th>
+                                            <th>Service</th>
+                                            <th>Time</th>
+                                            <th>Area</th>
+                                            <th>Sub Area</th>
+                                            <th>Tower</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="10" style="color:blue;" id="spanteamdetailLoader"><span><b>Loading...</b></span></td>
+                                            <td colspan="10" style="color:red;display:none;" id="spanEmptyTeamDetailRecords"><span>No records found!</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="logistics" role="tabpanel">
+                            <form name="searchLogisticteam" novalidate>
+                                <div class="row w-100">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Select Date</label>
+                                        <input class="form-control" type="date" name="Logisticsdate" ng-model="logisticdate" required />
+                                        <span ng-if="searchLogisticteam.$submitted && searchLogisticteam.Logisticsdate.$invalid" style="color:red">field is required</span>
+                                    </div>
+
+                                    <div class="col-md-4" style="margin-top:20px;">
+                                        <!--begin::Button-->
+                                        <button type="submit" ng-click="SearchwithLogisdate(searchLogisticteam.$valid)" class="btn btn-primary">
+                                            <span class="indicator-label" id="btnlogisticsearch">Search</span>
+                                            <span class="indicator-progress" id="btnlogisticloader">
+                                                Please wait...
+                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            </span>
+                                        </button>
+                                        <!--end::Button-->
+
+                                        <a class="btn btn-secondary" ng-click="ResetLogistics()">Reset</a>
+                                    </div>
+
+                                </div>
+                                <div class="row mb-5">
+                                    <!-- Area Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="areaSelect" class="form-label">Select Team</label>
+                                        <select name="ItemType"
+                                                id="dltDLTeamID"
+                                                aria-label="Select an Team"
+                                                ng-model="ddlTeam"
+                                                data-control="select2"
+                                                data-placeholder="Select an Team..."
+                                                class="form-select" multiple="multiple" ng-change="filterGroupedlogisData()">
+                                            <option value="">Select an Team...</option>
+                                            <option value="All">All</option>
+                                            <option value="{{ team.Value }}"
+                                                    ng-repeat="team in TeamDropdown"
+                                                    ng-bind="team.Value"></option>
+                                        </select>
+
+                                    </div>
+                                    <!-- Area Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="areaSelect" class="form-label">Select Area</label>
+                                        <select name="AreaType" id="dltLDAreaID" aria-label="Select an Area" ng-model="ddlArea" data-control="select2" data-placeholder="Select an Area..." ng-change="filterGroupedlogisData()" class="form-select">
+                                            <option value="">Select an Area...</option>
+                                            <option value="{{ area.Value }}" ng-repeat="area in AreaDropdown" ng-bind="area.Value"></option>
+                                        </select>
+
+                                    </div>
+                                    <!-- Area Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="areaSelect" class="form-label">Select SubArea</label>
+                                        <select name="SubArea"
+                                                id="dltLsubareaID"
+                                                aria-label="Select an SubArea"
+                                                ng-model="ddlsubarea"
+                                                data-control="select2"
+                                                data-placeholder="Select an SubArea..."
+                                                class="form-select" ng-change="filterGroupedlogisData()">
+                                            <option value="">Select Type...</option>
+                                            <option value="{{ subarea.Value }}"
+                                                    ng-repeat="subarea in SubAreaDropdown"
+                                                    ng-bind="subarea.Value"></option>
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Property/Tower Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="towerSelect" class="form-label">Select Tower</label>
+                                        <select name="PropertyType"
+                                                id="dltLDPropertyID"
+                                                aria-label="Select a Property"
+                                                ng-model="ddlProperty"
+                                                data-control="select2"
+                                                data-placeholder="Select a Property..."
+                                                class="form-select" ng-change="filterGroupedlogisData()">
+                                            <option value="">Select a Property...</option>
+                                            <option value="{{ prop.Value }}"
+                                                    ng-repeat="prop in PropertyDropdown"
+                                                    ng-bind="prop.Value"></option>
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Area Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="areaSelect" class="form-label">Select To Area</label>
+                                        <select name="AreaType" id="dltLDTAreaID" aria-label="Select an Area" ng-model="ddlToArea" data-control="select2" data-placeholder="Select an Area..." ng-change="filterGroupedlogisData()" class="form-select">
+                                            <option value="">Select an Area...</option>
+                                            <option value="{{ area.Value }}" ng-repeat="area in AreaDropdown" ng-bind="area.Value"></option>
+                                        </select>
+
+                                    </div>
+                                    <!-- Area Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="areaSelect" class="form-label">Select To SubArea</label>
+                                        <select name="SubArea"
+                                                id="dltTLsubareaID"
+                                                aria-label="Select an SubArea"
+                                                ng-model="ddltosubarea"
+                                                data-control="select2"
+                                                data-placeholder="Select an SubArea..."
+                                                class="form-select" ng-change="filterGroupedlogisData()">
+                                            <option value="">Select Type...</option>
+                                            <option value="{{ subarea.Value }}"
+                                                    ng-repeat="subarea in SubAreaDropdown"
+                                                    ng-bind="subarea.Value"></option>
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Property/Tower Selection -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="towerSelect" class="form-label">Select To Tower </label>
+                                        <select name="PropertyType"
+                                                id="dltLTDPropertyID"
+                                                aria-label="Select a Property"
+                                                ng-model="ddltoProperty"
+                                                data-control="select2"
+                                                data-placeholder="Select a Property..."
+                                                class="form-select" ng-change="filterGroupedlogisData()">
+                                            <option value="">Select a Property...</option>
+                                            <option value="{{ prop.Value }}"
+                                                    ng-repeat="prop in PropertyDropdown"
+                                                    ng-bind="prop.Value"></option>
+                                        </select>
+
+                                    </div>
+
+                                    <!-- Date Range Picker -->
+                                    <!-- Start Time Dropdown -->
+                                    <!-- Start Time Dropdown -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="startTime" class="form-label">Start Time</label>
+                                        <select id="LstartTime" data-control="select2" class="form-select" ng-model="LstartTime" ng-options="time for time in timeOptions" ng-change="updateEndTimeLOptions()">
+                                            <option value="" disabled>Select Start Time</option>
+                                        </select>
+                                    </div>
+                                    <!-- End Time Dropdown -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="endTime" class="form-label">End Time</label>
+                                        <select id="LoendTime" data-control="select2" class="form-select" ng-model="LendTime" ng-options="time for time in endTimeOptions" ng-change="filterGroupedlogisData()">
+                                            <option value="" disabled>Select End Time</option>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+                            </form>
+
+                            <!-- Task Cards Section -->
+                            <div class="table-responsive mt-4" id="tbl_teamLogisticsDetaillist">
+                                <table class="table table-bordered table-hover mt-4 mb-2 table-light">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="teamstatus" style="text-align:center;">Team</th>
+                                            <th colspan="4" class="previous-service" style="text-align:center;">Previous Service</th>
+                                            <th colspan="4" class="next-service" style="text-align:center;">Next Service</th>
+
+                                            <th class="teamstatus" style="text-align:center;">Status</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="teamstatus"></th>
+                                            <th class="previous-service">Area</th>
+                                            <th class="previous-service">SubArea</th>
+                                            <th class="previous-service">Tower</th>
+                                            <th class="previous-service">Time</th>
+                                            <th class="next-service">Area</th>
+                                            <th class="next-service">SubArea</th>
+                                            <th class="next-service">Tower</th>
+                                            <th class="next-service">Time</th>
+                                            <th class="teamstatus"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="item in filteredLogisticsData | itemsPerPage: 10" pagination-id="availableTable">
+                                            <td class="teamstatus" ng-bind="item.Teams"></td>
+                                            <td class="previous-service" ng-bind="item.FromArea"></td>
+                                            <td class="previous-service" ng-bind="item.FromSubArea"></td>
+                                            <td class="previous-service" ng-bind="item.FromTower + '_' + item.FromAppartmentName"></td>
+                                            <td class="previous-service" ng-bind="item.FromServiceTime"></td>
+                                            <td class="next-service" ng-bind="item.ToArea"></td>
+                                            <td class="next-service" ng-bind="item.ToSubArea"></td>
+                                            <td class="next-service" ng-bind="item.ToTower + '_' + item.ToAppartmentName"></td>
+                                            <td class="next-service" ng-bind="item.ToServiceTime"></td>
+                                            <td class="teamstatus">
+                                                <span class="badge bg-danger" style="color:#fff;">
+                                                    Different
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls pagination-id="availableTable"></dir-pagination-controls>
+                                @*<thead class="table-light">
+            <tr>
+                <th style="text-align:center;">S.No</th>
+                <th style="text-align:center;">Team</th>
+                <th style="text-align:center;">From Address</th>
+                <th style="text-align:center;">To Address</th>
+                <th style="text-align:center;">Start Time</th>
+                <th style="text-align:center;">End Time</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in filteredLogisticsData">
+                <td>{{$index + 1}}</td>
+                <td style="text-align:center;" ng-bind="item.Teams"></td>
+                <td style="text-align:center;" ng-bind="item.FromAddress"></td>
+                <td style="text-align:center;" ng-bind="item.ToAddress"></td>
+                <td style="text-align:center;" ng-bind="formatTimeWithAMPM(item.StartTime)"></td>
+                <td style="text-align:center;" ng-bind="formatTimeWithAMPM(item.EndTime)"></td>
+            </tr>
+        </tbody>*@
+                                @*</table>*@
+
+
+                            </div>
+
+
+
+                            <div id="tbl_dummylogisticsteamdetail" style="display:none;">
+                                <table class="table">
+                                    <thead>
+                                        <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                            <th style="text-align:center;">S.No</th>
+                                            <th style="text-align:center;">Team</th>
+                                            <th style="text-align:center;">From Address</th>
+                                            <th style="text-align:center;">To Address</th>
+                                            <th style="text-align:center;">Start Time</th>
+                                            <th style="text-align:center;">End Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="10" style="color:blue;" id="spanlogisticteamdetailLoader"><span><b>Loading...</b></span></td>
+                                            <td colspan="10" style="color:red;display:none;" id="spanEmptylogisticsTeamDetailRecords"><span>No records found!</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="teamroasters">
+
+                            <div class="container mt-5">
+                                <table class="table  text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Team</th>
+                                            <th colspan="2" class="previous-service">Previous Service</th>
+                                            <th colspan="2" class="next-service">Next Service</th>
+                                           
+                                            <th>Status</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th class="previous-service">Time</th>
+                                            <th class="previous-service">Location</th>
+                                            <th class="next-service">Time</th>
+                                            <th class="next-service">Location</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="service in services">
+                                            <td>{{ service.team }}</td>
+                                            <td class="previous-service">{{ service.previous.time }}</td>
+                                            <td class="previous-service">{{ service.previous.location }}</td>
+                                            <td class="next-service">{{ service.next.time }}</td>
+                                            <td class="next-service">{{ service.next.location }}</td>
+                                            <td>
+                                                <span class="badge"
+                                                      ng-class="{'bg-success': service.status === 'Same', 'bg-danger': service.status === 'Different'}" style="color:#fff;">
+                                                    {{ service.status }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+
+                        </div>
+                      
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Send Message</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="messageType" class="form-label">Message Type</label>
+                                        <select name="emailmsgType"
+                                                id="emailmsg"
+                                                aria-label="Select a Route"
+                                                ng-model="message.isEmail"
+                                                data-control="select2"
+                                                data-placeholder="Select a Route..."
+                                                class="form-select">
+                                            <option value="">Select</option>
+                                            <option value="true">Email</option>
+                                            <option value="false">SMS</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3" ng-show="message.isEmail === 'true'">
+                                        <label for="messageSubject" class="form-label">Subject</label>
+                                        <input type="text" class="form-control" id="messageSubject" ng-model="message.subject" placeholder="Enter subject">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="messageBody" class="form-label">Message</label>
+                                        <textarea class="form-control" id="messageBody" rows="5" ng-model="message.message"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" ng-click="sendMessage()" ng-disabled="isLoading">
+                                    <span ng-if="!isLoading">Send</span>
+                                    <span ng-if="isLoading">
+                                        <i class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i>
+                                        Sending...
+                                    </span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#kt_timepicker_71").flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultHour: 12,
+                defaultMinute: 0
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+    <script src="~/Scripts/Content/xlsx.core.min.js"></script>
+}

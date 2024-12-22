@@ -1,0 +1,372 @@
+﻿
+@{
+    ViewBag.Title = "Team Roaster";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+    .card h5 {
+        color: #4e73df;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    /* Ensure both charts maintain a uniform height */
+    .card-body h5 {
+        margin-bottom: 20px;
+    }
+
+    /*#teamsByAreaChart,
+    #serviceVerticalChart {
+        max-height: 300px;*/ /* Set consistent height */
+    /*}*/
+
+    .card {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+</style>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="TeamReportController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post" ng-cloak>
+        <!--begin::Container-->
+        <div id="kt_content_container-fluid" class="container-fluid">
+
+            <div class="card">
+                <h2 class="text-center m-5">Teams Report</h2>
+                <div class="card-header">
+                    <!--begin::Navs-->
+                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="pill" href="#activeteam">Teams per Tower</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="ServicesIndividualbyTeam()" data-bs-toggle="pill" href="#servicevertical">Teams by Service</a>
+                        </li>
+                        <!--begin::Nav item-->
+                        @*<li class="nav-item mt-2">
+            <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="ServicesIndividualbyTeam()" data-bs-toggle="pill" href="#servicevertical">Teams by Service</a>
+        </li>*@
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="AverageRating()" data-bs-toggle="pill" href="#averagerating">Average Rating and Service Count</a>
+        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+
+
+                    </ul>
+                    <!--begin::Navs-->
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="activeteam">
+
+                            <div class="card mb-5">
+                                <div class="card-body">
+                                    <form name="kt_searchteamtower" id="kt_searchteamtower" novalidate>
+                                        <div class="row w-100">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Select Date</label>
+                                                <input class="form-control" type="date" name="TeamTower" ng-model="txtteamtower" required />
+                                                <span ng-if="kt_searchteamtower.$submitted && kt_searchteamtower.TeamTower.$invalid" style="color:red">field is required</span>
+                                            </div>
+
+                                            <div class="col-md-4" style="margin-top:20px;">
+                                                <!--begin::Button-->
+                                                <button type="submit" ng-click="SearchTeamDate(kt_searchteamtower.$valid)" class="btn btn-primary">
+                                                    <span class="indicator-label" id="btnteamtowersearch">Search</span>
+                                                    <span class="indicator-progress" id="btnteamtowerloader">
+                                                        Please wait...
+                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                    </span>
+                                                </button>
+                                                <!--end::Button-->
+
+                                                <a class="btn btn-secondary" ng-click="Reset()">Reset</a>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                    <div class="row mb-5">
+                                        <!-- Area Selection -->
+                                        <div class="col-md-4 mb-3">
+                                            <label for="areaSelect" class="form-label">Select Team</label>
+                                            <select name="ItemType"
+                                                    id="dltDTeamID"
+                                                    aria-label="Select an Team"
+                                                    ng-model="ddlTeam"
+                                                    data-control="select2"
+                                                    data-placeholder="Select an Team..."
+                                                    class="form-select" multiple="multiple" ng-change="filterTeamTowerData()">
+                                                <option value="">Select an Team...</option>
+                                                <option value="All">All</option>
+                                                <option value="{{ team.Value }}"
+                                                        ng-repeat="team in TeamDropdown"
+                                                        ng-bind="team.Value"></option>
+                                            </select>
+
+                                        </div>
+                                        <!-- Area Selection -->
+                                        <div class="col-md-4 mb-3">
+                                            <label for="areaSelect" class="form-label">Select Area</label>
+                                            <select name="AreaType" id="dltDAreaID" aria-label="Select an Area" ng-model="ddlArea" data-control="select2" data-placeholder="Select an Area..." ng-change="filterTeamTowerData()" class="form-select">
+                                                <option value="">Select an Area...</option>
+                                                <option value="{{ area.Value }}" ng-repeat="area in AreaDropdown" ng-bind="area.Value"></option>
+                                            </select>
+
+                                        </div>
+                                        <!-- Area Selection -->
+                                        <div class="col-md-4 mb-3">
+                                            <label for="areaSelect" class="form-label">Select SubArea</label>
+                                            <select name="SubArea"
+                                                    id="dltsubareaID"
+                                                    aria-label="Select an SubArea"
+                                                    ng-model="ddlsubarea"
+                                                    data-control="select2"
+                                                    data-placeholder="Select an SubArea..."
+                                                    class="form-select" ng-change="filterTeamTowerData()">
+                                                <option value="">Select Type...</option>
+                                                <option value="{{ subarea.Value }}"
+                                                        ng-repeat="subarea in SubAreaDropdown"
+                                                        ng-bind="subarea.Value"></option>
+                                            </select>
+
+                                        </div>
+
+                                        <!-- Property/Tower Selection -->
+                                        <div class="col-md-4 mb-3">
+                                            <label for="towerSelect" class="form-label">Select Tower</label>
+                                            <select name="PropertyType"
+                                                    id="dltDPropertyID"
+                                                    aria-label="Select a Property"
+                                                    ng-model="ddlProperty"
+                                                    data-control="select2"
+                                                    data-placeholder="Select a Property..."
+                                                    class="form-select" ng-change="filterTeamTowerData()">
+                                                <option value="">Select a Property...</option>
+                                                <option value="{{ prop.Value }}"
+                                                        ng-repeat="prop in PropertyDropdown"
+                                                        ng-bind="prop.Value"></option>
+                                            </select>
+
+                                        </div>
+                                        <!-- Date Range Picker -->
+
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row" id="spinneractiveteamldiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;display:none;">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="row" id="activeDeteam" style="display:none;">
+
+
+
+
+                                <!-- Active Teams/Cleaners per Area/Tower -->
+                                <div class="col-md-12 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body d-flex flex-column align-items-center">
+                                            <h5 class="text-center">Active Teams per Tower</h5>
+                                            <canvas id="teamsByAreaChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <!--begin::Card toolbar-->
+                                        <div class="card-toolbar">
+                                            <!--begin::Toolbar-->
+                                            <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+                                                <!--begin::Export-->
+                                                <button type="button" class="btn btn-light-primary me-3 mt-1" ng-click="exportTTowerData('TeambyTower','xlsx',TeambyTowers)">
+                                                    <i class="ki-outline ki-exit-up fs-2"></i>Export
+                                                </button>
+                                                <!--end::Export-->
+
+                                            </div>
+                                            <!--end::Toolbar-->
+
+                                        </div>
+                                        <!--end::Card toolbar-->
+                                        <div class="card-body">
+                                            <!-- Detailed Revenue Table Section -->
+                                            <div class="table-responsive" id="tbl_teamdetailist" style="display:none;">
+                                                <table class="table table-bordered table-striped" datatable="ng" dt-options="vm.dtOptions">
+                                                    <thead class="thead-dark">
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Area</th>
+                                                            <th>Sub Area</th>
+                                                            <th>Tower</th>
+                                                            <th style="text-align:center;">No Of Teams</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in TeambyTowers | orderBy:sortByTeamName">
+                                                            <td ng-bind="$index+1"></td>
+                                                            <td ng-bind="item.Area"></td>
+                                                            <td ng-bind="item.SubArea"></td>
+                                                            <td ng-bind="item.TowerName"></td>
+                                                            <td style="text-align:center;" ng-if="item.TeamName.length > 0" ng-bind="item.TeamName.length ? item.TeamName.slice().sort().join(', ') : ''">
+                                                            </td>
+                                                            <td style="text-align:center;" ng-if="item.TeamName.length === 0">
+                                                                No Teams
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div id="tbl_dummyteambytowerpacakges">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Tower</th>
+                                                            <th>Revenue</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="8" style="color:blue;" id="spanteamtowerLoader"><span><b>Loading...</b></span></td>
+                                                            <td colspan="8" style="color:red;display:none;" id="spanEmptyeamtowerRecords"><span>No records found!</span></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="servicevertical">
+                            <div class="row" id="spinnerserverticaldiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;display:none;">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <div class="row" id="serviceverdiv" style="display:none;">
+
+                                <!-- Teams/Cleaners by Service Vertical -->
+                                <div class="col-md-12 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body d-flex flex-column align-items-center">
+                                            <h5 class="text-center">Teams by Service Vertical</h5>
+                                            <canvas id="serviceVerticalChart" style="max-height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="efficiency">
+                            <div class="row" id="spinnerefficencydiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;display:none;">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <div class="row" id="efficencydiv" style="display:none;">
+                                <div class="col-md-12 md-5">
+                                    <!-- Efficiency - Services per Team -->
+                                    <div class="card mt-4">
+                                        <div class="card-body d-flex flex-column">
+                                            <h5>Efficiency - Services per Team</h5>
+                                            <canvas id="efficiencyChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="averagerating">
+                            <div class="row" id="spinneraveragediv" style="justify-content: center; align-items: center; height: 50vh; display: none;">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <div class="row" id="ratingdiv" style="display:none;">
+                                <div class="col-md-12 m-10">
+                                    <!-- Average Rating of Teams -->
+                                    <div class="card mt-4">
+                                        <div class="card-body d-flex flex-column">
+                                            <h5>Average Rating of Teams</h5>
+                                            <div id="teamChartAvg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <table class="table table-bordered table-striped" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Team Name</th>
+                                                <th>Regular Cleaning</th>
+                                                <th>Deep Cleaning</th>
+                                                <th>Specialized Cleaning</th>
+                                                <th>Car Wash</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="team in teams">
+                                                <td>{{ team.TeamName }}</td>
+                                                <td>
+                                                    Service Count:{{ team.RegularCleaning.ServiceCount }}<br>
+                                                    Avg Rating: {{ team.RegularCleaning.AverageRating || 0 }}<br>
+
+                                                </td>
+                                                <td>
+                                                    Service Count: {{ team.DeepCleaning.ServiceCount }}<br>
+                                                    Avg Rating: {{ team.DeepCleaning.AverageRating || 0 }}<br>
+
+                                                </td>
+                                                <td>
+                                                    Service Count: {{ team.SpecializeCleaning.ServiceCount }}<br>
+                                                    Avg Rating: {{ team.SpecializeCleaning.AverageRating || 0 }}<br>
+
+                                                </td>
+                                                <td>
+                                                    Service Count: {{ team.CarWashCleaning.ServiceCount }}<br>
+                                                    Avg Rating: {{ team.CarWashCleaning.AverageRating || 0 }}<br>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+    <script src="~/Scripts/Content/xlsx.core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+}

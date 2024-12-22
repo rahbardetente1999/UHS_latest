@@ -1,0 +1,266 @@
+﻿
+@{
+    ViewBag.Title = "Service Assign";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="ServiceAssignController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::Card title-->
+                    <div class="card-title fw-medium">
+                        Service Assign List
+                    </div>
+                    <!--begin::Card title-->
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+                            <!--begin::Export-->
+                            <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
+                                <i class="ki-outline ki-exit-up fs-2"></i>Export
+                            </button>
+                            <!--end::Export-->
+                            <!--begin::Add customer-->
+                            <button type="button" class="btn btn-primary" ng-click="AssignserviceModal()" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Assign Service</button>
+                            <!--end::Add customer-->
+                        </div>
+                        <!--end::Toolbar-->
+
+                    </div>
+                    <!--end::Card toolbar-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <div class="table-responsive" id="tbl_serviceassignlist" style="display:none;">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+                                    <th>Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Service Category</th>
+                                    <th>Service Option</th>
+                                    <th>Area Name</th>
+                                    <th>Staff</th>
+                                    <th>Team</th>
+                                    <th>Assign By</th>
+                                    <th>Assign Date</th>
+                                    @*<th class="min-w-70px">Actions</th>*@
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                <tr ng-repeat="assign in AssignList">
+                                    <td ng-bind="assign.index"></td>
+                                    <td ng-bind="assign.MainCategoryName"></td>
+                                    <td ng-bind="assign.SubCategoryName"></td>
+                                    <td ng-bind="assign.ServiceCategoryName"></td>
+                                    <td ng-bind="assign.SubServiceCategoryName || 'N/A'"></td>
+                                    <th ng-bind="assign.PropertyName || 'N/A'"></th>
+                                    <th ng-bind="assign.StaffName || 'N/A'"></th>
+                                    <th ng-bind="assign.TeamName || 'N/A'"></th>
+                                    <td>
+                                        <a href="#" class="text-gray-800 text-hover-primary mb-1" ng-bind="assign.CreatedBy"></a>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="text-gray-800  mb-1" ng-bind="assign.CreatedOn | customDate"></a>
+                                    </td>
+                                    @*<td>
+            <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateservicesubcategory">Update</a>
+                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteservicesubcategory">Delete</a>
+
+            </div>
+        </td>*@
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                        <!--end::Table-->
+                    </div>
+                    <div id="tbl_dummyserviceassignlist">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th class="min-w-125px">Name</th>
+                                    <th>Main Category</th>
+                                    <th>Added By</th>
+                                    <th>Added On</th>
+                                    <th class="min-w-70px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+            <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="AssignServiceForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Assign Services</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <div class="row">
+                                    <div class="col-md-6 mb-6">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Main Category</label>
+                                        <!--end::Label-->
+                                        <select name="MainType" id="SAmainCat" aria-label="Select a Main Category" ng-model="ddlMainCategory" ng-change="GetSubCategoryByID()" data-control="select2" data-placeholder="Select a Main Category..." data-dropdown-parent="#kt_modal_add_customer" class="form-select" required>
+                                            <option value="">Select a  main category...</option>
+                                            <option value="{{maincat.ID}}" ng-repeat="maincat in MainCategoryDropdown">
+                                                {{maincat.Value}}
+                                            </option>
+
+                                        </select>
+                                        <span ng-if="AssignServiceForm.$submitted && AssignServiceForm.MainType.$invalid" style="color:red">field is required</span>
+                                    </div>
+                                    <div class="col-md-6 mb-6">
+
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Sub Category</label>
+                                        <!--end::Label-->
+                                        <select name="SubCategory" id="SubCatM" ng-disabled="DisableAllCat" ng-model="ddlsubcategory" ng-change="GetServiceCategoryByID()"  aria-label="Select a Sub Category" data-control="select2" data-placeholder="Select a Sub Category..." data-dropdown-parent="#kt_modal_add_customer" class="form-select" multiple="multiple">
+                                            <option value="">Select a  Sub Category...</option>
+                                            <option value="{{subcat.ID}}" ng-repeat="subcat in SubCategoryDropdown">
+                                                {{subcat.Value}}
+                                            </option>
+
+                                        </select>
+                                        <span  style="color:red" ng-bind="msgVsubcategory"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-6">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">Select Service Category</label>
+                                        <!--end::Label-->
+                                        <select name="ServiceCategory" ng-disabled="DisableAllCat" id="ServCat" ng-model="ddlservicecategory" ng-change="GetSubServiceCategoryByID()" aria-label="Select a Sub Category" data-control="select2" data-placeholder="Select a Sub Category..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                            <option value="">Select a  Service Category...</option>
+                                            <option value="{{servcat.ID}}" ng-repeat="servcat in ServiceCategoryDropdown">
+                                                {{servcat.Value}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 mb-6">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">Select Service Option</label>
+                                        <!--end::Label-->
+                                        <select name="SubServiceCategory" ng-disabled="DisableAllCat" id="SubServId" ng-model="ddlsubservicecategory" aria-label="Select a Service Option" data-control="select2" data-placeholder="Select a Service Option..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                            <option value="">Select a  Service Option...</option>
+                                            <option value="{{servcat.ID}}" ng-repeat="servcat in SubServiceCategoryDropdown">
+                                                {{servcat.Value}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-6">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">Select Area</label>
+                                        <!--end::Label-->
+                                        <select name="Area" aria-label="Select a Area" ng-model="ddlArea"  data-control="select2" data-placeholder="Select a Area..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                            <option value="">Select a  Area...</option>
+                                            <option value="{{area.ID}}" ng-repeat="area in AreaDropdown" ng-bind="area.Value">
+                                            </option>
+
+                                        </select>
+                                       
+                                    </div>
+                                    <div class="col-md-6 mb-6">
+                                        <label class="required fs-6 fw-semibold mb-2">Select Type</label>
+                                        <select name="Type" ng-change="Typebased()" ng-model="txtType" aria-label="Select a Type" data-control="select2" data-placeholder="Select a Type..." data-dropdown-parent="#kt_modal_add_customer" class="form-select TypeDropdown" required>
+                                            <option value="">Select Type...</option>
+                                            <option value="Staff">Cleaner</option>
+                                            <option value="Team">Team</option>
+                                        </select>
+                                        <span ng-if="AssignServiceForm.$submitted && AssignServiceForm.Type.$invalid" style="color:red">field is required</span>
+                                    </div>
+                                    <div class="col-md-6 mb-6" ng-hide="TeamDiv">
+                                        <label class="required fs-6 fw-semibold mb-2">Select Team</label>
+                                        <select name="Team" ng-model="txtTeam" ng-options="team.ID as team.Value for team in TeamDropdown" aria-label="Select a Role" data-control="select2" data-placeholder="Select a Team..." data-dropdown-parent="#kt_modal_add_customer" class="form-select TeamDropdown">
+                                            <option value="">Select Team...</option>
+
+
+                                        </select>
+                                        <span style="color:red" ng-bind="msgVTeam"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-6" ng-hide="StaffDiv">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Cleaner</label>
+                                        <!--end::Label-->
+                                        <select name="Staff" aria-label="Select a Cleaner" ng-model="ddlstaff" data-control="select2" data-placeholder="Select a Cleaner..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                            <option value="">Select a  Cleaner...</option>
+
+                                            <option value="{{user.ID}}" ng-repeat="user in GetUserDropdown">
+                                                {{user.Value}}
+                                            </option>
+
+
+                                        </select>
+                                        <span style="color:red" ng-bind="msgVStaff"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="AssignServices(AssignServiceForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnsave">Submit</span>
+                                    <span class="indicator-progress" id="btnloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

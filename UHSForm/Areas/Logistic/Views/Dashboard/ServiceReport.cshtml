@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Service Report";
+    Layout = "~/Areas/Logistic/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+    .chart-height {
+        height: 400px; /* Adjust the height as needed */
+    }
+</style>
+<div class="content d-flex flex-column flex-column-fluid"
+     id="kt_content"
+     ng-controller="ServiceReportController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post" ng-cloak>
+        <!--begin::Container-->
+        <div id="kt_content_container-fluid" class="container-fluid">
+            <div class="card my-4">
+                <div class="card-body">
+                    <form name="SearchForm" novalidate>
+                        <!-- Date Range Selector -->
+                        <div class="row mx-4 my-2">
+                            <!-- Date Range Picker -->
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label required">Range Selection</label>
+                                <input class="form-control"
+                                       name="Range"
+                                       ng-model="rangewise"
+                                       placeholder="Pick date"
+                                       id="kt_datepicker_71"
+                                       required />
+                                <span ng-if="SearchForm.$submitted && SearchForm.Range.$invalid"
+                                      style="color: red">Field is required</span>
+                            </div>
+                            <div class="col-md-2 mt-4 d-flex">
+                                <!--begin::Button-->
+                                <button type="submit" ng-click="FilterData(SearchForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnServsearch">
+                                        <span class="bi bi-search spinner-border-sm align-middle ms-2"></span>
+                                        @*<span class="spinner-border spinner-border-sm align-middle ms-2"></span>*@
+                                    </span>
+                                    <span class="indicator-progress" id="btnserviceloader">
+
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+
+                                <button type="button" class="btn btn-secondary mt-2 mx-3" ng-click="resetFilter()">Reset</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <div class="row" id="spinnerdiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;display:none;">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <div id="ServiceReportDiv" style="display:none;">
+                        <!-- Charts Section -->
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <canvas id="serviceStatusPieChart" style="display:none;" class="chart-height"></canvas>
+                            </div>
+                        </div>
+                        <!-- Detailed Report Table -->
+                        <hr />
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="button" ng-click="exportData('servicesReport', 'xlsx', servicesReport)" class="btn btn-primary">
+                                Export
+                            </button>
+                        </div>
+                        <div class="table-responsive mb-4" id="tbl_serviceReport" style="display:none;">
+                            <table class="table table-striped" datatable="ng" dt-options="vm.dtOptions">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Date/Month</th>
+                                        <th style="text-align:center;">Completed</th>
+                                        <th style="text-align:center;">Reschedule</th>
+                                        <th style="text-align:center;">Cancelled</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="service in servicesReport">
+                                        <td ng-bind="$index+1"></td>
+                                        <td ng-bind="service.Month"></td>
+                                        <td ng-bind="service.Completed" style="text-align:center;"></td>
+                                        <td ng-bind="service.Reschdule" style="text-align:center;"></td>
+                                        <td ng-bind="service.Cancelled" style="text-align:center;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="tbl_dummyservice">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th class="min-w-125px">Name</th>
+                                        <th>Added By</th>
+                                        <th>Added On</th>
+                                        <th class="min-w-70px">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                        <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+    <script src="~/Scripts/Content/xlsx.core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+}
+

@@ -1,0 +1,315 @@
+[
+  {
+    "PropertyName": "Abraj Bay Tower",
+
+
+    "services": [
+      {
+        "name": "One Time service Price in QAR",
+
+        "duration": [
+          {
+            "type": "1 BHK",
+            "Time": "1 hour",
+            "Price": 110
+
+          },
+          {
+            "type": "1 BHK with study room",
+            "Time": "1.5 hour",
+            "Price": 160
+          },
+          {
+            "type": "2 BHK",
+            "Time": "2 hour",
+            "Price": 210
+          },
+
+          {
+            "type": "3 BHK",
+            "Time": "2.5 hour",
+            "Price": 260
+          },
+          {
+            "type": "2 BHK TownHouse",
+            "Time": "2.5 hour",
+            "Price": 260
+          },
+          {
+            "type": "3 BHK TownHouse",
+            "Time": "3 hour",
+            "Price": 310
+          },
+          {
+            "type": "Villa",
+            "Time": "3.5 hour",
+            "Price": 360
+          }
+
+        ]
+
+      },
+      {
+        "name": "Monthly package of 4 services once a week Price in QAR",
+        "duration": [
+          {
+            "type": "1 BHK",
+            "Time": "1 hour",
+            "Price": 220
+          },
+          {
+            "type": "1 BHK with study room",
+            "Time": "1.5 hour",
+            "Price": 320
+          },
+          {
+            "type": "2 BHK",
+
+            "Time": "2 hour",
+            "Price": 420
+          },
+          {
+            "type": "3 BHK",
+            "Time": "2.5 hour",
+            "Price": 520
+          },
+          {
+            "type": "2 BHK TownHouse",
+            "Time": "2.5 hour",
+            "Price": 520
+          },
+          {
+            "type": "3 BHK TownHouse",
+            "Time": "3 hour",
+            "Price": 620
+          },
+          {
+            "type": "Villa",
+            "Time": "3.5 hour",
+            "Price": 720
+          }
+
+        ]
+      },
+      {
+        "name": "Monthly package of 4 services 2 times in a week Price in QAR",
+        "duration": [
+          {
+            "type": "1 BHK",
+            "Time": "1 hour",
+            "Price": 420
+          },
+          {
+            "type": "1 BHK with study room",
+            "Time": "1.5 hour",
+            "Price": 620
+          },
+          {
+            "type": "2 BHK",
+            "Time": "2 hour",
+            "Price": 800
+          },
+          {
+            "type": "3 BHK",
+            "Time": "2.5 hour",
+            "Price": 1000
+          },
+          {
+            "type": "2 BHK TownHouse",
+            "Time": "2.5 hour",
+            "Price": 1000
+          },
+          {
+            "type": "3 BHK TownHouse",
+            "Time": "3 hour",
+            "Price": 1200
+          },
+          {
+            "type": "Villa",
+            "Time": "3.5 hour",
+            "Price": 1380
+          }
+
+        ]
+      },
+      {
+        "name": "Monthly package of 4 services 3 times in a week Price in QAR",
+        "duration": [
+          {
+            "type": "1 BHK",
+            "Time": "1 hour",
+            "Price": 640
+          },
+          {
+            "type": "1 BHK with study room",
+            "Time": "1.5 hour",
+            "Price": 920
+          },
+          {
+            "type": "2 BHK",
+            "Time": "2 hour",
+            "Price": 1220
+          },
+          {
+            "type": "3 BHK",
+            "Time": "2.5 hour",
+            "Price": 1500
+          },
+          {
+            "type": "2 BHK TownHouse",
+            "Time": "2.5 hour",
+            "Price": 1500
+          },
+          {
+            "type": "3 BHK TownHouse",
+            "Time": "3 hour",
+            "Price": 1800
+          },
+          {
+            "type": "Villa",
+            "Time": "3.5 hour",
+            "Price": 2080
+          }
+
+        ]
+      },
+      {
+        "name": "Monthly package of 4 services 5 times in a week Price in QAR",
+        "duration": [
+          {
+            "type": "1 BHK",
+            "Time": "1 hour",
+            "Price": 1020
+          },
+          {
+            "type": "1 BHK with study room",
+            "Time": "1.5 hour",
+            "Price": 1520
+          },
+          {
+            "type": "2 BHK",
+            "Time": "2 hour",
+            "Price": 2020
+          },
+          {
+            "type": "3 BHK",
+            "Time": "2.5 hour",
+            "Price": 2520
+          },
+          {
+            "type": "2 BHK TownHouse",
+            "Time": "2.5 hour",
+            "Price": 2520
+          },
+          {
+            "type": "3 BHK TownHouse",
+            "Time": "3 hour",
+            "Price": 3020
+          },
+          {
+            "type": "Villa",
+            "Time": "3.5 hour",
+            "Price": 3490
+          }
+
+        ]
+      },
+      {
+        "name": "Fortnightly package of 4 services once in 2 weeks Price in QAR",
+        "duration": [
+          {
+            "type": "1 BHK",
+            "Time": "1 hour",
+            "Price": 220
+          },
+          {
+            "type": "1 BHK with study room",
+            "Time": "1.5 hour",
+            "Price": 320
+          },
+          {
+            "type": "2 BHK",
+            "Time": "2 hour",
+            "Price": 420
+          },
+          {
+            "type": "3 BHK",
+            "Time": "2.5 hour",
+            "Price": 520
+          },
+          {
+            "type": "2 BHK TownHouse",
+            "Time": "2.5 hour",
+            "Price": 520
+          },
+          {
+            "type": "3 BHK TownHouse",
+            "Time": "3 hour",
+            "Price": 620
+          },
+          {
+            "type": "Villa",
+            "Time": "3.5 hour",
+            "Price": 720
+          }
+
+        ]
+      },
+      {
+        "name": "Deep Cleaning Price in QAR",
+        "duration": [
+          {
+            "type": "1 BHK",
+            "Time": "1 hour",
+            "Price": 189
+          },
+          {
+            "type": "1 BHK with study room",
+            "Time": "1.5 hour",
+            "Price": 289
+          },
+          {
+            "type": "2 BHK",
+            "Time": "2 hour",
+            "Price": 389
+          },
+          {
+            "type": "3 BHK",
+            "Time": "2.5 hour",
+            "Price": 489
+          },
+          {
+            "type": "2 BHK TownHouse",
+            "Time": "2.5 hour",
+            "Price": 489
+          },
+          {
+            "type": "3 BHK TownHouse",
+            "Time": "3 hour",
+            "Price": 589
+          },
+          {
+            "type": "Villa",
+            "Time": "3.5 hour",
+            "Price": 689
+          }
+
+        ]
+      }
+
+    ]
+  },
+  {
+    "PropertyName": "Al Jasra Residence",
+    "services": []
+  },
+  {
+    "PropertyName": "Shark Tower",
+    "services": []
+  },
+  {
+    "PropertyName": "Other Location",
+    "services": []
+  }
+    ]
+

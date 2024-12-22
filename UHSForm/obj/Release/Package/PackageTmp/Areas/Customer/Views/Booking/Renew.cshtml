@@ -1,0 +1,351 @@
+﻿
+@{
+    ViewBag.Title = "Renew";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutPage.cshtml";
+}
+<style>
+    .select2-container .select2-selection--single {
+        box-sizing: border-box !important;
+        cursor: pointer !important;
+        display: block !important;
+        height: 43px !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+    }
+
+    .time-slot {
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Add box shadow */
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .day-slot {
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Add box shadow */
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .row .day-slot {
+        flex-basis: calc(50% - 10px); /* Set width for two time slots in a row */
+    }
+
+    .row .time-slot {
+        flex-basis: calc(50% - 10px); /* Set width for two time slots in a row */
+    }
+
+    @@media (max-width: 575.98px) {
+        .row .time-slot {
+            flex-basis: 100%; /* Set full width for time slots on small screens */
+        }
+
+        .row .day-slot {
+            flex-basis: 100%; /* Set full width for time slots on small screens */
+        }
+    }
+
+    .time-slot label {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        font-size: 15px;
+        user-select: none;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .day-slot label {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        font-size: 15px;
+        user-select: none;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .time-slot label:hover {
+        background-color: #e9ecef;
+    }
+
+    .day-slot label:hover {
+        background-color: #e9ecef;
+    }
+
+    .time-slot input[type="radio"] {
+        display: none;
+    }
+
+    .day-slot input[type="radio"] {
+        display: none;
+    }
+
+    .day-slot input[type="checkbox"] {
+        display: none;
+    }
+
+    .time-slot input[type="radio"]:checked + label {
+        background-color: #030104;
+        color: #fff;
+    }
+
+    .day-slot input[type="radio"]:checked + label {
+        background-color: #030104;
+        color: #fff;
+    }
+
+    .day-slot input[type="checkbox"]:checked + label {
+        background-color: #030104;
+        color: #fff;
+    }
+
+    .freq .form-check {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+
+        .freq .form-check:hover {
+            background-color: #f1f1f1;
+        }
+
+    .freq .form-check-input {
+        margin-right: 1rem;
+        margin-left: 0;
+    }
+
+    .freq .form-check-label {
+        flex-grow: 1;
+        margin: 0;
+        color: #000;
+        font-size: 15px;
+    }
+
+    .freq .price {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-left: auto;
+    }
+    /* Change the color of disabled dates */
+    .flatpickr-day.disabled {
+        color: red !important; /* Set your desired color */
+        background-color: #f0f0f0 !important; /* Optional: Add a background color */
+    }
+
+    /* Change the color of enabled dates */
+    .flatpickr-day:not(.disabled) {
+        color: black !important; /* Set your desired dark black color */
+        background-color: #fff !important; /* Ensure enabled dates have a contrasting background */
+    }
+
+        /* Optional: Hover effect on enabled dates */
+        .flatpickr-day:not(.disabled):hover {
+            background-color: #000 !important; /* Add hover effect for better visibility */
+            color: #fff !important; /* Invert color for better readability */
+        }
+
+
+
+
+    .card {
+        border: none;
+        border-radius: 8px;
+    }
+
+    .text-primary {
+        color: #1E90FF !important;
+    }
+
+    .booking-table {
+        border-collapse: separate;
+        border-spacing: 0 15px;
+        width: 100%;
+    }
+
+        .booking-table th {
+            border: none;
+        }
+
+        .booking-table td {
+            background: white;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+</style>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="RenewalTeamController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_dashboard" style="display:none;">
+       
+        <div id="kt_content_container" class="container-xxl">
+            <div class="row" id="spinnerdiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;display:none;">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div class="card" id="customerDashboard" style="display:none;">
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <!--begin::Label-->
+                        <!--end::Label-->
+                        <div class="col-md-10 freq" ng-show="PackagesDetails.length != 0">
+                            <label class="required fw-semibold fs-6 mb-2" ng-show="PackagesDetails.length != 0">Select Frequency</label>
+                            <label class="float-right fw-semibold fs-6 mb-2" style="float: inline-end;" ng-show="PackagesDetails.length != 0">Price perservice</label>
+                            <div ng-repeat="detail in PackagesDetails | orderBy:'RecursiveTime'" name="FreType" id="PackageD" class="form-check" style="cursor:pointer;">
+                                <input class="form-check-input" type="radio" name="frequency" id="frequency{{detail.packID}}" ng-model="$parent.selectedFrequency" ng-click="selectFrequency(detail)" value="{{detail.packID}}">
+                                <label class="form-check-label" style="cursor: pointer; font-weight: 500;" for="frequency{{detail.packID}}">
+                                    <span style="display: inline-block;">{{ detail.PackageName }}</span>
+                                    <span style="display: inline-block;">({{ formatTimeDuration(detail.Duration,detail.TimeMeasurement) }})</span>
+                                </label>
+                                <span class="price">{{detail.Price + ' QR '}}perservice</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <!-- Select Start Date -->
+                        <div class="col-md-5 mb-4" ng-hide="BasedOnPackageSelect">
+                            <label class="form-label Is-required">Select Start Date</label>
+                            <input class="form-control" placeholder="Pick a date" ng-model="txtRenewStartDate"
+                                   ng-change="GetChangeDatesRenew()" id="kt_specializeRen" />
+
+                        </div>
+                        <!-- Select No Of Months -->
+                        <div class="col-md-5 mb-4" ng-hide="BasedOnNoOfMonthsR">
+                            <label class="form-label Is-required">Select No Of Months</label>
+                            <select select2 style="width: 100%;" ng-model="ddlNoOfMonths" ng-change="onMonthSelection()" class="form-select" id="ddlNoOfMonthsR">
+                                <option disabled="">Select Type</option>
+                                <option value="4">1 Month</option>
+                                <option value="1">3 Months (5 % Discount)</option>
+                                <option value="2">6 Months (10 % Discount)</option>
+                                <option value="3">12 Months (15 % Discount)</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <!-- Select Days -->
+                    <div class="col-sm-12 mb-3" ng-show="DayPackage.length != 0">
+                        <label class="form-label Is-required" ng-show="DayPackage.length != 0">Select your preferred days</label>
+                        <div class="card-body">
+                            <div ng-repeat="day in DayPackage" class="day-slot mb-3">
+                                <input type="radio" name="dayslot" ng-model="$parent.selectedDay" id="slotD{{$index + 1}}" value="{{day.Days}}" ng-true-value="day.Days" ng-false-value="false" ng-click="selectedDaysPack(day)">
+                                <label for="slotD{{$index + 1}}">{{day.Days}}</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <span style="color:green;" ng-bind="msgVDayPDays"></span>
+                    </div>
+                    <!-- Time Selection for Chosen Days (Initially Hidden) -->
+                    <div class="mt-2 mb-3" ng-show="selectedDays.length > 0">
+                        <div class="card shadow-sm">
+                            <div class="card-header text-white" style="min-height: 40px;">
+                                <div class="card-title m-0">
+                                    Select the Start Time for the Chosen Days
+                                </div>
+
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3 mb-3">
+                                    <div ng-repeat="day in selectedDays" class="col-md-4">
+                                        <div class="p-3 border rounded shadow-sm">
+                                            <h6>{{ day }}</h6>
+                                            <!-- First Day -->
+                                            <select select2 style="width: 100%;" name="SelectTime" class="form-select mt-2"
+                                                    ng-model="timeSelections[day]"
+                                                    ng-change="timeSelections[day] && onTimeChange(day, timeSelections[day])"
+                                                    ng-if="$index === 0" ng-disabled="isTimeConfirmed">
+                                                <option value="" disabled>Select Time</option>
+                                                <option ng-repeat="time in timeOptionsForDays[day]" value="{{ time }}">{{ time.Display }}</option>
+                                            </select>
+
+                                            <!-- Other Days -->
+                                            <select select2 style="width: 100%;" name="SelectTime" class="form-select mt-2"
+                                                    ng-model="timeSelections[day]"
+                                                    ng-if="$index !== 0" ng-disabled="isTimeConfirmed || !timeOptionsForDays[day]">
+                                                <option value="" disabled>Select Time</option>
+                                                <option ng-repeat="time in timeOptionsForDays[day]" value="{{ time }}">{{ time.Display }}</option>
+                                            </select>
+                                            <!-- Time Selection -->
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Confirm Time Button -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button ng-hide="loaderconfirmbtn" type="button" class="btn btn-primary"><i class="fa fa-spinner"></i>  loading</button>
+                                        <button ng-hide="btnconfirmd" type="button" class="btn btn-primary"
+                                                ng-click="ConfirmTime()"
+                                                ng-disabled="!areAllTimesSelected() || isTimeConfirmed || btnConfirmDisabled">
+                                            <!-- Disable after confirmation -->
+                                            Confirm the Booking Time
+                                        </button>
+                                    </div>
+
+                                    <!-- Delete Time Button -->
+                                    <div class="col-md-6" ng-show="isTimebtnConfirmed">
+                                        <button ng-hide="loaderchangetimebtn" type="button" class="btn btn-danger"><i class="fa fa-spinner"></i>  loading</button>
+                                        <!-- Show only if time is confirmed -->
+                                        <button ng-hide="changetimebtn" type="button" class="btn btn-danger"
+                                                ng-click="DeleteConfirmedTime()">
+                                            Change the Booking Time
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!--begin::Button-->
+                            <button type="reset" class="btn btn-light me-3">Discard</button>
+                            <!--end::Button-->
+                            <!--begin::Button-->
+                            <button type="submit" ng-disabled="!Disablesubmitbtn()" id="kt_modal_add_customer_submit" ng-click="ExistingCustomerRenew()" class="btn btn-primary">
+                                <span class="indicator-label" id="btnRSsave">Save</span>
+                                <span class="indicator-progress" id="btnRSloader">
+                                    Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                            <!--end::Button-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+

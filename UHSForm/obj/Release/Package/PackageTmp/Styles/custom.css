@@ -1,0 +1,44 @@
+﻿/* Reset the base styles */
+/*.flatpickr-day {
+    font-weight: normal;
+    opacity: 1;
+    color: #000;*/ /* Base color for dates */
+/*}*/
+
+    /* Styling for enabled dates (dates without the 'disabled' class) */
+    /*.flatpickr-day:not(.disabled) {
+        font-weight: bold;*/ /* Bold for enabled dates */
+    /*}*/
+
+    /* Styling for disabled dates (dates with 'disabled' class) */
+    /*.flatpickr-day.disabled {
+        color: #aaa;*/ /* Light gray for disabled dates */
+        /*opacity: 0.5;*/ /* Faded appearance */
+        /*font-style: italic;*/ /* Italic to differentiate */
+        /*pointer-events: none;*/ /* Prevent interaction */
+    /*}*/
+
+/* General styling for all dates */
+.flatpickr-day {
+    font-weight: normal;
+    opacity: 1;
+}
+
+    /* Styling for enabled dates (available dates in green) */
+    .flatpickr-day:not(.flatpickr-disabled) {
+        font-weight: 500; /* Bold for available dates */
+        color: green; /* Green color for enabled dates */
+    }
+
+    /* Styling for disabled dates (unavailable dates in red) */
+    /*.flatpickr-day.disabled {
+        color: red;*/ /* Red color for disabled dates */
+        /*opacity: 0.5;*/ /* Faded effect for disabled dates */
+        /*pointer-events: none;*/ /* Prevent interaction with disabled dates */
+    /*}*/
+    .flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover {
+        cursor: not-allowed;
+        opacity: 0.5;
+        color: red;
+        /* color: var(--bs-gray-500); */
+    }

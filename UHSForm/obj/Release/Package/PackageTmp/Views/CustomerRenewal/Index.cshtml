@@ -1,0 +1,196 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html ng-app="RenewApp">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Urban Hospitality Services, Hospitality Staffing Qatar, Casual Staff Qatar, Cleaning Services Qatar, Event Staffing Qatar">
+    <title>Hospitality &amp; Events Staffing | Urban Hospitality Services</title>
+    <link rel="short-touch-icon" sizes="76x76" href="~/Images/logo.png" id="Icon1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="~/Images/logo.png" id="Icon2">
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="~/Styles/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Styles/angular-growl-2.css">
+    <style>
+        .booking-details {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            /* padding: 30px;*/
+            margin: 50px auto;
+        }
+
+            .booking-details h2 {
+                color: #333333;
+                font-weight: 700;
+                margin-bottom: 30px;
+            }
+
+            .booking-details p {
+                color: #555555;
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+                .booking-details p strong {
+                    color: #333333;
+                    font-weight: 600;
+                }
+
+            .booking-details .card {
+                border: none;
+                background: linear-gradient(135deg, #ffffff, #f8f9fa);
+                border-radius: 15px;
+                box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+                transition: 0.3s;
+            }
+
+                .booking-details .card:hover {
+                    box-shadow: 0 14px 40px 0 rgba(31, 38, 135, 0.5);
+                    /* transform: scale(1.05);*/
+                }
+
+            .booking-details .card-body {
+                padding: 40px;
+            }
+
+            .booking-details .card-title {
+                color: #333333;
+                font-size: 24px;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+
+    </style>
+</head>
+<body ng-controller="SummaryController">
+    <div growl></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form>
+                    <div class="booking-details">
+                        <div class="card">
+                            <div class="card-header text-white" style="background-color: #5756a2;">
+                                Booking Summary
+                            </div>
+                            <div class="card-body">
+                                <div style="margin-top: -40px;" class="container-fluid d-flex justify-content-between">
+                                    <div class="col-lg-4 ps-0">
+                                        <a href="#" class="noble-ui-logo d-block"><img src="~/Images/logo.png" style="height: 90px;" /></a>
+                                        <p class="mt-1 mb-1"><b>Urban Hospitality Services</b></p>
+                                        <p>2nd Floor, Al Hitmi Building, C-Ring Road, P.O Box: 7218, Doha - Qatar</p>
+
+                                    </div>
+
+                                </div>
+                                <div class="container-fluid mt-5 w-100">
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                            <p><strong>Apartment No:</strong> {{RenewalDetls.ApartmentNo}}</p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="table-responsive w-100">
+                                            <table class="table table-bordered" ng-if="RenewalDetls!=null">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th style="text-align:center;">Service Type</th>
+                                                        <th style="text-align:center;">Time Duration</th>
+
+                                                        <th style="text-align:center;">Price</th>
+                                                        <th style="text-align:center;">Weekly Frequency</th>
+                                                        <th style="text-align:center;">Preferred Days</th>
+
+                                                        <th>Preferred Time</th>
+                                                        <th style="text-align:center;"> Total No Of Service</th>
+
+                                                        <th style="text-align:center;">Start Date</th>
+                                                        <th style="text-align:center;">End Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="text-end">
+
+                                                        <td style="text-align:center;" ng-bind="RenewalDetls.SubCategory"></td>
+                                                        <td style="text-align:center;" ng-bind="RenewalDetls.Duration"></td>
+
+                                                        <td style="text-align:center;" ng-bind="RenewalDetls.Price + ' QR'"></td>
+                                                        <td style="text-align:center;" ng-bind="RenewalDetls.PackageName"></td>
+                                                        <td style="text-align:center;" ng-bind="RenewalDetls.Days"></td>
+
+                                                        <td class="text-break" ng-bind="RenewalDetls.Times.length != 0 ? formatTimes(RenewalDetls.Times) : ''"></td>
+
+                                                        <td style="text-align:center;" ng-bind="RenewalDetls.TotalNoOfService"></td>
+
+                                                        <td style="text-align:center;" ng-bind="getFormattedDateDisplay(RenewalDetls.StartDate)"></td>
+                                                        <td style="text-align:center;" ng-bind="getFormattedDateDisplay(RenewalDetls.EndDate)"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="7"><strong> Price:</strong></td>
+                                                        <td colspan="5"><strong ng-bind="TotalPrice | currencyFormat"></strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="7"><strong> Service Months:</strong></td>
+                                                        <td colspan="5"><strong ng-bind="RenewalDetls.NoOfMonths"></strong></td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="7"><strong> Discount Percentage:</strong></td>
+                                                        <td colspan="5"><strong>{{Discount+"%"}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="7"><strong>Discount Price:</strong></td>
+                                                        <td colspan="5"><strong ng-bind="DiscountPrice | currencyFormat"></strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="7"><strong>Total  Price:</strong></td>
+                                                        <td colspan="5"><strong ng-bind="RenewalDetls.TotalPrice | currencyFormat"></strong></td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                            <div class="card-footer">
+                                <button id="btnRSloader"  class="btn btn-primary" type="submit" style="float: right;display:none;"><i class="fa fa-spinner"></i>  loading</button>
+                                <button type="submit" id="btnRSsave" ng-disabled="isRenewalDetlsEmpty()" ng-click="RenewService()" style="float: right;" class="btn btn-primary">Renew</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+               
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Bootstrap-5 -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <!-- Jquery -->
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-growl-2.js"></script>
+    <script src="~/Scripts/App/renewservice.js"></script>
+</body>
+</html>

@@ -1,0 +1,559 @@
+﻿
+@{
+    ViewBag.Title = "InclExclusion";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="ServiceInclusionController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::Card title-->
+                    <div class="card-title fw-medium">
+                        Inclusions & Exclusion List
+                    </div>
+                    <!--begin::Card title-->
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+                            <!--begin::Export-->
+                            <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
+                                <i class="ki-outline ki-exit-up fs-2"></i>Export
+                            </button>
+                            <!--end::Export-->
+                            <!--begin::Add customer-->
+                            <button type="button" class="btn btn-primary" ng-click="InclusionModal()" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Inclusion & Exclusion</button>
+                            <!--end::Add customer-->
+                        </div>
+                        <!--end::Toolbar-->
+
+                    </div>
+                    <!--end::Card toolbar-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <div class="table-responsive" id="tbl_incexllist" style="display:none;">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" datatable="ng" dt-options="vm.dtOptions">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+                                    <th>Service Category</th>
+                                    <th>Service Category Option</th>
+                                    <th>Inclusion</th>
+                                    <th>Exclusion</th>
+                                    @*<th class="min-w-70px">Actions</th>*@
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                <tr ng-repeat="inclu in InclusionList">
+                                    <td ng-bind="inclu.index"></td>
+                                    <td ng-bind="inclu.SubCategoryName"></td>
+                                    <td ng-bind="inclu.SubServiceCategoryName || 'N/A'"></td>
+                                    <td><a href="#" ng-bind="inclu.CountInc || 0" data-bs-toggle="modal" ng-click="GetIncl(inclu.incexID,1)" data-bs-target="#kt_modal_Inclusionlist"></a></td>
+                                    <td><a href="" ng-bind="inclu.CountExc || 0" data-bs-toggle="modal" ng-click="GetIncl(inclu.incexID,2)" data-bs-target="#kt_modal_Inclusionlist"></a></td>
+                                    @*<td>
+                                            <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updatecategory" ng-click="EditMainCategory(service)">Update</a>
+                                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deletemaincategory" ng-click="EditMainCategory(service)">Delete</a>
+
+                                            </div>
+                                        </td>*@
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                        <!--end::Table-->
+                    </div>
+
+                    <div id="tbl_dummyincexllist">
+                        <table class="table">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+                                    <th>Service Category</th>
+                                    <th>Service Category Option</th>
+                                    <th>Inclusion</th>
+                                    <th>Exclusion</th>
+                                    <th class="min-w-70px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+            <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="AddInclExclForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Add a Inclusion & Exclusion</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <!--begin::Scroll-->
+                                <!--end::Input group-->
+                                <div class="row">
+                                    <div class="col-md-6 mb-6">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Main Category</label>
+                                        <!--end::Label-->
+                                        <select name="MainType" aria-label="Select a Main Category" ng-model="ddlMainCategory" ng-change="GetSubCategoryByID()" data-control="select2" data-placeholder="Select a Main Category..." data-dropdown-parent="#kt_modal_add_customer" class="form-select" required>
+                                            <option value="">Select a  main category...</option>
+                                            <option value="{{maincat.ID}}" ng-repeat="maincat in MainCategoryDropdown">
+                                                {{maincat.Value}}
+                                            </option>
+
+                                        </select>
+                                        <span ng-if="AddInclExclForm.$submitted && AddInclExclForm.MainType.$invalid" style="color:red">field is required</span>
+                                    </div>
+                                    <div class="col-md-6 mb-6">
+
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Sub Category</label>
+                                        <!--end::Label-->
+                                        <select name="SubCategory" ng-model="ddlsubcategory" ng-change="GetServiceCategoryByID()" required aria-label="Select a Sub Category" data-control="select2" data-placeholder="Select a Sub Category..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                            <option value="">Select a  Sub Category...</option>
+                                            <option value="{{subcat.ID}}" ng-repeat="subcat in SubCategoryDropdown">
+                                                {{subcat.Value}}
+                                            </option>
+
+                                        </select>
+                                        <span ng-if="AddInclExclForm.$submitted && AddInclExclForm.SubCategory.$invalid" style="color:red">field is required</span>
+                                    </div>
+                                    <div class="col-md-6 mb-6">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">Select Service Category</label>
+                                        <!--end::Label-->
+                                        <select name="ServiceCategory" ng-model="ddlservicecategory" ng-change="GetSubServiceCategoryByID()" aria-label="Select a Sub Category" data-control="select2" data-placeholder="Select a Sub Category..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                            <option value="">Select a  Service Category...</option>
+                                            <option value="{{servcat.ID}}" ng-repeat="servcat in ServiceCategoryDropdown">
+                                                {{servcat.Value}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 mb-6">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">Select Service Option</label>
+                                        <!--end::Label-->
+                                        <select name="SubServiceCategory" ng-model="ddlsubservicecategory" aria-label="Select a Service Option" data-control="select2" data-placeholder="Select a Service Option..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                            <option value="">Select a  Service Option...</option>
+                                            <option value="{{servcat.ID}}" ng-repeat="servcat in SubServiceCategoryDropdown">
+                                                {{servcat.Value}}
+                                            </option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mb-6">
+                                    <div class="col-md-4">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Type</label>
+                                        <!--end::Label-->
+                                        <select name="InclusionExcType" id="ddlTypeD" aria-label="Select a Type" ng-model="ddlType" data-control="select2" data-placeholder="Select a Type..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                            <option value="">Select a  Type...</option>
+                                            <option value="{{inctype}}" ng-repeat="inctype in InclusionTypes" ng-bind="inctype.Name">
+                                            </option>
+
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Note</label>
+                                        <input class="form-control" id="VNotes" rows="3" cols="3" ng-model="Notes" />
+                                    </div>
+                                    <!-- Other details such as color, quantity, etc. -->
+                                    <div class="col-md-2" style="margin-top:30px;">
+                                        <!-- Add button to add category to selectedCategories array -->
+                                        <button class="btn btn-primary" type="button" ng-click="AddIncExcl()">Add</button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive border-bottom mb-5" ng-show="IncluExclusionArray.length != 0">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="min-w-70px">Type</th>
+                                                <th class="min-w-175px">Notes</th>
+
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="" ng-repeat="incl in IncluExclusionArray">
+                                                <td><i class="fa fa-genderless text-success fs-2 me-2"></i>{{incl.TypeName}}</td>
+                                                <td class="d-flex align-items-center" ng-bind="incl.Name"></td>
+
+                                                <td>
+                                                    <a href="" class="btn btn-danger btn-icon" ng-click="AddIncExclRemove($index)" style="height: 30px;"><i class="far fa-trash-alt fs-1x"></i></a>
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" ng-click="initForm()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="AddServiceInclusion(AddInclExclForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnsave">Submit</span>
+                                    <span class="indicator-progress" id="btnloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_Inclusionlist" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+
+
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <div class="card">
+                                <!--begin::Card header-->
+                                <div class="card-header border-0 pt-6">
+                                    <!--begin::Card title-->
+                                    <div class="card-title fw-medium">
+                                        Inclusions & Exclusion List
+                                    </div>
+                                    <!--begin::Card title-->
+                                    <!--begin::Card toolbar-->
+                                    <div class="card-toolbar">
+                                        <!--begin::Toolbar-->
+                                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+
+                                            <!--begin::Add customer-->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_inclusion">Add Inclusion & Exclusion</button>
+                                            <!--end::Add customer-->
+                                        </div>
+                                        <!--end::Toolbar-->
+
+                                    </div>
+                                    <!--end::Card toolbar-->
+                                </div>
+                                <!--end::Card header-->
+                                <div class="card-body">
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_InclusionExList" style="display:none;">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-70px">Type</th>
+                                                    <th class="min-w-175px">Notes</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="" ng-repeat="exclusion in InclusionExclusionList">
+                                                    <td><i class="fa fa-genderless text-success fs-2 me-2"></i>{{exclusion.TypeName}}</td>
+                                                    <td class="d-flex align-items-center" ng-bind="exclusion. Name"></td>
+                                                    <td>
+                                                        <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_update_inclusion" ng-click="EditSInclusion(exclusion)">Update</a>
+                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_delete_inclusion" ng-click="EditSInclusion(exclusion)">Delete</a>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_dummyInclusionExList">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-70px">Type</th>
+                                                    <th class="min-w-175px">Notes</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8" style="color:blue;" id="spanIncLoader"><span><b>Loading...</b></span></td>
+                                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyIncRecords"><span>No records found!</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--begin::Scroll-->
+                            <!--end::Input group-->
+
+
+                        </div>
+                        <!--end::Modal body-->
+                        <!--begin::Modal footer-->
+                        <div class="modal-footer flex-center">
+                            <!--begin::Button-->
+                            <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Close</button>
+                            <!--end::Button-->
+
+                        </div>
+                        <!--end::Modal footer-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_add_inclusion" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="AddInclExclSForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Add a Inclusion & Exclusion</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <!--begin::Scroll-->
+                                <!--end::Input group-->
+
+
+                                <div class="row mb-6">
+                                    <div class="col-md-4">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Type</label>
+                                        <!--end::Label-->
+                                        <select name="InclusionExcTypeS" id="ddlTypeSD" aria-label="Select a Type" ng-model="ddlSType" required data-control="select2" data-placeholder="Select a Type..." data-dropdown-parent="#kt_modal_add_inclusion" class="form-select">
+                                            <option value="">Select a  Type...</option>
+                                            <option value="{{inctype}}" ng-repeat="inctype in InclusionTypes" ng-bind="inctype.Name">
+                                            </option>
+
+
+                                        </select>
+                                        <span ng-if="AddInclExclSForm.$submitted && AddInclExclSForm.InclusionExcTypeS.$invalid" style="color:red" ng-bind="msgVInclusionExcTypeS"></span>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Note</label>
+                                        <input class="form-control" id="VNotes" rows="3" cols="3" ng-model="SNotes" />
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="AddSeparateInclusion(AddInclExclSForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnSsave">Submit</span>
+                                    <span class="indicator-progress" id="btnSloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_update_inclusion" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="UpdateInclExclSForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Update a Inclusion & Exclusion</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <!--begin::Scroll-->
+                                <!--end::Input group-->
+
+
+                                <div class="row mb-6">
+                                    <div class="col-md-4">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Select Type</label>
+                                        <!--end::Label-->
+                                        <select name="InclusionExcTypeU" id="ddlTypeSD" aria-label="Select a Type" ng-model="ddlSUType" ng-options="inctype.ID as inctype.Name for inctype in EditInclusionTypes" required data-control="select2" data-placeholder="Select a Type..." data-dropdown-parent="#kt_modal_update_inclusion" class="form-select">
+                                            <option value="">Select a  Type...</option>
+
+
+                                        </select>
+                                        <span ng-if="UpdateInclExclSForm.$submitted && UpdateInclExclSForm.InclusionExcTypeU.$invalid" style="color:red" ng-bind="msgVInclusionExcTypeS"></span>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Note</label>
+                                        <input class="form-control" id="VNotes" rows="3" cols="3" ng-model="SUNotes" />
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="UpdateSeparateInclusion(UpdateInclExclSForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnSUsave">Submit</span>
+                                    <span class="indicator-progress" id="btnSUloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_delete_inclusion" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="DeleteMainCategoryForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold" ng-bind="'Delete ' + TypeName"></h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <label class="control-label" style="font-size:16px;">
+                                    Are you sure want to delete this  {{TypeName}}?<br />
+
+                                </label>
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="DeleteInclusion()" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnDsave">Submit</span>
+                                    <span class="indicator-progress" id="btnDloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

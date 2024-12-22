@@ -1,0 +1,307 @@
+﻿
+@{
+    ViewBag.Title = "Residence Type";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="ResidenceController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::Card title-->
+                    <div class="card-title fw-medium">
+                        Residential Types List
+                    </div>
+                    <!--begin::Card title-->
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+                            <!--begin::Export-->
+                            <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
+                                <i class="ki-outline ki-exit-up fs-2"></i>Export
+                            </button>
+                            <!--end::Export-->
+                            <!--begin::Add customer-->
+                            <button type="button" class="btn btn-primary" ng-click="AddResidentialModal()" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Residential Types</button>
+                            <!--end::Add customer-->
+                        </div>
+                        <!--end::Toolbar-->
+
+                    </div>
+                    <!--end::Card toolbar-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <div class="table-responsive" id="tbl_residlist" style="display:none;">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+
+                                    <th>Residential Type</th>
+                                    <th>Order By</th>
+                                    <th>Added By</th>
+                                    <th>Added On</th>
+                                    <th class="min-w-70px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                <tr ng-repeat="res in ResidentialList">
+                                    <td ng-bind="res.index"></td>
+
+                                    <td>
+                                        <a href="#" class="text-gray-800 text-hover-primary mb-1" ng-bind="res.Name"></a>
+                                    </td>
+                                    <td ng-bind="res.OrderBy || 0"></td>
+                                    <td>
+                                        <a href="#" class="text-gray-800 text-hover-primary mb-1" ng-bind="res.CreatedBy"></a>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="text-gray-800  mb-1" ng-bind="res.CreatedOn| customDate"></a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateresid" ng-click="EditResidential(res)">Update</a>
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteresid" ng-click="EditResidential(res)">Delete</a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                        <!--end::Table-->
+                    </div>
+                    <div id="tbl_dummyresid">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Area</th>
+                                    <th class="min-w-125px">Property Name</th>
+                                    <th>Residential Type</th>
+                                    <th>Added By</th>
+                                    <th>Added On</th>
+                                    <th class="min-w-70px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+            <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="AddResidentialForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Add a Residential Types</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <!--begin::Scroll-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Name</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="txtname" placeholder="" name="Name" required />
+                                    <!--end::Input-->
+                                    <span ng-if="AddResidentialForm.$submitted && AddResidentialForm.Name.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Order By</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="txtorder" placeholder="" name="Order" required />
+                                    <!--end::Input-->
+                                    <span ng-if="AddResidentialForm.$submitted && AddResidentialForm.Order.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--end::Input group-->
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="AddResidentialType(AddResidentialForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnsave">Submit</span>
+                                    <span class="indicator-progress" id="btnloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="updateresid" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="UpdateResidentialForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Update a Residential Types</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <!--begin::Scroll-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Name</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="EditName" placeholder="" name="Name" required />
+                                    <!--end::Input-->
+                                    <span ng-if="UpdateResidentialForm.$submitted && UpdateResidentialForm.Name.$invalid" style="color:red" ng-bind="msgVName"></span>
+
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Order By</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="txtEditorder" placeholder="" name="EditOrder" required />
+                                    <!--end::Input-->
+                                    <span ng-if="UpdateResidentialForm.$submitted && UpdateResidentialForm.EditOrder.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--end::Input group-->
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="UpdatePropertyResidenceType(UpdateResidentialForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnUsave">Submit</span>
+                                    <span class="indicator-progress" id="btnUloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="deleteresid" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="DeleteMainCategoryForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Delete Residential Type</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <label class="control-label" style="font-size:16px;">
+                                    Are you sure want to delete this Residential Type? <br />
+                                    <b style="color:red" ng-bind="EditName"></b>
+                                </label>
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="DeleteResidentialTypes()" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnDsave">Submit</span>
+                                    <span class="indicator-progress" id="btnDloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

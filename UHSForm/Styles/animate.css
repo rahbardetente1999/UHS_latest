@@ -1,0 +1,219 @@
+.pop
+{
+    animation: pop 0.3s linear forwards;
+
+}
+@keyframes pop {
+    25%
+    {
+        transform: scale(1.2);
+    }
+
+    100%
+    {
+        transform: scale(1.0);
+    }
+}
+.reveal
+{
+    animation: reveal 3s linear 1;
+}
+@keyframes reveal {
+    0%
+    {
+        opacity: 1;
+        display: block;
+    }
+    30%
+    {
+        opacity: 1;
+        display: block;
+    }
+    60%
+    {
+        opacity: 0.7;
+        display: block;
+    }
+    90%
+    {
+        opacity: 0.3;
+        display: block;
+    }
+    100%
+    {
+        opacity: 0;
+
+    }
+}
+.count-bar20
+{
+    animation: countBar20 1s linear forwards;
+}
+@keyframes countBar20
+{
+    from
+    {
+        width: 0;
+    }
+    to
+    {
+        width: 20%;
+    }
+}
+.count-bar40
+{
+    animation: countBar40 1s linear forwards;
+}
+@keyframes countBar40
+{
+    from
+    {
+        width: 20%;
+    }
+    to
+    {
+        width: 40%;
+    }
+}
+.count-bar60
+{
+    animation: countBar60 1s linear forwards;
+}
+@keyframes countBar60
+{
+    from
+    {
+        width: 40%;
+    }
+    to
+    {
+        width: 60%;
+    }
+}
+.count-bar80
+{
+    animation: countBar80 1s linear forwards;
+}
+@keyframes countBar80
+{
+    from
+    {
+        width: 60%;
+    }
+    to
+    {
+        width: 80%;
+    }
+}
+
+
+.pin-move20
+{
+    animation: pinmove20 1s linear forwards;
+}
+@keyframes pinmove20
+{
+    from
+    {
+        left: 0;
+    }
+    to
+    {
+        left: calc(20% - 15px);
+    }
+}
+.pin-move40
+{
+    animation: pinmove40 1s linear forwards;
+}
+@keyframes pinmove40
+{
+    from
+    {
+        left: calc(20% - 15px);
+    }
+    to
+    {
+        left: calc(40% - 15px);
+    }
+}
+.pin-move60
+{
+    animation: pinmove60 1s linear forwards;
+}
+@keyframes pinmove60
+{
+    from
+    {
+        left: calc(40% - 15px);
+    }
+    to
+    {
+        left: calc(60% - 15px);
+    }
+}
+.pin-move80
+{
+    animation: pinmove80 1s linear forwards;
+}
+@keyframes pinmove80
+{
+    from
+    {
+        left: calc(60% - 15px);
+    }
+    to
+    {
+        left: calc(80% - 15px);
+    }
+}
+
+
+/* .lightSpeedIn
+{
+    animation: lightSpeedIn 0.7s ease-in forwards;
+}
+.lightSpeedOut
+{
+    animation: lightSpeedOut 0.7s ease-out forwards;
+} */
+
+
+
+@keyframes lightSpeedIn {
+    0% {
+       -webkit-transform: translateX(100%) skewX(-30deg);
+       opacity: 0;
+    }
+    60% {
+       -webkit-transform: translateX(-20%) skewX(30deg);
+       opacity: 1;
+    }
+    80% {
+       -webkit-transform: translateX(0%) skewX(-15deg);
+       opacity: 1;
+    }
+    100% {
+       -webkit-transform: translateX(0%) skewX(0deg);
+       opacity: 1;
+    }
+ }
+
+ @keyframes lightSpeedOut {
+    100% {
+       -webkit-transform: translateX(100%) skewX(-30deg);
+       opacity: 0;
+    }
+    80% {
+       -webkit-transform: translateX(-20%) skewX(30deg);
+       opacity: 1;
+    }
+    60% {
+       -webkit-transform: translateX(0%) skewX(-15deg);
+       opacity: 1;
+    }
+    0% {
+       -webkit-transform: translateX(0%) skewX(0deg);
+       opacity: 1;
+    }
+ }

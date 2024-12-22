@@ -1,0 +1,163 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html ng-app="HomeApp">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Urban  Services, Hospitality Staffing Qatar, Casual Staff Qatar, Cleaning Services Qatar, Event Staffing Qatar">
+    <title>Hospitality &amp; Events Staffing | Urban  Services</title>
+    <link rel="short-touch-icon" sizes="76x76" href="~/Images/logo.png" id="Icon1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="~/Images/logo.png" id="Icon2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="~/Styles/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Styles/style.css">
+
+    <link rel="stylesheet" href="~/Styles/responsive.css">
+    <link rel="stylesheet" href="~/Styles/animate.css">
+    <style>
+        .help-section {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            margin-top: -20px;
+            border-radius: 8px;
+        }
+
+            .help-section h4 {
+                font-size: 18px;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .help-section p {
+                font-size: 14px;
+                color: #555;
+                line-height: 1.6;
+            }
+
+            .help-section a {
+                color: #007bff;
+                text-decoration: none;
+            }
+
+                .help-section a:hover {
+                    text-decoration: underline;
+                }
+
+        .thank-you-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 60vh;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+            .thank-you-container h1 {
+                font-weight: bold;
+                margin-bottom: 1rem;
+            }
+
+            .thank-you-container p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .thank-you-container .btn {
+                background-color: #343a40;
+                color: white;
+                padding: 0.75rem 1.5rem;
+                font-size: 1.1rem;
+                border-radius: 50px;
+            }
+
+                .thank-you-container .btn:hover {
+                    background-color: #495057;
+                }
+
+        /* Custom styles */
+        .navbar-brand img {
+            height: 90px; /* Adjust logo height */
+        }
+
+        .navbar {
+            background-color: #f8f9fa; /* Light background color */
+            border-bottom: 1px solid rgb(237, 237, 237);
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+        .navbar-nav {
+            margin: 0;
+        }
+
+        .btn-outline-dark.active,
+        .btn-outline-dark.hover {
+            color: #fff; /* Change text color to white */
+            background-color: #343a40; /* Change background color to dark */
+            border-color: #343a40; /* Change border color to dark */
+        }
+    </style>
+</head>
+<body ng-controller="WelcomeAngController">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="~/Images/logo.png" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            @*<div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-dark btn-lg px-5" style="color:#fff;" href="/Account/Index">Login</a>
+                        </li>
+
+                    </ul>
+                </div>*@
+        </div>
+    </nav>
+    <div class="thank-you-container">
+        <h1>Thank you</h1>
+        <p>Your booking is confirmed, and we’re excited to serve you! An email with your login details and payment confirmation has been sent to your inbox.</p>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <a class="nav-link btn px-5" style="background-color: #e86826; color: #fff;" href="/Account/Index">Login</a>
+            <a href="/Home/Index" class="btn" style="background-color: #ddd; color: #000;">Go to homepage</a>
+        </div>
+
+        @*<a class="nav-link btn px-5" style="background-color :#1a3c2c;color:#fff;" href="/Account/Index">Login</a>
+            <a href="/Home/Index" class="btn">Go to homepage</a>*@
+    </div>
+
+    <div class="help-section">
+        <h4>Need Help?</h4>
+        <p>If you don’t receive the email or need any assistance, please reach out to us at:</p>
+        <p>
+            <strong>Email:</strong> <a href="mailto:support@urbanservice-qa.com">support@urbanservice-qa.com</a>
+        </p>
+        <p>
+            <strong>Phone:</strong> <a href="tel:+97431170222">3117 0222</a>
+        </p>
+    </div>
+
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Jquery -->
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-growl-2.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js"></script>
+    <script src="~/Scripts/App/home.js?v=59"></script>
+</body>
+</html>

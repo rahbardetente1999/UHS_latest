@@ -1,0 +1,235 @@
+﻿
+@{
+    ViewBag.Title = "Support";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="SupportController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::Card title-->
+                    <div class="card-title fw-medium">
+                        Ticket List
+                    </div>
+                    <!--begin::Card title-->
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+                            <!--begin::Export-->
+                            <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
+                                <i class="ki-outline ki-exit-up fs-2"></i>Export
+                            </button>
+                            <!--end::Export-->
+                            <!--begin::Add customer-->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Ticket</button>
+                            <!--end::Add customer-->
+                        </div>
+                        <!--end::Toolbar-->
+
+                    </div>
+                    <!--end::Card toolbar-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <div class="table-responsive" id="tbl_supportlist" style="display:none;">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+                                    <th>Ticket No</th>
+                                    <th style="cursor:pointer;">Serverity</th>
+                                    <th style="cursor:pointer;">
+                                        Subject
+                                    </th>
+                                    <th style="cursor:pointer;">Description</th>
+                                    <th style="cursor:pointer;">Emails</th>
+                                    <th>Creation By</th>
+                                    <th>Date of Creation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                <tr ng-repeat="support in SupportList">
+                                    <td ng-bind="support.index"></td>
+
+                                    <td ng-bind="support.
+TicketNo"></td>
+                                    <th ng-bind="support.ServerityName"></th>
+                                    <td ng-bind="support.subject">
+                                    </td>
+                                    <td ng-bind="support.Description" class="text-wrap text-break" style="max-width: 150px;"></td>
+                                    <td class="text-wrap text-break" style="max-width: 100px;">{{support.Emails.split(',').join(', ')}}</td>
+
+                                    <td>
+                                        <a href="#" class="text-gray-800 text-hover-primary mb-1" ng-bind="support.CreatedBy"></a>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="text-gray-800  mb-1" ng-bind="support.CreatedOn==null ? 'N/A' : support.CreatedOn.replace('/Date(','').replace(')/','') | date"></a>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-light-warning" ng-bind="support.Status"></span>
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                        <!--end::Table-->
+                    </div>
+
+                    <div id="tbl_dummysupport">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Ticket No</th>
+                                    <th style="cursor:pointer;">Serverity</th>
+                                    <th style="cursor:pointer;">
+                                        Subject
+                                    </th>
+                                    <th style="cursor:pointer;">Description</th>
+                                    <th style="cursor:pointer;">Emails</th>
+                                    <th>Creation By</th>
+                                    <th>Date of Creation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+            <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="supportForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Technical Support - Contact Form</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <div class="fv-row mb-2">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2 control-label ">Select Serverity</label>
+                                    <!--end::Label-->
+                                    <select name="Serverity" aria-label="Select a Serverity" required ng-model="ddlServerity" data-control="select2" data-placeholder="Select a Serverity..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Type...</option>
+                                        <option value="1">
+                                            General Guidance
+                                        </option>
+                                        <option value="2">
+                                            System Impaired
+                                        </option>
+
+                                    </select>
+
+                                    <span ng-if="supportForm.$submitted && supportForm.Serverity.$invalid" style="color:red" ng-hide="validation" ng-bind="msgDDLServerity"></span>
+
+
+                                </div>
+                                <div class="fv-row mb-2">
+
+                                    <label class="required fs-6 fw-semibold mb-2 control-label ">Subject</label>
+                                    <input type="text" class="form-control" name="Subject" ng-model="subject" maxlength="75" required />
+                                    <span ng-if="supportForm.$submitted && supportForm.Subject.$invalid" style="color:red" ng-hide="validation" ng-bind="msgDDlSubject"></span>
+
+                                </div>
+                              
+                                <div class="fv-row mb-2">
+
+                                    <label class="required fs-6 fw-semibold mb-2 control-label ">Description :</label>
+                                    <textarea id="maxlength-textarea" class="form-control" name="Description" row="3" cols="3" ng-model="Description" maxlength="200" rows="8" placeholder="Maximum 200" required></textarea>
+                                    @*<textarea class="form-control" name="Description" placeholder="Details" cols="10" rows="5" ng-model="txtDescription" maxlength="160"></textarea>*@
+                                    <span ng-if="supportForm.$submitted && supportForm.Description.$invalid" style="color:red" ng-hide="validation" ng-bind="msgDescription"></span>
+
+                                </div>
+                               
+                                <div class="fv-row mb-2">
+                                    <label class="fs-6 fw-semibold mb-2 control-label ">
+                                        Additional Emails :
+                                        <span class="ms-1" data-bs-toggle="tooltip" aria-label="When we contact you via email,we will copy the correspondence to the following email addresses" data-bs-original-title="Specify a target name for future usage and reference" data-kt-initialized="1">
+                                            <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Email Addresses" ng-model="emailadresss" maxlength="360" name="Email" id="defaultconfig" />
+
+
+                                </div>
+                                <div class="fv-row mb-2">
+
+
+                                    <label class="fs-6 fw-semibold mb-2 control-label ">File upload</label>
+                                    <div class="dropzone" id="kt_supportfiles" style=" min-height: 30px; padding: 1rem 1.2rem;">
+                                        <!--begin::Message-->
+                                        <div class="dz-message needsclick">
+                                            <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+
+                                            <!--begin::Info-->
+                                            <div class="ms-4">
+                                                <h3 class="fs-5 fw-bold text-gray-900 mb-1">Request files</h3>
+                                                <span class="fs-7 fw-semibold text-gray-400">Upload up to 2 files</span>
+                                            </div>
+                                            <!--end::Info-->
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" ng-click="initForm()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="RequestSupport(supportForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnsave">Submit</span>
+                                    <span class="indicator-progress" id="btnloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewBag.Title = "TeamRoaster";
+    Layout = "~/Areas/Operation/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+    .card h5 {
+        color: #4e73df;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    /* Ensure both charts maintain a uniform height */
+    .card-body h5 {
+        margin-bottom: 20px;
+    }
+
+    #teamsByAreaChart,
+    #serviceVerticalChart {
+        max-height: 300px; /* Set consistent height */
+    }
+
+    .card {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+</style>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="TeamReportController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post" ng-cloak>
+        <!--begin::Container-->
+        <div id="kt_content_container-fluid" class="container-fluid">
+
+            <div class="card">
+                <h2 class="text-center m-5">Teams Report</h2>
+                <div class="card-header">
+                    <!--begin::Navs-->
+                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="pill" href="#activeteam">Active Teams per Area/Tower</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="pill" href="#servicevertical">Teams by Service Vertical</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="pill" href="#efficiency">Efficiency - Services per Team</a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="AverageRating()" data-bs-toggle="pill" href="#averagerating">Average Rating of Teams</a>
+                        </li>
+                        <!--end::Nav item-->
+
+                    </ul>
+                    <!--begin::Navs-->
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="activeteam">
+                            <!-- Filters Section -->
+                            <form name="SearchForm" id="kt_searchassets" novalidate>
+                                <div class="card mb-5">
+                                    <div class="card-body">
+                                        <!--begin::Compact form-->
+                                        <div class="d-flex align-items-center">
+                                            <!--begin::Input group-->
+                                            <div class="position-relative w-md-900px me-md-2">
+
+                                                <div class="row">
+
+                                                    <div class="col-md-5">
+                                                        <label for="areaSelect" class="form-label required">Select Area</label>
+                                                        <select name="ItemType" id="dltAreaID" required aria-label="Select a Area" ng-model="ddlArea" data-control="select2" data-placeholder="Select a Area..." data-dropdown-parent="#kt_searchassets" ng-change="GetPropertybyArea()" class="form-select">
+                                                            <option value="">Select a Area ...</option>
+                                                            <option value="All">All</option>
+                                                            <option value="{{area.ID}}" ng-repeat="area in AreaDropdown" ng-bind="area.Value"></option>
+                                                        </select>
+                                                        <span ng-if="SearchForm.$submitted && SearchForm.ItemType.$invalid" style="color:red">field is required</span>
+                                                    </div>
+
+                                                    <div class="col-md-5">
+                                                        <label for="towerSelect" class="form-label required">Select Tower</label>
+                                                        <select name="PropertyType" required ng-disabled="propertyDisable" id="dltPropertyID" aria-label="Select a Property" ng-model="ddlProperty" data-control="select2" data-placeholder="Select a Property..." data-dropdown-parent="#kt_searchassets" class="form-select">
+                                                            <option value="">Select a Property ...</option>
+                                                            <option value="All">All</option>
+                                                            <option value="{{prop.ID}}" ng-repeat="prop in PropertyDropdown" ng-bind="prop.Value"></option>
+                                                        </select>
+                                                        <span ng-if="SearchForm.$submitted && SearchForm.PropertyType.$invalid" style="color:red">field is required</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!--end::Input group-->
+                                            <!--begin:Action-->
+                                            <div class="d-flex align-items-center">
+
+                                                <!--begin::Button-->
+                                                <button type="submit" ng-click="FilterData(SearchForm.$valid)" class="btn btn-primary">
+                                                    <span class="indicator-label" id="btnsearch">
+                                                        <span class="bi bi-search spinner-border-sm align-middle ms-2"></span>
+                                                        @*<span class="spinner-border spinner-border-sm align-middle ms-2"></span>*@
+                                                    </span>
+                                                    <span class="indicator-progress" id="btnloader">
+
+                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                    </span>
+                                                </button>
+                                                <!--end::Button-->
+                                                @*<button type="submit" class="btn btn-primary me-5" ng-click="FilterData()">Search</button>*@
+                                                <a class="btn btn-light btn-active-light-primary me-2" ng-click="resetfields()">Reset</a>
+
+                                            </div>
+                                            <!--end:Action-->
+                                        </div>
+                                        <!--end::Compact form-->
+                                    </div>
+                                </div>
+
+                            </form>
+                            <div class="row">
+                                <!-- Active Teams/Cleaners per Area/Tower -->
+                                <div class="col-md-12 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body d-flex flex-column align-items-center">
+                                            <h5 class="text-center">Active Teams per Area/Tower</h5>
+                                            <canvas id="teamsByAreaChart" style="max-height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="servicevertical">
+                            <div class="row">
+                                <!-- Teams/Cleaners by Service Vertical -->
+                                <div class="col-md-12 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body d-flex flex-column align-items-center">
+                                            <h5 class="text-center">Teams by Service Vertical</h5>
+                                            <canvas id="serviceVerticalChart" style="max-height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="efficiency">
+                            <div class="row">
+                                <div class="col-md-12 md-5">
+                                    <!-- Efficiency - Services per Team -->
+                                    <div class="card mt-4">
+                                        <div class="card-body d-flex flex-column">
+                                            <h5>Efficiency - Services per Team</h5>
+                                            <canvas id="efficiencyChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="averagerating">
+                            <div class="row">
+                                <div class="col-md-12 md-5">
+                                    <!-- Average Rating of Teams -->
+                                    <div class="card mt-4">
+                                        <div class="card-body d-flex flex-column">
+                                            <h5>Average Rating of Teams</h5>
+                                            <canvas id="ratingChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+

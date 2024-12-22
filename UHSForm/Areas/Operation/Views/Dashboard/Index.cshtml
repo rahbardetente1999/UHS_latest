@@ -1,0 +1,351 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Operation/Views/Shared/_LayoutPage.cshtml";
+}
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<style>
+    [ng-cloak] {
+        display: none !important;
+    }
+
+    svg {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        margin-bottom: 30px;
+    }
+
+    .bar {
+        rx: 6;
+        cursor: pointer;
+        fill: #3F8CFF;
+        transition: fill 0.3s ease, transform 0.3s ease;
+    }
+
+        .bar:hover {
+            fill: #316FCC;
+            transform: translateY(-2px);
+        }
+
+    .free-slot {
+        rx: 6;
+        cursor: pointer;
+        transition: fill 0.3s ease, stroke 0.3s ease;
+    }
+
+        .free-slot.white {
+            fill: #EAF3FF;
+            stroke: #CCE1FF;
+            stroke-width: 1.5px;
+        }
+
+        .free-slot.red {
+            fill: #FF6B6B;
+            stroke: #FF6B6B;
+        }
+
+        .free-slot:hover {
+            stroke: #333;
+            transform: scale(1.05);
+        }
+
+    .axis path, .axis line {
+        stroke: #d3d3d3;
+    }
+
+    .tooltip {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.75);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        z-index: 10;
+    }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+    h2 {
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    @@media (max-width: 768px) {
+        svg {
+            width: 100%;
+        }
+    }
+
+    .free-slot.light-grey {
+        fill: #e0e0e0;
+        stroke: #b0b0b0;
+        stroke-width: 1.5px;
+    }
+
+    .card-title {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .card-text {
+        font-weight: 700;
+        color: #343a40;
+    }
+
+    .table {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* .table thead {
+                background-color: #343a40;
+                color: #fff;
+            }*/
+
+    /* .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f2f4f6;
+        }
+    */
+    select.form-select {
+        border-radius: 8px;
+    }
+
+
+
+    .chart-container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+    }
+</style>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="RevenueController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post" ng-cloak>
+        <!--begin::Container-->
+        <div id="kt_content_container-fluid" class="container-fluid">
+            <div class="row mb-5 justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0" style="background-color: #f0f4f7;">
+                        <div class="card-body p-4 text-center">
+                            <h5 class="card-title mb-3 text-uppercase fw-bold" style="color: #1e3a8a;">
+                                Cumulative Revenue Across All Years
+                            </h5>
+                            <h6 class="text-muted mb-4">(Up to Today)</h6>
+                            <p class="card-text display-4 fw-bold" style="color: #3b82f6;" ng-bind="TotalRevenue | currencyFormat"></p>
+                            @*<div class="mt-3">
+                                    <span class="badge" style="background-color: #1e40af; color: #ffffff; padding: 10px 20px;">
+                                        Updated
+                                    </span>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0" style="background-color: #f0f4f7;">
+                        <div class="card-body p-4 text-center">
+                            <h5 class="card-title mb-3 text-uppercase fw-bold" style="color: #1e3a8a;">
+                                Total Amount Received
+                            </h5>
+                            <h6 class="text-muted mb-4">(Up to Today)</h6>
+                            <p class="card-text display-4 fw-bold" style="color: #3b82f6;" ng-bind="TotalRetreiveRevenue | currencyFormat"></p>
+                            @*<div class="mt-3">
+                                    <span class="badge" style="background-color: #1e40af; color: #ffffff; padding: 10px 20px;">
+                                        Updated
+                                    </span>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <hr />
+            <!-- Filters Section -->
+            <form name="SearchForm" id="kt_searchassets" novalidate>
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <!--begin::Compact form-->
+                        <div class="d-flex align-items-center">
+                            <!--begin::Input group-->
+                            <div class="position-relative w-md-900px me-md-2">
+
+                                <div class="row">
+                                    <div class="col-md-4  mb-5">
+                                        <label for="" class="form-label required">Range selections</label>
+                                        <input class="form-control" name="Range" ng-model="rangewise" required placeholder="Pick date" id="kt_datepicker_7" />
+                                        <span ng-if="SearchForm.$submitted && SearchForm.Range.$invalid" style="color:red">field is required</span>
+                                    </div>
+
+
+
+                                    <div class="col-md-4">
+                                        <label for="areaSelect" class="form-label required">Select Area</label>
+                                        <select name="ItemType" id="dltAreaID" required aria-label="Select a Area" ng-model="ddlArea" data-control="select2" data-placeholder="Select a Area..." data-dropdown-parent="#kt_searchassets" ng-change="GetPropertybyArea()" class="form-select">
+                                            <option value="">Select a Area ...</option>
+                                            <option value="All">All</option>
+                                            <option value="{{area.ID}}" ng-repeat="area in AreaDropdown" ng-bind="area.Value"></option>
+                                        </select>
+                                        <span ng-if="SearchForm.$submitted && SearchForm.ItemType.$invalid" style="color:red">field is required</span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="towerSelect" class="form-label required">Select Tower</label>
+                                        <select name="PropertyType" required ng-disabled="propertyDisable" id="dltPropertyID" aria-label="Select a Property" ng-model="ddlProperty" data-control="select2" data-placeholder="Select a Property..." data-dropdown-parent="#kt_searchassets" class="form-select">
+                                            <option value="">Select a Property ...</option>
+                                            <option value="All">All</option>
+                                            <option value="{{prop.ID}}" ng-repeat="prop in PropertyDropdown" ng-bind="prop.Value"></option>
+                                        </select>
+                                        <span ng-if="SearchForm.$submitted && SearchForm.PropertyType.$invalid" style="color:red">field is required</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin:Action-->
+                            <div class="d-flex align-items-center">
+
+                                <!--begin::Button-->
+                                <button type="submit" ng-click="FilterData(SearchForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnsearch">
+                                        <span class="bi bi-search spinner-border-sm align-middle ms-2"></span>
+                                        @*<span class="spinner-border spinner-border-sm align-middle ms-2"></span>*@
+                                    </span>
+                                    <span class="indicator-progress" id="btnloader">
+
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                                @*<button type="submit" class="btn btn-primary me-5" ng-click="FilterData()">Search</button>*@
+                                <a class="btn btn-light btn-active-light-primary me-2" ng-click="resetfields()">Reset</a>
+
+                            </div>
+                            <!--end:Action-->
+                        </div>
+                        <!--end::Compact form-->
+                    </div>
+                </div>
+
+            </form>
+
+            <div id="revenueDetails" style="display:none;">
+                <!-- Revenue Overview Section -->
+                <div class="row g">
+
+
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Revenue per Area</h5>
+                                <p class="card-text display-6" ng-bind="RevnueReport.RevenuePerArea | currencyFormat"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Revenue per Tower</h5>
+                                <p class="card-text display-6" ng-bind="RevnueReport.RevenuePerTower | currencyFormat"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="row mt-5">
+                    @*<div class="col-md-6 chart-container">
+                            <h5 class="text-center">Revenue Over Time</h5>
+                            <canvas id="revenueChart"></canvas>
+                        </div>*@
+
+                    <div class="col-md-12 chart-container">
+                        <h5 class="text-center">Revenue Breakdown by Tower</h5>
+                        <canvas id="towerRevenueChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+                            <!--begin::Export-->
+                            <button type="button" class="btn btn-light-primary me-3" ng-click="exportData('RevenueList','xlsx',RevenueTList)">
+                                <i class="ki-outline ki-exit-up fs-2"></i>Export
+                            </button>
+                            <!--end::Export-->
+
+                        </div>
+                        <!--end::Toolbar-->
+
+                    </div>
+                    <!--end::Card toolbar-->
+                    <div class="card-body">
+                        <!-- Detailed Revenue Table Section -->
+                        <div class="table-responsive" id="tbl_packageslist" style="display:none;">
+                            <table class="table table-bordered table-striped" datatable="ng" dt-options="vm.dtOptions">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Tower</th>
+                                        <th>Revenue</th>
+                                        <th style="text-align:center;">No Of Customer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in RevenueTList">
+                                        <td ng-bind="item.index"></td>
+                                        <td ng-bind="item.TowerName"></td>
+                                        <td ng-bind="item.Amount| currencyFormat"></td>
+                                        <td style="text-align:center;" ng-bind="item.NoOfCustomers"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="tbl_dummypacakges">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Tower</th>
+                                        <th>Revenue</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                        <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+    <script src="~/Scripts/Content/xlsx.core.min.js"></script>
+    
+}

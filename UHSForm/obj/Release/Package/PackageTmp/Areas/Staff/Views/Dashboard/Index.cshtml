@@ -1,0 +1,820 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Staff/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="DashboardController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+
+
+            <div class="row mb-5">
+                <div class="card">
+                    <div class="card-header">
+                        <!--begin::Navs-->
+                        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="pill" href="#overview">Today's Task</a>
+                            </li>
+                            <!--end::Nav item-->
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" ng-click="GetPendingTask()" data-bs-toggle="pill" href="#pendingtask">Today's Pending Task</a>
+                            </li>
+                            <!--end::Nav item-->
+                            <!--begin::Nav item-->
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="pill" ng-click="GetCompletedTask()" href="#changepassword">Today's Completed Task</a>
+                            </li>
+
+                            <!--end::Nav item-->
+
+                        </ul>
+                        <!--begin::Navs-->
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="overview">
+                                <div class="table-responsive" id="tbl_bookinglist" style="display:none;">
+                                    <!--begin::Table-->
+                                    <table class="table table-bordered gs-7 gy-7 gx-7" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th class="min-w-20px">S.No</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Area</th>
+                                                <th class="min-w-50px">SubArea</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-50px">Service Time</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="book in TodayList | filter: searchbook">
+                                                <td ng-bind="$index+1"></td>
+                                                <td>
+                                                    <a href="" ng-bind="book.CustomerName" data-bs-toggle="modal" data-bs-target="#kt_modal_remilist" ng-click="GetPersonalDtls(book)"></a>
+                                                </td>
+                                                <td ng-bind="book.Area"></td>
+                                                <td ng-bind="book.SubArea"></td>
+                                                <td ng-bind="book.CustomerAddress">
+                                                </td>
+                                                <td ng-bind="book.AppartmentType"></td>
+                                                <td ng-bind="book.ServiceType"></td>
+                                                <td ng-bind="book.ServiceTime">
+                                                </td>
+                                                <td>
+                                                    <span class="badge py-3 px-4 fs-7" ng-class="{ 'badge-light-info':book.StatusOfWork== 1,
+        'badge-light-primary': book.StatusOfWork
+ == 2,
+        'badge-light-success': book.StatusOfWork
+ == 3}" ng-bind="book.StatusOfWork
+==1?'Open':book.StatusOfWork
+==2?'Pending':book.StatusOfWork
+
+==3?'Closed':'N/A'"></span>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#reportIssue" ng-if="shouldShowCloseTask(book)" ng-click="IssueModal(book)">Report Issue</a>
+                                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" ng-if="book.StatusOfWork != 3 && shouldShowCloseTask(book)" data-bs-target="#closedTask" ng-click="ClosedModal(book)">Close Task</a>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <div id="tbl_dummybooking">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-50px">S.no</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-100px">Service Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="10" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                                <td colspan="10" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="pendingtask">
+                                <div class="table-responsive" id="tbl_bookingpendinglist" style="display:none;">
+                                    <!--begin::Table-->
+                                    <table class="table table-bordered gs-7 gy-7 gx-7" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th class="min-w-20px">S.No</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Area</th>
+                                                <th class="min-w-50px">SubArea</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-50px">Service Time</th>
+
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="book in TodayPendingList | filter: searchbook">
+                                                <td ng-bind="$index+1"></td>
+                                                <td>
+                                                    <a href="" ng-bind="book.CustomerName" data-bs-toggle="modal" data-bs-target="#kt_modal_remilist" ng-click="GetPersonalDtls(book)"></a>
+                                                </td>
+                                                <td ng-bind="book.Area"></td>
+                                                <td ng-bind="book.SubArea"></td>
+                                                <td ng-bind="book.CustomerAddress">
+                                                </td>
+                                                <td ng-bind="book.AppartmentType"></td>
+                                                <td ng-bind="book.ServiceType"></td>
+                                                <td ng-bind="book.ServiceTime">
+                                                </td>
+
+                                                <td>
+                                                    <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                                        <a class="dropdown-item" ng-if="shouldShowCloseTask(book)" href="#" data-bs-toggle="modal" data-bs-target="#reportIssue" ng-click="ClosedModal(book)">Report Issue</a>
+                                                        <a class="dropdown-item" ng-if="shouldShowCloseTask(book)" href="#" data-bs-toggle="modal" data-bs-target="#closedTask" ng-click="ClosedModal(book)">Close Task</a>
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <div id="tbl_dummybookingpending">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-50px">S.no</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-100px">Service Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="10" style="color:blue;" id="spanPeLoader"><span><b>Loading...</b></span></td>
+                                                <td colspan="10" style="color:red;display:none;" id="spanEmptyPenRecords"><span>No records found!</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="changepassword">
+                                @*<div class="row" id="spinnerMonthlydiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;display:none;">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>*@
+                                <div class="table-responsive" id="tbl_bookingClist" style="display:none;">
+                                    <!--begin::Table-->
+                                    <table class="table table-bordered gs-7 gy-7 gx-7" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th class="min-w-20px">S.No</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Area</th>
+                                                <th class="min-w-50px">SubArea</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-100px">Service Time</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="book in CompletedList | filter: searchbook">
+                                                <td ng-bind="$index+1"></td>
+                                                <td>
+                                                    <a href="" ng-bind="book.CustomerName" data-bs-toggle="modal" data-bs-target="#kt_modal_remilist" ng-click="GetPersonalDtls(book)"></a>
+                                                </td>
+                                                <td ng-bind="book.Area"></td>
+                                                <td ng-bind="book.SubArea"></td>
+                                                <td ng-bind="book.CustomerAddress">
+                                                </td>
+                                                <td ng-bind="book.AppartmentType"></td>
+                                                <td ng-bind="book.ServiceType"></td>
+                                                <td ng-bind="book.ServiceTime">
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <div id="tbl_dummyCbooking">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-50px">S.no</th>
+                                                <th class="min-w-100px">Customer Name</th>
+                                                <th class="min-w-50px">Address</th>
+                                                <th class="min-w-50px">Apartment Type</th>
+                                                <th class="min-w-50px">Service Type</th>
+                                                <th class="min-w-100px">Service Time</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="10" style="color:blue;" id="spanCLoader"><span><b>Loading...</b></span></td>
+                                                <td colspan="10" style="color:red;display:none;" id="spanCEmptyRecords"><span>No records found!</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="modal fade" id="kt_modal_serviceslist" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Services List</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_servicesList" style="display:none;">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Service Category</th>
+                                                    <th class="min-w-175px">Sub Category</th>
+                                                    <th class="min-w-70px">Quantity</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="" ng-repeat="servs in ServiceList">
+                                                    <td ng-bind="servs.ServiceCategoryName"></td>
+                                                    <td ng-bind="servs.ServiceSubCategoryName"></td>
+                                                    <td ng-bind="servs.Quantity"></td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_dummyservices">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Service Category</th>
+                                                    <th class="min-w-175px">Sub Category</th>
+                                                    <th class="min-w-70px">Quantity</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8" style="color:blue;" id="spanservLoader"><span><b>Loading...</b></span></td>
+                                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyservRecords"><span>No records found!</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--begin::Scroll-->
+                            <!--end::Input group-->
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_packagelist" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Packages List</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_packageList" style="display:none;">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Package Name</th>
+                                                    <th class="min-w-100px">Date</th>
+                                                    <th class="min-w-100px">Duration</th>
+
+                                                    <th class="min-w-100px">Price</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="" ng-repeat="package in PackagesList">
+                                                    <td ng-bind="package.PackageName"></td>
+                                                    <td ng-bind="getFormattedDate(package.Date) | date:'fullDate'"></td>
+                                                    <td ng-bind="package.Duration + ' ' + package.Measurement "></td>
+                                                    <td ng-bind="package.Price"></td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="table-responsive border-bottom mb-5" id="tbl_dummypackage">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="min-w-175px">Package Name</th>
+                                                    <th class="min-w-100px">Date</th>
+                                                    <th class="min-w-100px">Duration</th>
+
+                                                    <th class="min-w-100px">Price</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8" style="color:blue;" id="spanpackLoader"><span><b>Loading...</b></span></td>
+                                                    <td colspan="8" style="color:red;display:none;" id="spanEmptypackRecords"><span>No records found!</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--begin::Scroll-->
+                            <!--end::Input group-->
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_remilist" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold" ng-bind="GetDetails.CustomerName + ' Details'"></h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+
+
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Special Instruction</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="GetDetails.SpecialInstruction || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Availability in the Apartment:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList != null ? (AvailabilityList.Availability == true ? 'Yes' : 'No') : ''"></label>
+                                </div>
+                                <div class="col-md-4 mb-4" ng-if="AvailabilityList.Availability == false">
+                                    <label for="phone" class="control-label">Key Collection:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList != null ? (AvailabilityList.KeyCollection == true ? 'Yes' : 'No') : ''"></label>
+                                </div>
+                                <div class="col-md-4 mb-4" ng-if="AvailabilityList.Availability == false">
+                                    <label for="phone" class="control-label">Access Details</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList.AccessProperty || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4" ng-if="AvailabilityList.Availability == false">
+                                    <label for="phone" class="control-label">Date:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList.ReceptionDate==null ? 'N/A' : AvailabilityList.ReceptionDate.replace('/Date(','').replace(')/','') | date"></label>
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="row" ng-if="GetDetails.Files != null">
+                                <div class="col-sm-12">
+
+                                    <a href="{{image.Value}}" class="mr-2" ng-repeat="image in GetDetails.Files" data-toggle="lightbox" data-gallery="img-gallery" data-title="Incident Images" data-max-width="600">
+                                        <img class="img-responsive" ng-src="{{image.Value}}" style="width:200px;height:200px;" />
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="kt_modal_availability" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Availability Details</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Availability in the Apartment:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList != null ? (AvailabilityList.Availability != null ? 'Yes' : 'No') : ''"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Key Collection:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList != null ? (AvailabilityList.KeyCollection != null ? 'Yes' : 'No') : ''"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Access Details</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList.AccessProperty || 'N/A'"></label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="phone" class="control-label">Date:</label><br />
+                                    <label class="text-wrap text-break" style="max-width: 200px;font-weight:500;" ng-bind="AvailabilityList.ReceptionDate==null ? 'N/A' : AvailabilityList.ReceptionDate.replace('/Date(','').replace(')/','') | date"></label>
+                                </div>
+
+
+                            </div>
+
+
+                            <!--begin::Scroll-->
+                            <!--end::Input group-->
+
+
+                        </div>
+                        <!--end::Modal body-->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="reportIssue" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-850px">
+
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <form class="form" name="ReportTaskForm" novalidate>
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_customer_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bold">Report Issues</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div data-bs-dismiss="modal" ng-click="InitIssueForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body py-10 px-lg-17">
+                        <!--begin::Input group-->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-4">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Select Issues</label>
+                                <!--end::Label-->
+                                <select class="form-select" id="issuedropdown" ng-model="ddlissuetype" ng-change="ChangeIssueType()" name="IssueType" required data-control="select2" data-placeholder="Select an option" multiple="multiple">
+                                    <option></option>
+                                    <option value="1">Breakages</option>
+                                    <option value="2">Stains</option>
+                                    <option value="3">Damages </option>
+                                    <option value="4">Others</option>
+                                </select>
+                                <span ng-if="ReportTaskForm.$submitted && ReportTaskForm.IssueType.$invalid" style="color:red">Field is required</span>
+                            </div>
+
+                            <div class="col-md-6 mb-4" ng-show="ddlotherdiv">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Other</label>
+                                <!--end::Label-->
+                                <input type="text" id="Othertxt" class="form-control" ng-model="ddlOthertext" />
+                                <span style="color:red;" ng-bind="msgVother"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Select Conditional Type</label>
+                                <!--end::Label-->
+                                <select class="form-select" id="ConditionTypeDiv" name="Conditiontype" ng-model="ddlConditiontype" data-control="select2" data-placeholder="Select an option" required>
+                                    <option></option>
+                                    <option value="1">Pre-existing Condition</option>
+                                    <option value="2">Accidental Damage</option>
+
+                                </select>
+                                <span ng-if="ReportTaskForm.$submitted && ReportTaskForm.Conditiontype.$invalid" style="color:red">field is required</span>
+
+                            </div>
+
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-semibold mb-2">Comment</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <textarea type="text" class="form-control" ng-model="txtcomment" rows="3" cols="3" placeholder="" name="Name"></textarea>
+                                <!--end::Input-->
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <!--begin::Label-->
+                                <label class="col-form-label text-lg-right">Upload Files:</label>
+                                <!--end::Label-->
+                                <!--begin::Dropzone-->
+                                <div class="dropzone" id="kt_dropzonejs_example_2">
+
+                                    <!--begin::Message-->
+                                    <div class="dz-message needsclick">
+                                        <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+
+                                        <!--begin::Info-->
+                                        <div class="ms-4">
+                                            <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
+                                            <span class="fs-7 fw-semibold text-gray-500">Upload up to 1 files</span>
+                                        </div>
+                                        <!--end::Info-->
+                                    </div>
+                                </div>
+                                <!--end::Dropzone-->
+                            </div>
+
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <!--end::Input group-->
+
+
+
+
+                    </div>
+                    <!--end::Modal body-->
+                    <!--begin::Modal footer-->
+                    <div class="modal-footer flex-center">
+                        <!--begin::Button-->
+                        <button type="reset" ng-click="InitIssueForm()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="submit" id="kt_modal_add_customer_submit" ng-click="CreateIssueTask(ReportTaskForm.$valid)" class="btn btn-primary">
+                            <span class="indicator-label" id="btnCisTsave">Submit</span>
+                            <span class="indicator-progress" id="btnCisTCloader">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Modal footer-->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="closedTask" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <form class="form" name="ClosedTaskForm" novalidate>
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_customer_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bold">Closed Task</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div data-bs-dismiss="modal" ng-click="initCForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body py-10 px-lg-17">
+                        <div class="text-center">
+                            <h4>Are you sure you want to close the task for <span ng-bind="CustomerName"></span>?</h4>
+
+
+                        </div>
+
+
+                        </div>
+                    <!--end::Modal body-->
+                    <!--begin::Modal footer-->
+                    <div class="modal-footer flex-center">
+                        <!--begin::Button-->
+                        <button type="reset" ng-click="initCForm()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="submit" id="kt_modal_add_customer_submit" ng-click="ClosedTask(ClosedTaskForm.$valid)" class="btn btn-primary">
+                            <span class="indicator-label" id="btnCTsave">Submit</span>
+                            <span class="indicator-progress" id="btnCTCloader">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Modal footer-->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="rating" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-850px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <form class="form" name="AddRatingForm" novalidate>
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_customer_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bold">Rate Our Service</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body py-10 px-lg-17">
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <span style="font-size:20px;">Rating:</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <jk-rating-stars max-rating="5"
+                                                 rating="secondRate"
+                                                 on-rating="onItemRating(rating)">
+                                </jk-rating-stars>
+                                <span style="color:red; display:none;" id="spanRatingReqMsg">Rating is required!</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <span><b>Reviews:</b></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <p>
+                                    Thank you for Rating {{secondRate}} stars
+                                </p>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="comment" class="form-label">Comment</label>
+                                <textarea class="form-control" name="review" rows="3" cols="3" maxlength="160" placeholder="Review" ng-model="review"></textarea>
+
+                                @*<span ng-if="ratingForm.$submitted && ratingForm.review.$invalid" style="color:red" ng-bind="msgVrating"></span>*@
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <!--end::Modal body-->
+                    <!--begin::Modal footer-->
+                    <div class="modal-footer flex-center">
+                        <!--begin::Button-->
+                        <button type="reset" data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-light me-3">Discard</button>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="submit" id="kt_modal_add_customer_submit" ng-click="SaveRating()" class="btn btn-primary">
+                            <span class="indicator-label" id="btnsave">Submit</span>
+                            <span class="indicator-progress" id="btnloader">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Modal footer-->
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+    <script src="~/Scripts/Content/xlsx.core.min.js"></script>
+  
+}
+

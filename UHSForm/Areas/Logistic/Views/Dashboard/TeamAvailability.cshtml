@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = "Team Availability";
+    Layout = "~/Areas/Logistic/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+    [ng-cloak] {
+        display: none !important;
+    }
+
+    .pagination > li > a, .pagination > li > span {
+        position: relative;
+        float: left;
+        padding: 6px 12px;
+        line-height: 1.42857;
+        text-decoration: none;
+        color: #337ab7;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        margin-left: -1px;
+    }
+</style>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="TeamAvailableController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post" ng-cloak>
+        <!--begin::Container-->
+        <div id="kt_content_container-fluid" class="container-fluid">
+
+            <div class="card">
+                <form name="searchTeamAvalteam" novalidate ng-hide="teamavailadiv">
+                    <div class="row w-100">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label required">Select Date</label>
+                            <input class="form-control" type="date" name="DataAvailb" ng-model="teamavaildate" required />
+                            <span ng-if="searchTeamAvalteam.$submitted && searchTeamAvalteam.DataAvailb.$invalid" style="color:red">field is required</span>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="Duration" class="form-label required">Select Duration</label>
+                            <select id="Duration" data-control="select2" name="AvilDuration" class="form-select"
+                                    ng-model="txtDuration"
+                                    ng-options="duration as formatDuration(duration) for duration in durations" required>
+                                <option value="" disabled>Select Duration</option>
+                            </select>
+                            <span ng-if="searchTeamAvalteam.$submitted && searchTeamAvalteam.AvilDuration.$invalid" style="color:red">field is required</span>
+                        </div>
+                        <div class="col-md-4" style="margin-top:20px;">
+                            <!--begin::Button-->
+                            <button type="submit" ng-click="Searchwithdateavailab(searchTeamAvalteam.$valid)" class="btn btn-primary">
+                                <span class="indicator-label" id="btnteamavailsearch">Search</span>
+                                <span class="indicator-progress" id="btnteamvailloader">
+                                    Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                            <!--end::Button-->
+
+                            <a class="btn btn-secondary" ng-click="ResetTeamavailable()">Reset</a>
+                        </div>
+
+                    </div>
+
+                </form>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="button" ng-if="AvailableTimes.length!=0" ng-click="exportToExcel()" class="btn btn-primary">
+                                Export
+                            </button>
+                        </div>
+                        <h5 class="card-title mb-5">Team Availability Overview</h5>
+
+
+                        <!-- Summary Section -->
+                        <!--<div class="mt-4">
+                            <h5 class="text-secondary">Legend:</h5>
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><span class="badge bg-success">Available</span></li>
+                                <li class="list-inline-item"><span class="badge bg-danger">Not Available</span></li>
+                            </ul>
+                        </div>-->
+                        <!-- Availability Table -->
+                        <div class="table-responsive" id="tbl_availablelist" style="display:none;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Team Member</th>
+                                        <th ng-repeat="slot in timeSlots">
+                                            {{ slot.DisplayStart }} - {{ slot.DisplayEnd }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="team in AvailableTimes | itemsPerPage: 10" pagination-id="availableTable">
+                                        <td>{{ team.TeamName }}</td>
+                                        <td ng-repeat="slot in timeSlots">
+                                            <span class="badge py-3 px-4 fs-7 badge-light-primary" ng-class="{'badge-light-success': isSlotAvailable(team, slot),'badge-light-danger': !isSlotAvailable(team, slot)}" ng-bind="isSlotAvailable(team, slot) ? 'Available' : 'Not Available'"></span>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="availableTable"></dir-pagination-controls>
+
+                        </div>
+
+                        <div id="tbl_dummyavailablelist">
+                            <table class="table">
+                                <thead>
+                                    <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                        <th>Team Member</th>
+                                        <th>Times</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="10" style="color:blue;" id="spanavailLoader"><span><b>Loading...</b></span></td>
+                                        <td colspan="10" style="color:red;display:none;" id="spanEmptyAvailRecords"><span>No records found!</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+    <script src="~/Scripts/Content/xlsx.core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+}
+

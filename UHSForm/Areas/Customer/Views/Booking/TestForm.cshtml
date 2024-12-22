@@ -1,0 +1,988 @@
+﻿
+@{
+    ViewBag.Title = "TestForm";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutPage.cshtml";
+}
+
+<link href="~/Styles/Content/custom.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Styles/flatpickr.css">
+<style>
+    .booking-details {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        /* padding: 30px;*/
+        /* margin: 50px auto;*/
+    }
+
+        .booking-details h2 {
+            color: #333333;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .booking-details p {
+            color: #555555;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+            .booking-details p strong {
+                color: #333333;
+                font-weight: 600;
+            }
+
+        .booking-details .card {
+            border: none;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            transition: 0.3s;
+        }
+
+            .booking-details .card:hover {
+                box-shadow: 0 14px 40px 0 rgba(31, 38, 135, 0.5);
+                transform: scale(1.05);
+            }
+
+        .booking-details .card-body {
+            padding: 40px;
+        }
+
+        .booking-details .card-title {
+            color: #333333;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+    .time-slot {
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Add box shadow */
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .day-slot {
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Add box shadow */
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .row .day-slot {
+        flex-basis: calc(50% - 10px); /* Set width for two time slots in a row */
+    }
+
+    .row .time-slot {
+        flex-basis: calc(50% - 10px); /* Set width for two time slots in a row */
+    }
+
+    @@media (max-width: 575.98px) {
+        .row .time-slot {
+            flex-basis: 100%; /* Set full width for time slots on small screens */
+        }
+
+        .row .day-slot {
+            flex-basis: 100%; /* Set full width for time slots on small screens */
+        }
+    }
+
+    .time-slot label {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        font-size: 15px;
+        user-select: none;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .day-slot label {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        font-size: 15px;
+        user-select: none;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .time-slot label:hover {
+        background-color: #e9ecef;
+    }
+
+    .day-slot label:hover {
+        background-color: #e9ecef;
+    }
+
+    .time-slot input[type="radio"] {
+        display: none;
+    }
+
+    .day-slot input[type="radio"] {
+        display: none;
+    }
+
+    .day-slot input[type="checkbox"] {
+        display: none;
+    }
+
+    .time-slot input[type="radio"]:checked + label {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .day-slot input[type="radio"]:checked + label {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .day-slot input[type="checkbox"]:checked + label {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+
+    .freq .form-check {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+
+        .freq .form-check:hover {
+            background-color: #f1f1f1;
+        }
+
+    .freq .form-check-input {
+        margin-right: 1rem;
+        margin-left: 0;
+    }
+
+    .freq .form-check-label {
+        flex-grow: 1;
+        margin: 0;
+    }
+
+    .freq .price {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-left: auto;
+    }
+
+    label.checkbox-card .resizecard {
+        background: #fff;
+        border-radius: 5px;
+        margin-right: 20px;
+        max-width: 170px;
+        min-height: 50px;
+        padding: 10px;
+        display: grid;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: 200ms linear;
+    }
+</style>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="AddBookingController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+
+            <!--begin::Stepper-->
+            <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid gap-10" id="kt_create_account_stepper">
+                <!--begin::Aside-->
+                <div class="card d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px w-xxl-350px">
+                    <!--begin::Wrapper-->
+                    <div class="card-body px-6 px-lg-10 px-xxl-15 py-20">
+                        <!--begin::Nav-->
+                        <div class="stepper-nav">
+                            <!--begin::Step 1-->
+                            <div class="stepper-item current" data-kt-stepper-element="nav">
+                                <!--begin::Wrapper-->
+                                <div class="stepper-wrapper">
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="ki-duotone ki-check fs-2 stepper-check"></i>
+                                        <span class="stepper-number">1</span>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Service Type</h3>
+                                        <div class="stepper-desc fw-semibold">Setup Your Service Details</div>
+                                    </div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Line-->
+                                <div class="stepper-line h-40px"></div>
+                                <!--end::Line-->
+                            </div>
+                            <!--end::Step 1-->
+                            <!--begin::Step 2-->
+                            <div class="stepper-item" data-kt-stepper-element="nav">
+                                <!--begin::Wrapper-->
+                                <div class="stepper-wrapper">
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="ki-duotone ki-check fs-2 stepper-check"></i>
+                                        <span class="stepper-number">2</span>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Set up Dates & times</h3>
+                                        <div class="stepper-desc fw-semibold">Setup Your service</div>
+                                    </div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Line-->
+                                <div class="stepper-line h-40px"></div>
+                                <!--end::Line-->
+                            </div>
+                            <!--end::Step 2-->
+                            <!--begin::Step 3-->
+                            <div class="stepper-item" data-kt-stepper-element="nav">
+                                <!--begin::Wrapper-->
+                                <div class="stepper-wrapper">
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="ki-duotone ki-check fs-2 stepper-check"></i>
+                                        <span class="stepper-number">3</span>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Personal Info</h3>
+                                        <div class="stepper-desc fw-semibold">Your Personal Related Info</div>
+                                    </div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Line-->
+                                <div class="stepper-line h-40px"></div>
+                                <!--end::Line-->
+                            </div>
+                            <!--end::Step 3-->
+                            <!--begin::Step 4-->
+                            <div class="stepper-item" data-kt-stepper-element="nav">
+                                <!--begin::Wrapper-->
+                                <div class="stepper-wrapper">
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="ki-duotone ki-check fs-2 stepper-check"></i>
+                                        <span class="stepper-number">4</span>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Summary Details</h3>
+                                        <div class="stepper-desc fw-semibold">Summary Details</div>
+                                    </div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Line-->
+                                <div class="stepper-line h-40px"></div>
+                                <!--end::Line-->
+                            </div>
+                            <!--end::Step 4-->
+                            <!--begin::Step 5-->
+                            <div class="stepper-item mark-completed" data-kt-stepper-element="nav">
+                                <!--begin::Wrapper-->
+                                <div class="stepper-wrapper">
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="ki-duotone ki-check fs-2 stepper-check"></i>
+                                        <span class="stepper-number">5</span>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Completed</h3>
+                                        <div class="stepper-desc fw-semibold">Woah, we are here</div>
+                                    </div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Wrapper-->
+                            </div>
+                            <!--end::Step 5-->
+                        </div>
+                        <!--end::Nav-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--begin::Aside-->
+                <!--begin::Content-->
+                <div class="card d-flex flex-row-fluid flex-center">
+                    <!--begin::Form-->
+                    <form class="card-body py-20 w-100 mw-xl-700px px-9" name="NewAppointmentForm" novalidate="novalidate" id="kt_create_account_form">
+                        <!--begin::Step 1-->
+                        <div class="current" data-kt-stepper-element="content">
+                            <!--begin::Wrapper-->
+                            <div class="w-100">
+                                <!--begin::Heading-->
+                                <div class="pb-10 pb-lg-15">
+                                    <!--begin::Title-->
+                                    <h2 class="fw-bold d-flex align-items-center text-gray-900">
+                                        Select Type Of Service:
+                                    </h2>
+                                    <!--end::Title-->
+
+                                </div>
+                                <!--end::Heading-->
+                                <!--begin::Input group-->
+                                <div class="fv-row">
+                                    <!--begin::Row-->
+                                    <div class="row">
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6 mb-5">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span class="required">Main Category</span>
+
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select name="MainCategory" id="ddlCategory" ng-model="selectedMainCategory" ng-change="GetSubCategoryByID()" aria-label="Select a Role" data-control="select2" data-placeholder="Select a Main Category..." class="form-select" required>
+                                                <option value="">Select Main Category...</option>
+                                                <option value="{{type}}" ng-repeat="type in MainCategoryDropdown">{{type.Value}}</option>
+
+                                            </select>
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6 mb-5">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span class="required">Sub Category</span>
+
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select name="SubCategory" id="ddlSCategory" ng-model="selectedSubCategory" ng-change="GetServiceCategoryByID()" aria-label="Select a Role" data-control="select2" data-placeholder="Select a Sub Category..." class="form-select" required>
+                                                <option value="">Select Sub Category...</option>
+                                                <option value="{{cleaning}}" ng-repeat="cleaning in SubCategoryDropdown">{{cleaning.Value}}</option>
+
+                                            </select>
+                                        </div>
+                                        <!--end::Col-->
+                                        <div class="col-md-6 mb-5" ng-hide="serviceCatdiv">
+                                            <!--begin::Label-->
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span class="required">Service Category</span>
+
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select name="ServiceCategory" id="ddlServCategory" ng-model="selectedServiceCategory" ng-options="servicecat as servicecat.Value for servicecat in ServiceCategoryDropdown" ng-change="GetSubServiceCategoryByID()" aria-label="Select a Service Category" data-control="select2" data-placeholder="Select a Service Category..." class="form-select" required>
+                                                <option value="">Select Service Category...</option>
+
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- Single Seater -->
+                                        <div class="grid-wrapper grid-col-auto">
+                                            <!-- Repeat for each card -->
+                                            <label class="checkbox-card" ng-repeat="typespc in SubServiceCategoryDropdown" ng-attr-for="{{'checkbox-cardSST-' + $index}}">
+                                                <input type="checkbox" name="serviceoptiontype" ng-model="typespc.checked" ng-change="updateSelection(typespc)" id="{{'checkbox-cardSST-' + $index}}" />
+                                                <div class="card-content-wrapper resizecard" id="serviceoptiontypeID">
+                                                    <span class="check-icon"></span>
+                                                    <div class="card-content">
+                                                        <img ng-src="{{typespc.Images[0].Value}}" style="height:100px;" alt="" /> <!-- Adjust image width -->
+                                                        <h4>{{typespc.Value}}</h4>
+                                                        <input type="number" ng-model="typespc.quantity" min="0" ng-minlength="0" oninput="this.value = Math.abs(this.value)" class="form-control" placeholder="Enter Quantity" />
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <!-- Repeat for each card -->
+                                        </div>
+
+                                    </div>
+                                    <!--end::Row-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 1-->
+                        <!--begin::Step 2-->
+                        <div data-kt-stepper-element="content">
+                            <!--begin::Wrapper-->
+                            <div class="w-100">
+                                <!--begin::Heading-->
+                                <div class="pb-10 pb-lg-15">
+                                    <!--begin::Title-->
+                                    <h2 class="fw-bold text-gray-900">Service Enquiry Info</h2>
+                                    <!--end::Title-->
+
+                                </div>
+                                <!--end::Heading-->
+                                <!--begin::Input group-->
+                                <div class="mb-10 fv-row">
+
+                                    <!--begin::Row-->
+                                    <div class="row mb-2">
+                                        <div class="col-md-6 mb-4">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center form-label mb-3">
+                                                Select Area
+
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <select name="Area" id="ddlArea" ng-disabled="AreaDisable" ng-model="ddlArea" ng-change="ChangeArea(ddlArea)" aria-label="Select a Area" data-control="select2" data-placeholder="Select a Area..." class="form-select" required>
+                                                <option value="">Select Area...</option>
+                                                <option ng-repeat="area in AreaDropdown" value="{{area}}" ng-bind="area.Value"></option>
+
+
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center form-label mb-3">
+                                                Select Property
+                                            </label>
+                                            <!--end::Label-->
+                                            <select name="Property" id="sProperty" ng-disabled="PropertyDisable" ng-model="ddlProperty" ng-change="GetPropDetails()" aria-label="Select a Property" data-control="select2" data-placeholder="Select a Property..." class="form-select" required>
+                                                <option ng-selected="false" value="">Select Property</option>
+                                                <option ng-repeat="prop in PropertyDropdown" value="{{prop}}" ng-bind="prop.Value"></option>
+
+
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center form-label mb-3">
+                                                Residence Type
+                                            </label>
+                                            <!--end::Label-->
+                                            <select name="ResidentType" id="sResidentialType" ng-model="ddlResidenceType" class="form-select" aria-label="Select a Residential Type" data-control="select2" data-placeholder="Select a Residential Type..." ng-change="selectedServCategory == null || selectedServCategory == 'undefined' ? ChangResidentType() : ChangeResidentType()">
+                                                <option ng-selected="false" value="">Select Type</option>
+                                                <option value="{{Resident}}" ng-repeat="Resident in ResidenceDropdown" ng-bind="Resident.Value"></option>
+
+                                            </select>
+                                            @*<select name="ResidentType" id="ResidentialTypeID" ng-model="ddlResidenceType" ng-change="selectedServCategory == null || selectedServCategory == 'undefined' ? ChangResidentType() : ChangeResidentType()" aria-label="Select a Residential Type" data-control="select2" data-placeholder="Select a Residential Type..." class="form-select" required>
+                                                    <option ng-selected="false" value="" disabled="">Select Type</option>
+                                                    <option ng-repeat="reds in ResidenceDropdown" value="{{reds}}" ng-bind="reds.Value"></option>
+
+                                                </select>*@
+
+                                        </div>
+
+                                    </div>
+                                    <!--end::Row-->
+                                    <div class="row mb-5">
+                                        <!--begin::Label-->
+                                        <!--end::Label-->
+                                        <div class="col-md-10 freq" ng-show="PackagesDetails.length != 0">
+                                            <label class="required fw-semibold fs-6 mb-2">Select Frequency</label>
+                                            <label class="float-right fw-semibold fs-6 mb-2" style="float: inline-end;">Price/Service</label>
+                                            <div ng-repeat="detail in PackagesDetails | orderBy:'RecursiveTime'" name="FreType" id="PackageD" class="form-check" style="cursor:pointer;">
+                                                <input class="form-check-input" type="radio" name="frequency" id="frequency{{detail.packID}}" ng-model="$parent.selectedFrequency" ng-click="selectFrequency(detail)" value="{{detail.packID}}">
+                                                <label class="form-check-label" for="frequency{{detail.packID}}" style="cursor:pointer;">
+                                                    {{detail.PackageName}}
+                                                </label>
+                                                <span class="price">{{detail.Price + ' INR'}}/service</span>
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row mb-5">
+                                        <div class="col-sm-12 mb-3" ng-show="DayPackage.length != 0">
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span class="required">Select your preferred day</span>
+
+                                            </label>
+
+                                            <div class="card-body">
+                                                <div ng-repeat="day in DayPackage" class="day-slot mb-3">
+                                                    <input type="radio" name="dayslot" ng-model="$parent.selectedDay" id="slotD{{$index + 1}}" value="{{day.Day}}" ng-true-value="day.Day" ng-false-value="false" ng-click="selectedDaysPack(day.Day)">
+                                                    <label for="slotD{{$index + 1}}">{{day.Day}}</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row mb-5">
+                                        <div class="col-sm-12 mb-3" ng-show="CustomDays.length != 0">
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span class="required">Select your Custom day</span>
+
+                                            </label>
+
+                                            <div class="card-body">
+                                                <div ng-repeat="day in CustomDays" class="day-slotCB mb-3">
+                                                    <input type="checkbox"
+                                                           ng-model="dummyModel[$index]"
+                                                           ng-change="toggleSelection(day)"
+                                                           id="slotCD{{$index + 1}}"
+                                                           ng-checked="selectedDays.indexOf(day) > -1"
+                                                           ng-disabled="isDisabled(day)">
+                                                    <label for="slotCD{{$index + 1}}" ng-class="{'selected': selectedDays.indexOf(day) > -1}">{{day}}</label>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mb-5" ng-hide="availTimeDiv">
+                                        <div class="col-md-12" ng-show="TimeArray.length != 0">
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span class="required">Select start time for the choosen day</span>
+
+                                            </label>
+
+                                            <div class="card-body">
+                                                <div class="time-slot mb-3" ng-repeat="slotP in TimeArray">
+                                                    <input type="radio" ng-model="txtTimeSlot" value="{{slotP.timerange}}" ng-true-value="slotP.timerange" ng-false-value="false" name="timeslot" id="slot{{slotP.index}}" ng-change="selectedTimePack(slotP.timerange)">
+                                                    <label for="slot{{slotP.index}}">{{slotP.timerange}}</label>
+                                                </div>
+                                                <span style="color:red" ng-bind="msgVChoseTime"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-5" ng-hide="CustomTimediv">
+                                        <div class="col-md-12">
+                                            <label class="fs-6 fw-semibold mb-2">
+                                                <span class="required">Select start time for the custom day</span>
+
+                                            </label>
+
+                                            <div class="card-body">
+                                                <div class="time-slot mb-3" ng-repeat="slot in TimeCustomArray">
+                                                    <input type="radio" ng-model="txtCTimeSlot" value="{{slot.timerange}}" ng-true-value="slot.timerange" ng-false-value="false" name="timeslotcustom" id="slot{{slot.index}}" ng-change="selectedCustomTimePack(slot.timerange)">
+                                                    <label for="slot{{slot.index}}">{{slot.timerange}}</label>
+                                                </div>
+                                                <span style="color:red" ng-bind="msgVCustomTime"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4" style="margin-top: 20px;" ng-hide="BasedOnPackageSelect">
+
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class="required">Select Start Date</span>
+
+                                        </label>
+                                        <input class="form-control" placeholder="Pick a date" ng-model="txtStartDate" id="kt_specialize" />
+                                        <span style="color:red" ng-bind="msgVStartDate"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4" style="margin-top: 20px;" ng-hide="BasedOnCustomPackageSelect">
+
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class="required">Select Custom Start Date</span>
+
+                                        </label>
+                                        <input class="form-control" placeholder="Pick a date" ng-model="txtCustomStartDate" id="kt_specializeCD" />
+                                        <span style="color:red" ng-bind="msgVStartDate"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class="required">Will you be inside the apartment at the time of service?</span>
+
+                                        </label>
+
+
+                                        <div class="btn-group w-100 w-lg-70" role="group" aria-label="Service Timing">
+                                            <label class="btn btn-outline btn-color-muted btn-active-dark" style="line-height: 1.4;">
+
+                                                <input class="btn-check ServType" type="radio" name="ServTType" value="Yes" ng-change="ApartmnetTimeConfirm(ddlaprtmenttimecon)" ng-model="ddlaprtmenttimecon" ng-true-value="Yes" ng-false-value="false" />
+
+                                                Yes
+                                            </label>
+
+                                            <label class="btn btn-outline btn-color-muted btn-active-dark" style="line-height: 1.4;">
+
+                                                <input class="btn-check ServType" type="radio" name="ServTType" value="No" ng-model="ddlaprtmenttimecon" ng-change="ApartmnetTimeConfirm(ddlaprtmenttimecon)" ng-true-value="No" ng-false-value="false" />
+
+                                                No
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-4" ng-hide="Keycollectiondiv">
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class="required">Do you need to confirm key collection from reception?</span>
+
+                                        </label>
+
+                                        <div class="btn-group w-100 w-lg-70" role="group" aria-label="Service Timing">
+                                            <label class="btn btn-outline btn-color-muted btn-active-dark" style="line-height: 1.4;">
+
+                                                <input class="btn-check ConfirmKey" type="radio" name="ConfirmKey" value="Yes" ng-model="ddlConfirmKey" ng-change="ConfirmKeycol(ddlConfirmKey)" ng-true-value="Yes" ng-false-value="false" />
+
+                                                Yes
+                                            </label>
+
+                                            <label class="btn btn-outline btn-color-muted btn-active-dark" style="line-height: 1.4;">
+
+                                                <input class="btn-check ConfirmKey" type="radio" name="ConfirmKey" value="No" ng-model="ddlConfirmKey" ng-change="ConfirmKeycol(ddlConfirmKey)" ng-true-value="No" ng-false-value="false" />
+
+                                                No
+                                            </label>
+
+                                        </div>
+                                        <span style="color:red" ng-bind="msgVRKeyCollec"></span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4" ng-hide="Keyconfirmdiv" style="margin-top: 20px;">
+
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class="required">Key Collection Date</span>
+
+                                        </label>
+                                        <input type="text" class="form-control KeyDatTime" id="ConfirmDate" ng-model="keydatetime" />
+                                        <span style="color:red" ng-bind="msgVRKeyCollecDT"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4" ng-hide="KeyconfirmInstrdiv">
+                                        <label class="form-label">Provide instruction for access to property</label>
+                                        <textarea class="form-control KeySpecInst" ng-model="keyconinstruction"></textarea>
+                                        <span style="color:red" ng-bind="msgVRKeyCollecSInst"></span>
+                                    </div>
+
+
+                                </div>
+                                <!--end::Input group-->
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Special Instruction or Request</label>
+                                        <textarea class="form-control" ng-model="txtSpecialInstruction" maxlength="180" rows="3" cols="3"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Upload files</label>
+                                        <!--begin::Dropzone-->
+                                        <div class="dropzone" id="kt_dropzonejs_example_1" style=" min-height: 30px; padding: 1rem 1.2rem;">
+                                            <!--begin::Message-->
+                                            <div class="dz-message needsclick">
+                                                <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+
+                                                <!--begin::Info-->
+                                                <div class="ms-4">
+                                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1">Add Images</h3>
+                                                    <span class="fs-7 fw-semibold text-gray-400">Upload up to 2 files</span>
+                                                </div>
+                                                <!--end::Info-->
+                                            </div>
+                                        </div>
+                                        <span style="color:red;" ng-bind="msgVIndiQIDFile"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 2-->
+                        <!--begin::Step 3-->
+                        <div data-kt-stepper-element="content">
+                            <!--begin::Wrapper-->
+                            <div class="w-100">
+                                <!--begin::Heading-->
+                                <div class="pb-10 pb-lg-12">
+                                    <!--begin::Title-->
+                                    <h2 class="fw-bold text-gray-900">Personal Details</h2>
+                                    <!--end::Title-->
+
+                                </div>
+                                <!--end::Heading-->
+                                <!--begin::Input group-->
+                                <div class="row mb-10">
+
+
+
+                                    <div class="col-md-6 mb-4">
+                                        <label for="exampleInputUsername1 Is-required" class="form-label Is-required">Apartment Number</label>
+                                        <input type="text" ng-model="txtApartmntNumber" class="form-control" id="ApartmentNumber" autocomplete="off">
+                                        <span style="color:red" ng-bind="msgVApartmentNum"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4" ng-show="otherDivVisible">
+                                        <label for="TowerNumber" class="form-label Is-required"> Tower Name/Number</label>
+                                        <input type="text" class="form-control" ng-model="txtOtherTowerNo" id="TowerNumber" autocomplete="off">
+                                        <span style="color:red" ng-bind="msgVTowerNo"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4" ng-show="otherDivVisible">
+                                        <label for="BuildingNumber" class="form-label Is-required">Building Number</label>
+                                        <input type="text" class="form-control" ng-model="txtBuildingNumber" id="BuildingNumber" autocomplete="off">
+                                        <span style="color:red" ng-bind="msgVBuildingNo"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4" ng-show="otherDivVisible">
+                                        <label for="SteetNumber" class="form-label Is-required">Street Number</label>
+                                        <input type="text" class="form-control" ng-model="txtStreetNumber" id="SteetNumber" autocomplete="off">
+                                        <span style="color:red" ng-bind="msgVStreetNo"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4" ng-show="otherDivVisible">
+                                        <label for="ZoneNumber" class="form-label Is-required">Zone Number</label>
+                                        <input type="text" class="form-control" ng-model="txtZoneNumber" id="ZoneNumber" autocomplete="off">
+                                        <span style="color:red" ng-bind="msgVZoneNo"></span>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-4" ng-show="otherDivVisible">
+                                        <label for="Location" class="form-label">Location</label>
+                                        <input type="text" class="form-control" ng-model="txtLocation" id="Location" autocomplete="off">
+
+                                    </div>
+                                    <div class="col-md-6 mb-4" ng-show="otherDivVisible">
+                                        <label for="exampleInputUsername1" class="form-label">Location Link</label>
+                                        <div class="location-input mb-3">
+                                            <input type="text" class="form-control" ng-model="txtLocationLink" placeholder="Enter your location link">
+                                            <!-- Different icon for location input -->
+                                            <i class="icon fas fa-map-marker-alt"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--end::Input group-->
+
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 3-->
+                        <!--begin::Step 4-->
+                        <div data-kt-stepper-element="content">
+                            <!--begin::Wrapper-->
+                            <div class="w-100">
+                                <!--begin::Heading-->
+                                <div class="pb-10 pb-lg-15">
+                                    <!--begin::Title-->
+                                    <h2 class="fw-bold text-gray-900">Summary Details</h2>
+                                    <!--end::Title-->
+
+                                </div>
+                                <!--end::Heading-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="booking-details">
+                                            <div class="card">
+                                                <div class="card-header text-white" style="background-color: #5756a2;">
+                                                    <h3 class="card-title">Booking Summary</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div style="margin-top:40px;" class="container-fluid d-flex justify-content-between">
+                                                        <div class="col-lg-4 ps-0">
+                                                            <a href="#" class="noble-ui-logo d-block"><img src="~/Images/logo.png" style="height: 90px;" /></a>
+                                                            <p class="mt-1 mb-1"><b>Urban Hospitality Services</b></p>
+                                                            <p>2nd Floor, Al Hitmi Building, C-Ring Road, P.O Box: 7218, Doha - Qatar</p>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="container-fluid mt-5 w-100">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                @*<p><strong>Name:</strong>{{ddlSalutation + ' ' + txtFullname}}</p>
+                                                                    <p><strong>Email:</strong> {{txtEmail}}</p>
+                                                                    <p><strong>Phone:</strong> {{txtMobileno}}</p>*@
+                                                                <p><strong>Apartment No:</strong> {{txtApartmntNumber}}</p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="table-responsive w-100">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+
+                                                                            <th style="text-align:center;">Service Type</th>
+                                                                            <th style="text-align:center;">Time Duration</th>
+                                                                            <th style="text-align:center;" ng-if="selectedServCategory != null">Sub Service Name</th>
+                                                                            <th style="text-align:center;">Price</th>
+                                                                            <th style="text-align:center;">Weekly Frequency</th>
+                                                                            <th style="text-align:center;" ng-bind="selectedDays.length!=0 ? 'Custom Days' : 'Preferred Day'"></th>
+                                                                            <th style="text-align:center;" ng-bind="CustomTimeSel!=null ? 'Custom Time' : 'Preferred Time'"></th>
+                                                                            <th style="text-align:center;"> Total No Of Service</th>
+
+                                                                            <th style="text-align:center;" ng-if="selectedServCategory != null">Total Quantity</th>
+                                                                            <th style="text-align:center;">Start Date</th>
+                                                                            <th style="text-align:center;">End Date</th>
+                                                                            <th style="text-align:center;">Total Price</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="text-end" ng-repeat="servicesele in selectedPackageObjects">
+
+                                                                            <td style="text-align:center;" ng-bind="servicesele.SubCategoryName"></td>
+                                                                            <td style="text-align:center;" ng-bind="servicesele.Duration"></td>
+                                                                            <td style="text-align:center;" ng-if="selectedServCategory != null" ng-bind="servicesele.ServiceSubCategoryName"></td>
+                                                                            <td style="text-align:center;" ng-bind="servicesele.Price + ' QR'"></td>
+                                                                            <td style="text-align:center;" ng-bind="servicesele.freqType"></td>
+
+                                                                            <td style="text-align:center;" ng-bind="DaysArr.length!=0 ? DaysArr.join(', '): selectedDays.length!=0 ? selectedDays: ''"></td>
+                                                                            <td style="text-align:center;" ng-bind="TimePack.length!=null ? TimePack:CustomTimeSel!=null ? CustomTimeSel:''"></td>
+                                                                            <td style="text-align:center;" ng-bind="servicesele.TotalServices"></td>
+                                                                            <td style="text-align:center;" ng-if="selectedServCategory != null" ng-bind="servicesele.TotalQauntity"></td>
+                                                                            <td style="text-align:center;" ng-bind="txtStartDate!=null ? txtStartDate:txtCustomStartDate"></td>
+                                                                            <td style="text-align:center;" ng-bind="EndDate | date:'yyyy-MM-dd'"></td>
+                                                                            <td style="text-align:center;" ng-bind="servicesele.TotalPrice"></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="9"><strong>Total  Price:</strong></td>
+                                                                            <td><strong>{{getTotalPrice()}}</strong></td>
+
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12">
+                                                                <p><strong>Address:</strong>{{AreaName + ', '  + PropName +' ' + resdName}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-3" ng-if="txtSpecialInstruction !=null">
+                                                            <div class="col-md-12">
+                                                                <p><strong>Special Instruction:</strong>{{txtSpecialInstruction}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Step 4-->
+                        <!--begin::Actions-->
+                        <div class="d-flex flex-stack pt-10">
+                            <!--begin::Wrapper-->
+                            <div class="mr-2">
+                                <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
+                                    <i class="ki-duotone ki-arrow-left fs-4 me-1">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>Back
+                                </button>
+                            </div>
+                            <!--end::Wrapper-->
+                            <!--begin::Wrapper-->
+                            <div>
+                                <button type="submit" ng-click="RequestTsPayment()" class="btn btn-lg btn-primary me-3" data-kt-stepper-action="submit">
+                                    <span class="indicator-label" id="sub">
+                                        Submit
+                                        <i class="ki-duotone ki-arrow-right fs-3 ms-2 me-0">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </span>
+                                    <span class="indicator-progress" id="loaderbtn">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">
+                                    Continue
+                                    <i class="ki-duotone ki-arrow-right fs-4 ms-1 me-0">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </button>
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Stepper-->
+
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/Scripts/Content/dropify.min.js"></script>
+    <script src="https://flatpickr.js.org/themer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.js"></script>
+    <script>
+        flatpickr('#ConfirmDate', {
+            inline: false,
+            minDate: "today",
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
+    </script>
+    <script>
+        const CarwasheradioButtons = document.querySelectorAll('.carwash');
+        CarwasheradioButtons.forEach(CarwashradioButton => {
+            CarwashradioButton.addEventListener('change', (event) => {
+                CarwasheradioButtons.forEach(CarwashradioButton => {
+
+                    CarwashradioButton.parentElement.classList.remove('active');
+                });
+                event.target.parentElement.classList.add('active');
+            });
+        });
+        const UsertyperadioButtons = document.querySelectorAll('.ServType');
+        UsertyperadioButtons.forEach(UsertyperadioButton => {
+            UsertyperadioButton.addEventListener('change', (event) => {
+                UsertyperadioButtons.forEach(UsertyperadioButton => {
+
+                    UsertyperadioButton.parentElement.classList.remove('active');
+                });
+                event.target.parentElement.classList.add('active');
+            });
+        });
+        const ConfirmKeyradioButtons = document.querySelectorAll('.ConfirmKey');
+        ConfirmKeyradioButtons.forEach(ConfirmKeyradioButton => {
+            ConfirmKeyradioButton.addEventListener('change', (event) => {
+                ConfirmKeyradioButtons.forEach(ConfirmKeyradioButton => {
+
+                    ConfirmKeyradioButton.parentElement.classList.remove('active');
+                });
+                event.target.parentElement.classList.add('active');
+            });
+        });
+        const RConfirmKeyradioButtons = document.querySelectorAll('.RConfirmKey');
+        RConfirmKeyradioButtons.forEach(RConfirmKeyradioButton => {
+            RConfirmKeyradioButton.addEventListener('change', (event) => {
+                RConfirmKeyradioButtons.forEach(RConfirmKeyradioButton => {
+
+                    RConfirmKeyradioButton.parentElement.classList.remove('active');
+                });
+                event.target.parentElement.classList.add('active');
+            });
+        });
+        const paymentTyperadioButtons = document.querySelectorAll('.paymentType');
+        paymentTyperadioButtons.forEach(paymentTyperadioButton => {
+            paymentTyperadioButton.addEventListener('change', (event) => {
+                RConfirmKeyradioButtons.forEach(paymentTyperadioButton => {
+
+                    paymentTyperadioButton.parentElement.classList.remove('active');
+                });
+                event.target.parentElement.classList.add('active');
+            });
+        });
+    </script>
+}

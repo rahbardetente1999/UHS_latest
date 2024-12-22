@@ -1,0 +1,720 @@
+﻿
+@{
+    ViewBag.Title = "Pricing";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+<style>
+    .range-container {
+        position: relative;
+        width: 100%;
+    }
+
+        .range-container input[type=range] {
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+        }
+
+            .range-container input[type=range]:focus {
+                outline: none;
+            }
+
+            .range-container input[type=range]::-webkit-slider-runnable-track {
+                height: 8px;
+                cursor: pointer;
+                animate: 0.2s;
+                background: linear-gradient(to right, #000 0%, #000 var(--value), #ddd var(--value), #ddd 100%);
+                border-radius: 5px;
+                border: 0;
+            }
+
+            .range-container input[type=range]::-webkit-slider-thumb {
+                z-index: 3;
+                position: relative;
+                width: 16px;
+                height: 16px;
+                -webkit-appearance: none;
+                appearance: none;
+                background: #007bff;
+                border-radius: 50%;
+                margin-top: -4px;
+                cursor: pointer;
+            }
+
+            .range-container input[type=range]::-moz-range-track {
+                height: 8px;
+                cursor: pointer;
+                animate: 0.2s;
+                background: linear-gradient(to right, #000 0%, #000 var(--value), #ddd var(--value), #ddd 100%);
+                border-radius: 5px;
+                border: 0;
+            }
+
+            .range-container input[type=range]::-moz-range-thumb {
+                z-index: 3;
+                position: relative;
+                width: 16px;
+                height: 16px;
+                background: #007bff;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            .range-container input[type=range]::-ms-track {
+                width: 100%;
+                height: 8px;
+                cursor: pointer;
+                animate: 0.2s;
+                background: transparent;
+                border-color: transparent;
+                color: transparent;
+            }
+
+            .range-container input[type=range]::-ms-fill-lower {
+                background: #000;
+                border-radius: 5px;
+            }
+
+            .range-container input[type=range]::-ms-fill-upper {
+                background: #ddd;
+                border-radius: 5px;
+            }
+
+            .range-container input[type=range]::-ms-thumb {
+                z-index: 3;
+                position: relative;
+                width: 16px;
+                height: 16px;
+                background: #007bff;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+        .range-container .tick-container {
+            position: absolute;
+            width: 100%;
+            top: 10px;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .range-container .tick {
+            width: 1px;
+            height: 10px;
+            background: black;
+        }
+
+        .range-container .tick-label {
+            position: absolute;
+            top: 20px;
+            font-size: 12px;
+            transform: translateX(-50%);
+        }
+</style>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="PricingController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::Card title-->
+                    <div class="card-title fw-medium">
+                        Pricing List
+                    </div>
+                    <!--begin::Card title-->
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+                            <!--begin::Export-->
+                            <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
+                                <i class="ki-outline ki-exit-up fs-2"></i>Export
+                            </button>
+                            <!--end::Export-->
+                            <!--begin::Add customer-->
+                            <button type="button" class="btn btn-primary" ng-click="AddPackagesModal()" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Pricing</button>
+                            <!--end::Add customer-->
+                        </div>
+                        <!--end::Toolbar-->
+
+                    </div>
+                    <!--end::Card toolbar-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <div class="table-responsive" id="tbl_pricinglist" style="display:none;">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+                                    <th>Main Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Service Category</th>
+                                    <th>Service Category Option</th>
+                                    <th class="min-w-125px">Package</th>
+                                    <th>Car Type</th>
+                                    <th>Car Service Type</th>
+                                    <th>Residential</th>
+                                    <th>Pricing</th>
+                                    <th>Time</th>
+                                    <th class="min-w-70px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                <tr ng-repeat="pricing in PricingList">
+                                    <td ng-bind="pricing.index"></td>
+                                    <td ng-bind="pricing.MainCategoryName"></td>
+                                    <td ng-bind="pricing.SubCategoryName"></td>
+                                    <td ng-bind="pricing.ServiceCategoryName"></td>
+                                    <td ng-bind="pricing.SubServiceCategoryName"></td>
+                                    <td ng-bind="pricing.PackageName"></td>
+                                    <td ng-bind="pricing.CarType"></td>
+                                    <td ng-bind="pricing.CarTypeService"></td>
+                                    <td ng-bind="pricing.PropertyResidenceType"></td>
+                                    <td ng-bind="pricing.Price + ' QR'"></td>
+                                    <td ng-bind="formatTime(pricing.Duration,
+pricing.TimeMeasurement)
+"></td>
+                                    <td>
+                                        <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_update_pricing" ng-click="EditPricing(pricing)">Update</a>
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_delete_pricing" ng-click="DeletePricing(pricing)">Delete</a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                        <!--end::Table-->
+                    </div>
+                    <div id="tbl_dummypricing">
+                        <table class="table">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+                                    <th>Service Category</th>
+                                    <th>Service Category Option</th>
+                                    <th class="min-w-125px">Package</th>
+                                    <th>Area</th>
+                                    <th class="min-w-125px">Property</th>
+                                    <th>Residential</th>
+                                    <th>Pricing</th>
+                                    <th>Time</th>
+                                    <th class="min-w-70px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+
+
+
+
+        </div>
+        <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-850px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Form-->
+                    <form class="form" name="AddPricingForm" novalidate>
+                        <!--begin::Modal header-->
+                        <div class="modal-header" id="kt_modal_add_customer_header">
+                            <!--begin::Modal title-->
+                            <h2 class="fw-bold">Add a Pricing</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <i class="ki-outline ki-cross fs-1"></i>
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <!--begin::Scroll-->
+                            <!--end::Input group-->
+                            <div class="row">
+                                <div class="col-md-6 mb-6">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Main Category</label>
+                                    <!--end::Label-->
+                                    <select name="MainType" aria-label="Select a Main Category" ng-model="ddlMainCategory" ng-change="GetSubCategoryByID()" data-control="select2" data-placeholder="Select a Main Category..." data-dropdown-parent="#kt_modal_add_customer" class="form-select" required>
+                                        <option value="">Select a  main category...</option>
+                                        <option value="{{maincat.ID}}" ng-repeat="maincat in MainCategoryDropdown">
+                                            {{maincat.Value}}
+                                        </option>
+
+                                    </select>
+                                    <span ng-if="AddPricingForm.$submitted && AddPricingForm.MainType.$invalid" style="color:red">field is required</span>
+                                </div>
+                                <div class="col-md-6 mb-6" ng-hide="DisplayCarWash">
+
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Car Type</label>
+                                    <!--end::Label-->
+                                    <select name="SubCategory" ng-model="ddlCarType" ng-options="type.ID as type.Value for type in CarTypeDropdown" aria-label="Select a Car Type" data-control="select2" data-placeholder="Select a Car Type..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Car Type...</option>
+                                        @*<option value="1">Sedan</option>
+                                        <option value="2">Coupe</option>
+                                        <option value="3">Sport</option>
+                                        <option value="4">SUV</option>
+                                        <option value="5">Pick UP</option>
+                                        <option value="6">Hatchbacks</option>*@
+                                    </select>
+                                    <span ng-hide="msgVDCarWash" style="color:red">field is required</span>
+                                </div>
+                                <div class="col-md-6 mb-6" ng-hide="DisplayCarWash">
+
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Service Car Wash</label>
+                                    <!--end::Label-->
+                                    <select name="SubCategory" ng-model="ddlCarServiceType" ng-options="cservice.ID as cservice.Value for cservice in CarServiceDropdown" aria-label="Select a Service Car Wash" data-control="select2" data-placeholder="Select a Service Car Wash..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Service Car Wash...</option>
+                                        @*<option value="1">Quick Wash (Exterior Only)</option>*@
+                                    </select>
+                                    <span ng-hide="msgVDCarWashService" style="color:red">field is required</span>
+                                </div>
+                                <div class="col-md-6 mb-6" ng-hide="DisplayResidentialCleaning">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Sub Category</label>
+                                    <!--end::Label-->
+                                    <select name="SubCategory" ng-model="ddlsubcategory" ng-change="GetServiceCategoryByID()" aria-label="Select a Sub Category" data-control="select2" data-placeholder="Select a Sub Category..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Sub Category...</option>
+                                        <option value="{{subcat.ID}}" ng-repeat="subcat in SubCategoryDropdown">
+                                            {{subcat.Value}}
+                                        </option>
+
+                                    </select>
+                                    <span ng-hide="msgVDSubCategory" style="color:red">field is required</span>
+                                </div>
+                                <div class="col-md-6 mb-6" ng-hide="DisplayResidentialCleaning">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-semibold mb-2">Select Service Category</label>
+                                    <!--end::Label-->
+                                    <select name="ServiceCategory" ng-model="ddlservicecategory" ng-change="GetSubServiceCategoryByID()" aria-label="Select a Sub Category" data-control="select2" data-placeholder="Select a Sub Category..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Service Category...</option>
+                                        <option value="{{servcat.ID}}" ng-repeat="servcat in ServiceCategoryDropdown">
+                                            {{servcat.Value}}
+                                        </option>
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-6" ng-hide="DisplayResidentialCleaning">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-semibold mb-2">Select Service Option</label>
+                                    <!--end::Label-->
+                                    <select name="SubServiceCategory" ng-model="ddlsubservicecategory" aria-label="Select a Service Option" data-control="select2" data-placeholder="Select a Service Option..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Service Option...</option>
+                                        <option value="{{servcat.ID}}" ng-repeat="servcat in SubServiceCategoryDropdown">
+                                            {{servcat.Value}}
+                                        </option>
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-6">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-semibold mb-2">Select Area</label>
+                                    <!--end::Label-->
+                                    <select name="Area" aria-label="Select a Area" ng-model="ddlArea" ng-change="GetPropertybyArea()" data-control="select2" data-placeholder="Select a Area..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Area...</option>
+                                        <option value="{{area.ID}}" ng-repeat="area in AreaDropdown" ng-bind="area.Value">
+                                        </option>
+
+                                    </select>
+
+                                </div>
+                                <div class="col-md-6 mb-6">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-semibold mb-2">Select Property</label>
+                                    <select name="Property" aria-label="Select a Property" ng-model="ddlProperty" ng-change="GetResidentialTypeByProp()" data-control="select2" data-placeholder="Select a Property..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Property...</option>
+                                        <option value="{{prop.ID}}" ng-repeat="prop in PropertyDropdown" ng-bind="prop.Value">
+                                        </option>
+
+                                    </select>
+
+                                </div>
+                                <div class="col-md-6 mb-6" ng-hide="DisplayResidentialCleaning">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Residential</label>
+                                    <select name="ResidentialA" aria-label="Select a Property" ng-model="ddlResidential" data-control="select2" data-placeholder="Select a Residential Type..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Type...</option>
+                                        <option value="{{res.ID}}" ng-repeat="res in ResidentialDropdown" ng-bind="res.Value">
+                                        </option>
+
+                                    </select>
+                                    <span ng-hide="msgVDResidential" style="color:red">field is required</span>
+
+                                </div>
+
+                                <div class="col-md-6 mb-6">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Package</label>
+                                    <!--end::Label-->
+                                    <select name="Package" aria-label="Select a Package" required ng-model="ddlPackages" data-control="select2" data-placeholder="Select a Package..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Package...</option>
+                                        <option value="{{package.ID}}" ng-repeat="package in PackagesDropdown" ng-bind="package.Value">
+                                        </option>
+
+                                    </select>
+                                    <span ng-if="AddPricingForm.$submitted && AddPricingForm.Package.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <div class="col-md-6 mb-6">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Time Duration</label>
+                                    <!--end::Label-->
+                                    <div class="input-group">
+
+                                        <!--begin::Input-->
+                                        <input type="text" oninput="this.value = validateInput(this.value)" class="form-control" ng-model="TimeDuration" required placeholder="" name="Duration" />
+                                        <!--end::Input-->
+
+                                        <select class="form-select" aria-label="Select Hours" name="TimeMeasurement" ng-model="Timemeasurement" required>
+                                            <option value="Hour">Hours</option>
+                                            <option value="Min">Minutes</option>
+                                            <!-- Add more options as needed -->
+                                        </select>
+
+
+                                    </div>
+                                    <br />
+                                    <span ng-if="AddPricingForm.$submitted && (AddPricingForm.Duration.$invalid || AddPricingForm.TimeMeasurement.$invalid)" style="color:red">
+                                        <span ng-if="AddPricingForm.Duration.$invalid"> field is required.</span>
+                                        <span ng-if="AddPricingForm.TimeMeasurement.$invalid"> field is required.</span>
+                                    </span>
+                                    @*<span ng-if="AddPricingForm.$submitted && AddPricingForm.Duration.$invalid && AddPricingForm.TimeMeasurement.$invalid" style="color:red">
+            both fields are required
+        </span>*@
+                                </div>
+
+                                <div class="col-md-6 mb-6">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Price/Service</label>
+                                    <!--end::Label-->
+                                    <input type="text" oninput="this.value = validateInput(this.value)" class="form-control" ng-model="txtPrice" placeholder="" required name="Pricing" />
+                                    <span ng-if="AddPricingForm.$submitted && AddPricingForm.Pricing.$invalid" style="color:red" ng-bind="msgVPricing"></span>
+
+                                </div>
+
+
+
+                            </div>
+                            <!--end::Modal body-->
+                        </div>
+                        <!--begin::Modal footer-->
+                        <div class="modal-footer flex-center">
+                            <!--begin::Button-->
+                            <button type="reset" ng-click="initForm()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                            <!--end::Button-->
+                            <!--begin::Button-->
+                            <button type="submit" id="kt_modal_add_customer_submit" ng-click="AddPricing(AddPricingForm.$valid)" class="btn btn-primary">
+                                <span class="indicator-label" id="btnsave">Submit</span>
+                                <span class="indicator-progress" id="btnloader">
+                                    Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                            <!--end::Button-->
+                        </div>
+                        <!--end::Modal footer-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="kt_modal_update_pricing" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-850px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Form-->
+                <form class="form" name="UpdatePricingForm" novalidate>
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_customer_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bold">Update The Pricing</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body py-10 px-lg-17">
+                        <!--begin::Scroll-->
+                        <!--end::Input group-->
+                        <div class="row">
+                            <div class="col-md-6 mb-6">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Select Main Category</label>
+                                <!--end::Label-->
+                                <select name="UMainType" aria-label="Select a Main Category" ng-model="ddlUMainCategory" ng-options="main.ID as main.Value for main in MainCategoryDropdown" ng-change="GetSubCategoryUByID()" data-control="select2" data-placeholder="Select a Main Category..." data-dropdown-parent="#kt_modal_update_pricing" class="form-select" required>
+                                    <option value="">Select a  main category...</option>
+
+
+                                </select>
+                                <span ng-if="UpdatePricingForm.$submitted && UpdatePricingForm.UMainType.$invalid" style="color:red" ng-bind="msgVMainType"></span>
+                            </div>
+                            <div class="col-md-6 mb-6" ng-hide="DisplayEditResidentialCleaning">
+
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Select Sub Category</label>
+                                <!--end::Label-->
+                                <select name="USubCategory" ng-model="ddlUsubcategory" ng-change="GetServiceCategoryUByID()" ng-options="subcat.ID as subcat.Value for subcat in SubCategoryDropdown" aria-label="Select a Sub Category" data-control="select2" data-placeholder="Select a Sub Category..." data-dropdown-parent="#kt_modal_update_pricing" class="form-select">
+                                    <option value="">Select a  Sub Category...</option>
+                                </select>
+                                <span ng-hide="msgVDEditSubCategory" style="color:red" ng-bind="msgVSubCategory"></span>
+                            </div>
+                            <div class="col-md-6 mb-6" ng-hide="DisplayEditCarWash">
+
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Select Car Type</label>
+                                <!--end::Label-->
+                                <select name="SubCategory" ng-model="EditddlCarType" ng-options="type.ID as type.Value for type in CarTypeDropdown" aria-label="Select a Car Type" data-control="select2" data-placeholder="Select a Car Type..." data-dropdown-parent="#kt_modal_update_pricing" class="form-select">
+                                    <option value="">Select a  Car Type...</option>
+                                </select>
+                                <span ng-hide="msgVDEditCarWash" style="color:red">field is required</span>
+                            </div>
+                            <div class="col-md-6 mb-6" ng-hide="DisplayEditCarWash">
+
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Select Service Car Wash</label>
+                                <!--end::Label-->
+                                <select name="SubCategory" ng-model="EditddlCarTypeService" ng-options="cservice.ID as cservice.Value for cservice in CarServiceDropdown"  aria-label="Select a Service Car Wash" data-control="select2" data-placeholder="Select a Service Car Wash..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                    <option value="">Select a  Service Car Wash...</option>
+                                </select>
+                                <span ng-hide="msgVDEditCarWashService" style="color:red">field is required</span>
+                            </div>
+                            <div class="col-md-6 mb-6" ng-hide="DisplayEditResidentialCleaning">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-semibold mb-2">Select Service Category</label>
+                                <!--end::Label-->
+                                <select name="ServiceCategory" ng-model="ddlUservicecategory" ng-options="servcat.ID as servcat.Value for servcat in ServiceCategoryDropdown" ng-change="GetSubServiceUCategoryByID()" aria-label="Select a Sub Category" data-control="select2" data-placeholder="Select a Sub Category..." data-dropdown-parent="#kt_modal_update_pricing" class="form-select">
+                                    <option value="">Select a  Service Category...</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-6" ng-hide="DisplayEditResidentialCleaning">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-semibold mb-2">Select Service Option</label>
+                                <!--end::Label-->
+                                <select name="SubServiceCategory" ng-model="ddlUsubservicecategory" ng-options="subserv.ID as subserv.Value for subserv in SubServiceCategoryDropdown" aria-label="Select a Service Option" data-control="select2" data-placeholder="Select a Service Option..." data-dropdown-parent="#kt_modal_update_pricing" class="form-select">
+                                    <option value="">Select a  Service Option...</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-6">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-semibold mb-2">Select Area</label>
+                                <!--end::Label-->
+                                <select name="UArea" aria-label="Select a Area" ng-model="ddlUArea" ng-options="area.ID as area.Value for area in AreaDropdown" ng-change="GetPropertybyUArea()" data-control="select2" data-placeholder="Select a Area..." data-dropdown-parent="#kt_modal_update_pricing" class="form-select">
+                                    <option value="">Select a  Area...</option>
+
+                                </select>
+
+                            </div>
+                            <div class="col-md-6 mb-6">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-semibold mb-2">Select Property</label>
+                                <select name="UProperty" aria-label="Select a Property" ng-model="ddlUProperty" ng-options="prop.ID as prop.Value for prop in PropertyUpdateDropdown" ng-change="GetResidentialTypeUByProp()" data-control="select2" data-placeholder="Select a Property..." data-dropdown-parent="#kt_modal_update_pricing" class="form-select">
+                                    <option value="">Select a  Property...</option>
+
+                                </select>
+
+                            </div>
+                            <div class="col-md-6 mb-6" ng-hide="DisplayEditResidentialCleaning">
+                                <!--begin::Label-->
+                                <label class="required  fs-6 fw-semibold mb-2">Select Residential</label>
+                                <select name="UResidential" aria-label="Select a Residential" ng-model="ddlUResidential" ng-options="res.ID as res.Value for res in ResidentialDropdown" data-control="select2" data-placeholder="Select a Residential Type..." data-dropdown-parent="#kt_modal_update_pricing" class="form-select">
+                                    <option value="">Select a  Type...</option>
+
+                                </select>
+                                <span ng-hide="msgVDEditResidential" style="color:red" ng-bind="msgVProperty"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-6">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Select Package</label>
+                                <!--end::Label-->
+                                <select name="UPackage" aria-label="Select a Package" required ng-model="ddlUPackages" ng-options="package.ID as package.Value for package in PackagesDropdown" data-control="select2" data-placeholder="Select a Package..." data-dropdown-parent="#kt_modal_update_pricing" class="form-select">
+                                    <option value="">Select a  Package...</option>
+
+
+                                </select>
+                                <span ng-if="UpdatePricingForm.$submitted && UpdatePricingForm.UPackage.$invalid" style="color:red" ng-bind="msgVPackage"></span>
+
+                            </div>
+
+                            <div class="col-md-6 mb-6">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Time Duration</label>
+                                <!--end::Label-->
+                                <div class="input-group">
+
+                                    <!--begin::Input-->
+                                    <input type="text" oninput="this.value = validateInput(this.value)" class="form-control" ng-model="TimeUDuration" required placeholder="" name="UDuration" />
+                                    <!--end::Input-->
+                                    <select class="form-select" aria-label="Select Hours" name="UTimeMeasurement" ng-model="TimeUmeasurement" required>
+                                        <option value="Hour">Hours</option>
+                                        <option value="Min">Minutes</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                    @*<span ng-if="UpdatePricingForm.$submitted && UpdatePricingForm.UDuration.$invalid" style="color:red" ng-bind="msgVDuration"></span>*@
+
+                                </div>
+                                <br />
+                                <span ng-if="UpdatePricingForm.$submitted && (UpdatePricingForm.UDuration.$invalid || UpdatePricingForm.UTimeMeasurement.$invalid)" style="color:red">
+                                    <span ng-if="UpdatePricingForm.UDuration.$invalid"> field is required.</span>
+                                    <span ng-if="UpdatePricingForm.UTimeMeasurement.$invalid"> field is required.</span>
+                                </span>
+                            </div>
+                            <div class="col-md-6 mb-6">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-semibold mb-2">Price</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" oninput="this.value = validateInput(this.value)" class="form-control" ng-model="txtUPrice" placeholder="" required name="UPricing"  />
+                                <!--end::Input-->
+                                <span ng-if="UpdatePricingForm.$submitted && UpdatePricingForm.UPricing.$invalid" style="color:red" ng-bind="msgVPricing"></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--end::Modal body-->
+                    <!--begin::Modal footer-->
+                    <div class="modal-footer flex-center">
+                        <!--begin::Button-->
+                        <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="submit" id="kt_modal_add_customer_submit" ng-click="UpdatePricing(UpdatePricingForm.$valid)" class="btn btn-primary">
+                            <span class="indicator-label" id="btnUsave">Submit</span>
+                            <span class="indicator-progress" id="btnUloader">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Modal footer-->
+                </form>
+                <!--end::Form-->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="kt_modal_delete_pricing" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Form-->
+                <form class="form" name="DeleteMainCategoryForm" novalidate>
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_customer_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bold">Delete Pricing</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body py-10 px-lg-17">
+                        <label class="control-label" style="font-size:16px;">
+                            Are you sure want to delete this {{ServiceName}} Pricing?<br />
+
+                        </label>
+                    </div>
+                    <!--end::Modal body-->
+                    <!--begin::Modal footer-->
+                    <div class="modal-footer flex-center">
+                        <!--begin::Button-->
+                        <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="submit" id="kt_modal_add_customer_submit" ng-click="DeletedPricing()" class="btn btn-primary">
+                            <span class="indicator-label" id="btnDsave">Submit</span>
+                            <span class="indicator-progress" id="btnDloader">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Modal footer-->
+                </form>
+                <!--end::Form-->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    function validateInput(value) {
+        // Remove any non-numeric characters except the decimal point
+        value = value.replace(/[^0-9.]/g, '');
+
+        // Ensure only one decimal point
+        const decimalIndex = value.indexOf('.');
+        if (decimalIndex !== -1) {
+            const parts = value.split('.');
+            value = parts[0] + '.' + parts.slice(1).join('');
+        }
+
+        // Remove leading zeros
+        if (value.length > 1 && value.startsWith('0') && value[1] !== '.') {
+            value = value.replace(/^0+/, '');
+        }
+
+        // Prevent leading decimal point
+        if (value.startsWith('.')) {
+            value = '0' + value;
+        }
+
+        return value;
+    }
+
+
+</script>

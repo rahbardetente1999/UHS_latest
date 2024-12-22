@@ -1,0 +1,401 @@
+﻿
+@{
+    ViewBag.Title = "Add Property";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="PropertyController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::Card title-->
+                    <div class="card-title fw-medium">
+                        Property List
+                    </div>
+                    <!--begin::Card title-->
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+
+                            <!--begin::Export-->
+                            <button type="button" class="btn btn-light-primary me-3" ng-click="exportData('PropertyList','xlsx',PropertyList)">
+                                <i class="ki-outline ki-exit-up fs-2"></i>Export
+                            </button>
+                            <!--end::Export-->
+                            <!--begin::Add customer-->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" ng-click="AddPropertyModal()" data-bs-target="#kt_modal_add_customer">Add Property</button>
+                            <!--end::Add customer-->
+                        </div>
+                        <!--end::Toolbar-->
+
+                    </div>
+                    <!--end::Card toolbar-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <div class="table-responsive" id="tbl_proplist" style="display:none;">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table" datatable="ng" dt-options="vm.dtOptions">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+
+                                    <th class="min-w-125px">Name</th>
+                                    <th>Area</th>
+                                    <th>Sub Area</th>
+                                    <th style="text-align:center;">Order By</th>
+                                    <th style="text-align:center;">Code</th>
+                                    <th>Added By</th>
+                                    <th>Added On</th>
+                                    <th class="min-w-70px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                <tr ng-repeat="prop in PropertyList">
+                                    <td ng-bind="prop.index"></td>
+                                    <td>
+                                        <a href="#" ng-bind="prop.Name" class="text-gray-800 text-hover-primary mb-1"></a>
+                                    </td>
+
+                                    
+                                    <td>
+                                        <a href="#" ng-bind="prop.PropertyArea" class="text-gray-800 text-hover-primary mb-1"></a>
+                                    </td>
+                                    <td>
+                                        <a href="#" ng-bind="prop.SubAreaName" class="text-gray-800 text-hover-primary mb-1"></a>
+                                    </td>
+                                    <td style="text-align:center;" ng-bind="prop.OrderBy"></td>
+                                    <td style="text-align:center;" ng-bind="prop.Code"></td>
+                                    <td>
+                                        <a href="#" class="text-gray-800 text-hover-primary mb-1" ng-bind="prop.CreatedBy"></a>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="text-gray-800  mb-1" ng-bind="prop.CreatedOn| customDate"></a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateprop" ng-click="EditProp(prop)">Update</a>
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteprop" ng-click="EditProp(prop)">Delete</a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                        <!--end::Table-->
+                    </div>
+                    <div id="tbl_dummyprop">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Area</th>
+                                    <th class="min-w-125px">Name</th>
+                                    <th>Added By</th>
+                                    <th>Added On</th>
+                                    <th class="min-w-70px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span></td>
+                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No records found!</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+            <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="AddPropertyForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Add a Property</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" ng-click="initForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <!--begin::Scroll-->
+                                <!--end::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Area</label>
+                                    <!--end::Label-->
+                                    <select name="Area" aria-label="Select a Area" id="AreaDropdown" ng-change="GetSubArea()" ng-model="ddlArea" required data-control="select2" data-placeholder="Select a Area..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select a  Area...</option>
+                                        <option value="{{area.ID}}" ng-repeat="area in AreaDropdown" ng-bind="area.Value">
+                                        </option>
+
+                                    </select>
+                                    <span ng-if="AddPropertyForm.$submitted && AddPropertyForm.Area.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--begin::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Sub Area</label>
+                                    <!--end::Label-->
+                                    <select name="SubArea" ng-disabled="ddlsubAreadiv" aria-label="Select a Sub Area" id="AreaSubDropdown" ng-model="ddlsubArea" required data-control="select2" data-placeholder="Select a sub Area..." data-dropdown-parent="#kt_modal_add_customer" class="form-select">
+                                        <option value="">Select  Sub  Area...</option>
+                                        <option value="{{subarea.ID}}" ng-repeat="subarea in SubAreaDropdown" ng-bind="subarea.Value">
+                                        </option>
+
+                                    </select>
+                                    <span ng-if="AddPropertyForm.$submitted && AddPropertyForm.SubArea.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Name</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="txtname" placeholder="" name="Name" required />
+                                    <!--end::Input-->
+                                    <span ng-if="AddPropertyForm.$submitted && AddPropertyForm.Name.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Code</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="txtcode" placeholder="" name="Code" required />
+                                    <!--end::Input-->
+                                    <span ng-if="AddPropertyForm.$submitted && AddPropertyForm.Code.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Order By</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="txtorder" placeholder="" name="Order" required />
+                                    <!--end::Input-->
+                                    <span ng-if="AddPropertyForm.$submitted && AddPropertyForm.Order.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--end::Input group-->
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" ng-click="initForm()"  data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="AddProperty(AddPropertyForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnsave">Submit</span>
+                                    <span class="indicator-progress" id="btnloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="updateprop" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="UpdatePropertyForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_Update_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Update Property</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" ng-click="initUpdForm()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <!--begin::Scroll-->
+                                <!--end::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Area</label>
+                                    <!--end::Label-->
+                                    <select name="UpdArea" aria-label="Select a Area" ng-model="ddlpropaID" ng-options="area.ID as area.Value for area in AreaDropdown" required data-control="select2" data-placeholder="Select a Area..." data-dropdown-parent="#updateprop" class="form-select">
+                                        <option value="">Select a  Area...</option>
+
+
+                                    </select>
+                                    <span ng-if="UpdatePropertyForm.$submitted && UpdatePropertyForm.UpdArea.$invalid" style="color:red" ng-bind="msgVArea"></span>
+
+                                </div>
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Select Sub Area</label>
+                                    <!--end::Label-->
+                                    <select name="UpdSubArea" aria-label="Select a Sub Area" id="UpdAreaSubDropdown" ng-options="subarea.ID as subarea.Value for subarea in SubAreaDropdown" ng-model="ddlEditsubArea" required data-control="select2" data-placeholder="Select a sub Area..." data-dropdown-parent="#updateprop" class="form-select">
+                                        <option value="">Select  Sub  Area...</option>
+                                       
+
+                                    </select>
+                                    <span ng-if="UpdatePropertyForm.$submitted && UpdatePropertyForm.UpdSubArea.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--begin::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Name</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="EditName" placeholder="" name="EName" required />
+                                    <!--end::Input-->
+                                    <span ng-if="UpdatePropertyForm.$submitted && UpdatePropertyForm.EName.$invalid" style="color:red" ng-bind="msgVName"></span>
+
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Code</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="Edittxtcode" placeholder="" name="ECode" required />
+                                    <!--end::Input-->
+                                    <span ng-if="UpdatePropertyForm.$submitted && UpdatePropertyForm.ECode.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--end::Input group-->
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-4">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-semibold mb-2">Order By</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control" ng-model="txtEditorder" placeholder="" name="EditOrder" required />
+                                    <!--end::Input-->
+                                    <span ng-if="UpdatePropertyForm.$submitted && UpdatePropertyForm.EditOrder.$invalid" style="color:red">field is required</span>
+
+                                </div>
+                                <!--end::Input group-->
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" ng-click="initUpdForm()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="UpdateProperty(UpdatePropertyForm.$valid)" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnUsave">Submit</span>
+                                    <span class="indicator-progress" id="btnUloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="deleteprop" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Form-->
+                        <form class="form" name="DeleteMainCategoryForm" novalidate>
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Delete Property</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <label class="control-label" style="font-size:16px;">
+                                    Are you sure want to delete this Property? <br />
+                                    <b style="color:red" ng-bind="EditName"></b>
+                                </label>
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" ng-click="DeleteProperty()" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnDsave">Submit</span>
+                                    <span class="indicator-progress" id="btnDloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/alasql"></script>
+    <script src="~/Scripts/Content/xlsx.core.min.js"></script>
+}
+
+

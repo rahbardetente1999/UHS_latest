@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="077522fbf3b54e848729d22da168d6af" Name="Diagram1" ZoomLevel="47">
+        <EntityTypeShape EntityType="db_TestUHSModel.Admin_Sub" Width="1.5" PointX="7.5" PointY="106.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CarServiceType" Width="1.5" PointX="9.75" PointY="111.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CarType" Width="1.5" PointX="12.75" PointY="111.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Country" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Customer" Width="1.5" PointX="15.75" PointY="105.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerAvailability" Width="1.5" PointX="34.5" PointY="110.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerCarServiceDetail" Width="1.5" PointX="31.5" PointY="105.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerComplaint" Width="1.5" PointX="34.5" PointY="106.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerConditionalType" Width="1.5" PointX="43.5" PointY="106.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerCustomDateTime" Width="1.5" PointX="34.5" PointY="116" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerDateBlock" Width="1.5" PointX="37.5" PointY="110.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerFeedback" Width="1.5" PointX="37.5" PointY="104.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerInovice" Width="1.5" PointX="37.5" PointY="116.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerIssueType" Width="1.5" PointX="43.5" PointY="119.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerOfficalDetail" Width="1.5" PointX="29.25" PointY="108.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerOtherProperty" Width="1.5" PointX="40.5" PointY="110.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerPaymentStatu" Width="1.5" PointX="32.25" PointY="101.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerPricing" Width="1.5" PointX="40.5" PointY="116.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerRenewalMonth" Width="1.5" PointX="27" PointY="104.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerSpecializedCleaning" Width="1.5" PointX="33.75" PointY="121.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerTimeBlock" Width="1.5" PointX="18" PointY="125.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerTimeline" Width="1.5" PointX="40.5" PointY="103.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerTransaction" Width="1.5" PointX="34.5" PointY="100.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerType" Width="1.5" PointX="13.5" PointY="100.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.File" Width="1.5" PointX="42.75" PointY="110.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.FileUse" Width="1.5" PointX="40.5" PointY="121.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.IncExclu" Width="1.5" PointX="9.75" PointY="116.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Login" Width="1.5" PointX="3" PointY="102" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Log" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.MainCategory" Width="1.5" PointX="9.75" PointY="104.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Package" Width="1.5" PointX="12.75" PointY="116" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Pricing" Width="1.5" PointX="32.25" PointY="111.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Property" Width="1.5" PointX="26.25" PointY="109.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.PropertyArea" Width="1.5" PointX="12.75" PointY="104.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.PropertyResidenceType" Width="1.5" PointX="21" PointY="107.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.PropertyType" Width="1.5" PointX="24" PointY="98.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.RefIncExclu" Width="1.5" PointX="12" PointY="127.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.RefServiceSlot" Width="1.5" PointX="25.75" PointY="124.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Role" Width="1.5" PointX="0.75" PointY="103.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.ServiceCategory" Width="1.5" PointX="21.25" PointY="112.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.ServiceSlot" Width="1.5" PointX="23.5" PointY="117.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.ServiceSubCategory" Width="1.5" PointX="31.5" PointY="120.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Staff" Width="1.5" PointX="18.75" PointY="108" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.StaffCustomerRating" Width="1.5" PointX="45.75" PointY="108.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.StaffService" Width="1.5" PointX="26.5" PointY="117.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.StaffTeam" Width="1.5" PointX="21" PointY="118.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.SubArea" Width="1.5" PointX="18" PointY="115.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.SubCategory" Width="1.5" PointX="12" PointY="121.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Support" Width="1.5" PointX="24" PointY="102.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Team" Width="1.5" PointX="15.75" PointY="117.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.User" Width="1.5" PointX="5.25" PointY="110.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.VehicleColor" Width="1.5" PointX="18.75" PointY="103.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.VehicleType" Width="1.5" PointX="18.75" PointY="120.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_TestUHSModel.Venture" Width="1.5" PointX="24" PointY="109.125" IsExpanded="true" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_CarServiceTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_CarTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_CustomerInovice" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_Login" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_SubArea" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_Teams" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_VehicleColors" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_VehicleTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_IncExclu_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_MainCategory_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Packages_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Properties_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_PropertyArea_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_PropertyResidenceType_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSlots_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Support_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Ventures_Admin_Sub" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CarServiceTypes_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CarServiceTypes_Pricing" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_User_CarServiceTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CarTypes_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CarTypes_Pricing" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_User_CarTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Customer_CustomerCarServiceDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Customer_CustomerComplaint" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Customer_CustomerCustomDateTime" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Customer_CustomerFeedback" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Customer_CustomerInovice" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Customer_CustomerTransaction" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Customer_Login" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Customer_StaffCustomerRating" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Customer_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerAvailability_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerDateBlock_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOtherProperty_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerPricing_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerSpecializedCleaning_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerTimeline_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerType_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Properties_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerAvailability_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Admin_Sub_CustomerCarServiceDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_CustomerComplaint" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_StaffCustomerRating_CustomerConditionalType" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_CustomerCustomDateTime" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerDateBlock_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerDateBlock_Packages" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerDateBlock_Pricing" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_CustomerFeedback" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_CustomerInovice" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerTransaction_CustomerInovice" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_User_CustomerInovice" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_StaffCustomerRating_CustomerIssueType" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_CustomerTransaction" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_PropertyArea" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_PropertyResidenceType" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_StaffCustomerRating" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_SubArea" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_SubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOfficalDetails_Ventures" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerOtherProperty_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerPricing_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerRenewalMonths_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerSpecializedCleaning_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerTimeline_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Staff_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Teams_CustomerOfficalDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerPaymentStatus_CustomerTransaction" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerPricing_Packages" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerPricing_Pricing" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerSpecializedCleaning_ServiceCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerSpecializedCleaning_ServiceSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Teams_CustomerTimeBlock" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerTimeline_Packages" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerTimeline_Pricing" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_StaffCustomerRating_CustomerTimeline" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_FileUse" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_ServiceCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_ServiceSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_SubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_Support" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_IncExclu_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_IncExclu_ServiceCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_IncExclu_ServiceSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_IncExclu_SubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_IncExclu_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_RefIncExclu_IncExclu" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Login_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Login_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_User_Login" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_MainCategory_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceCategory_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSlots_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSubCategory_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_StaffService_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_SubCategory_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Packages_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_Packages" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_PropertyArea" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_PropertyResidenceType" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_ServiceCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_ServiceSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_SubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Pricing_Ventures" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Properties_PropertyType" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Properties_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Properties_Ventures" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_PropertyArea_StaffService" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_PropertyArea_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_PropertyResidenceType_PropertyArea" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_SubArea_PropertyArea" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Ventures_PropertyArea" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_PropertyResidenceType_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_PropertyResidenceType_Ventures" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_RefServiceSlots_ServiceSlots" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceCategory_SubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSlots_ServiceCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSubCategory_ServiceCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_StaffService_ServiceCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSlots_ServiceSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSlots_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSlots_SubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSlots_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_ServiceSubCategory_SubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_StaffService_ServiceSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Staff_StaffCustomerRating" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Staff_StaffTeams" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Staff_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_StaffService_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Support_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_StaffService_SubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Teams_StaffService" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Teams_StaffTeams" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_User_SubArea" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Support_User" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_User_Teams" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_User_VehicleColors" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_User_VehicleTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Ventures_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CarWashTimeRange" Width="1.5" PointX="0.75" PointY="5" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CarWashTimeRange_CustomerOfficalDetails" />
+        <EntityTypeShape EntityType="db_TestUHSModel.TeamType" Width="1.5" PointX="3.375" PointY="5" />
+        <AssociationConnector Association="db_TestUHSModel.FK_TeamType_Teams" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Teams_CustomerTimeline" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Teams_CustomerDateBlock" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerFeedback_CustomerTimeline" />
+        <AssociationConnector Association="db_TestUHSModel.FK_SubArea_Ventures" />
+        <EntityTypeShape EntityType="db_TestUHSModel.ApprovalStatu" Width="1.5" PointX="18.75" PointY="89.75" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerSupport" Width="1.5" PointX="21" PointY="100.75" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerSupportActionFor" Width="1.5" PointX="18.75" PointY="96.75" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerSupportServiceType" Width="1.5" PointX="18.75" PointY="93.25" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerSupportTicketType" Width="1.5" PointX="18.75" PointY="86.25" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerSupport_ApprovalStatus" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerSupport_Customer" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerSupport_CustomerSupportActionFor" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerSupport_CustomerSupportServiceType" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerSupport_CustomerSupportTicketType" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerAlert" Width="1.5" PointX="27" PointY="100.75" />
+        <EntityTypeShape EntityType="db_TestUHSModel.CustomerAltersType" Width="1.5" PointX="24.75" PointY="94" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerAlerts_Customer" />
+        <AssociationConnector Association="db_TestUHSModel.FK_CustomerAlerts_CustomerAltersType" />
+        <AssociationConnector Association="db_TestUHSModel.FK_MainCategory_CustomerAlerts" />
+        <AssociationConnector Association="db_TestUHSModel.FK_SubCategory_CustomerAlerts" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Ventures_CustomerAlerts" />
+        <AssociationConnector Association="db_TestUHSModel.FK_Files_CustomerSupport" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

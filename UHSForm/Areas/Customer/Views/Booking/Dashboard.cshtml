@@ -1,0 +1,2000 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/Styles/custom.css" rel="stylesheet" />
+<style>
+
+    .preferreddays .card {
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        padding: 20px;
+        background-color: #f8f9fa;
+        margin-top: 20px;
+    }
+
+    .preferreddays .card-header {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 15px;
+    }
+
+    .preferreddays .row-content {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        text-align: center;
+        gap: 20px;
+    }
+
+        .preferreddays .row-content span {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #6c757d;
+        }
+</style>
+<style>
+    .new_booking {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+    }
+
+    .select2-container .select2-selection--single {
+        box-sizing: border-box !important;
+        cursor: pointer !important;
+        display: block !important;
+        height: 43px !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+    }
+    .time-slot {
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Add box shadow */
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .day-slot {
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Add box shadow */
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .row .day-slot {
+        flex-basis: calc(50% - 10px); /* Set width for two time slots in a row */
+    }
+
+    .row .time-slot {
+        flex-basis: calc(50% - 10px); /* Set width for two time slots in a row */
+    }
+
+    @@media (max-width: 575.98px) {
+        .row .time-slot {
+            flex-basis: 100%; /* Set full width for time slots on small screens */
+        }
+
+        .row .day-slot {
+            flex-basis: 100%; /* Set full width for time slots on small screens */
+        }
+    }
+
+    .time-slot label {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        font-size: 15px;
+        user-select: none;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .day-slot label {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        font-size: 15px;
+        user-select: none;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .time-slot label:hover {
+        background-color: #e9ecef;
+    }
+
+    .day-slot label:hover {
+        background-color: #e9ecef;
+    }
+
+    .time-slot input[type="radio"] {
+        display: none;
+    }
+
+    .day-slot input[type="radio"] {
+        display: none;
+    }
+
+    .day-slot input[type="checkbox"] {
+        display: none;
+    }
+
+    .time-slot input[type="radio"]:checked + label {
+        background-color: #030104;
+        color: #fff;
+    }
+
+    .day-slot input[type="radio"]:checked + label {
+        background-color: #030104;
+        color: #fff;
+    }
+
+    .day-slot input[type="checkbox"]:checked + label {
+        background-color: #030104;
+        color: #fff;
+    }
+
+    .freq .form-check {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+
+        .freq .form-check:hover {
+            background-color: #f1f1f1;
+        }
+
+    .freq .form-check-input {
+        margin-right: 1rem;
+        margin-left: 0;
+    }
+
+    .freq .form-check-label {
+        flex-grow: 1;
+        margin: 0;
+        color: #000;
+        font-size: 15px;
+    }
+
+    .freq .price {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-left: auto;
+    }
+    /* Change the color of disabled dates */
+
+
+    /* Custom styles for better UX */
+   #verifyModal .modal-body {
+        text-align: center;
+        padding: 2rem 1.5rem;
+    }
+
+    #verifyModal .modal-body i {
+        font-size: 2.5rem;
+        color: #bf360c;
+        margin-bottom: 1rem;
+    }
+
+    #verifyModal .modal-body p {
+        font-size: 1.1rem;
+        color: #495057;
+        margin-top: 1rem;
+    }
+    .pagination {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: end;
+        margin: 0;
+    }
+    .pagination > li > a, .pagination > li > span {
+        position: relative;
+        float: left;
+        padding: 6px 12px;
+        line-height: 1.42857;
+        text-decoration: none;
+        color: #337ab7;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        margin-left: -1px;
+    }
+    .circle-background {
+        content: '';
+        position: absolute;
+        background: url('../../../../Images/Types/circle.svg') no-repeat right;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+        top: 0;
+        right: 0;
+        z-index: 0;
+    }
+
+    .dashboardC {
+        position: relative;
+        z-index: 1;
+    }
+
+
+    .card {
+        border: none;
+        border-radius: 8px;
+    }
+
+    .text-primary {
+        color: #1E90FF !important;
+    }
+      .booking-table {
+            border-collapse: separate;
+            border-spacing: 0 15px;
+            width: 100%;
+        }
+        .booking-table th {
+            border: none;
+        }
+        .booking-table td {
+            background: white;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .badge-status {
+            padding: 0.35em 0.75em;
+            font-size: 0.875rem;
+            border-radius: 1em;
+        }
+        .unassigned {
+            color: #999;
+        }
+        .status-in-progress {
+            background-color: #48c774;
+        }
+        .status-booked {
+            background-color: #209cee;
+        }
+        .status-cancelled {
+            background-color: #f14668;
+        }
+        .status-completed {
+            background-color: #7a7a7a;
+        }
+        .dropdown-toggle::after {
+            display: none;
+        }
+    </style>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="DashboardBookingController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_dashboard" style="display:none;">
+        @*<button type="button" data-bs-toggle="modal" data-bs-target="#rating">Modal</button>*@
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <div class="row" id="spinnerdiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;display:none;">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div id="customerDashboard" style="display:none;">
+                <div class="row">
+                    <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
+                        <!--begin::Page title-->
+                        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                            <!--begin::Title-->
+                            <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0" ng-bind="'Welcome ' + CustomerDName + ','"></h1>
+                            <!--end::Title-->
+
+                        </div>
+                        <!--end::Page title-->
+                        <!--begin::Actions-->
+                        <div class="d-flex align-items-center gap-2 gap-lg-3">
+                            <!--begin::Primary button-->
+                            <a href="/Customer/Booking/NewBooking" class="btn btn-sm fw-bold btn-primary new_booking">New Booking</a>
+                            <!--begin::Primary button-->
+                            <a href="/Customer/Booking/Reschedule" class="btn btn-sm fw-bold btn-warning rescheduleserv m-lg-2">Reschedule</a>
+                            <!--end::Primary button-->
+                            <!--begin::Primary button-->
+                            <a href="" ng-click="GetRenewDetails()" class="btn btn-sm fw-bold btn-danger renewservice" ng-if="RenewalAvail">Renewal</a>
+                            <!--end::Primary button-->
+                            <!--end::Primary button-->
+                        </div>
+                        <!--end::Actions-->
+                    </div>
+                </div> <br />
+                       <div class="row mb-3 d-none d-md-flex">
+                           <!-- Card layout for larger screens -->
+                           <div class="col-sm-4 mb-5 mb-xl-10">
+                               <!-- Regular Cleaning Card -->
+                               <div class="card shadow-lg h-lg-100">
+                                   <div class="card-header pt-5">
+                                       <h3 class="card-title align-items-start flex-column">
+                                           <span class="card-label fw-bold text-gray-900">Regular Cleaning</span>
+                                       </h3>
+                                   </div>
+                                   <div class="card-body pt-5">
+                                       <div class="d-flex flex-stack">
+                                           <div class="text-gray-700 fw-semibold fs-6 me-2">Total Services Booked</div>
+                                           <div class="d-flex align-items-center">
+                                               <i class="bi bi-calendar-check fs-2 text-success me-2"></i>
+                                               <span class="text-gray-900 fw-bolder fs-6" ng-bind="RegularCleaning.TotalCount || 0"></span>
+                                           </div>
+                                       </div>
+                                       <div class="separator separator-dashed my-3"></div>
+                                       <div class="d-flex flex-stack">
+                                           <div class="text-gray-700 fw-semibold fs-6 me-2">Completed Services</div>
+                                           <div class="d-flex align-items-center">
+                                               <i class="bi bi-check-circle fs-2 text-success me-2"></i>
+                                               <span class="text-gray-900 fw-bolder fs-6" ng-bind="RegularCleaning.CompletedCount || 0"></span>
+                                           </div>
+                                       </div>
+                                       <div class="separator separator-dashed my-3"></div>
+                                       <div class="d-flex flex-stack">
+                                           <div class="text-gray-700 fw-semibold fs-6 me-2">Pending Services</div>
+                                           <div class="d-flex align-items-center">
+                                               <i class="bi bi-hourglass-split fs-2 text-danger me-2"></i>
+                                               <span class="text-gray-900 fw-bolder fs-6" ng-bind="RegularCleaning.PendingCount || 0"></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="col-sm-4 mb-5 mb-xl-10">
+                               <!--begin::List widget 1-->
+                               <div class="card shadow-lg h-lg-100">
+                                   <!--begin::Header-->
+                                   <div class="card-header pt-5">
+                                       <!--begin::Title-->
+                                       <h3 class="card-title align-items-start flex-column">
+                                           <span class="card-label fw-bold text-gray-900">Deep Cleaning</span>
+
+                                       </h3>
+                                       <!--end::Title-->
+
+                                   </div>
+                                   <!--end::Header-->
+                                   <!--begin::Body-->
+                                   <div class="card-body pt-5">
+                                       <!--begin::Item-->
+                                       <div class="d-flex flex-stack">
+                                           <!--begin::Section-->
+                                           <div class="text-gray-700 fw-semibold fs-6 me-2">Total Services Booked</div>
+                                           <!--end::Section-->
+                                           <!--begin::Statistics-->
+                                           <div class="d-flex align-items-senter">
+                                               <i class="bi bi-calendar-check fs-2 text-success me-2">
+
+                                               </i>
+                                               <!--begin::Number-->
+                                               <span class="text-gray-900 fw-bolder fs-6" ng-bind="DeepCleaning.TotalCount || 0"></span>
+                                               <!--end::Number-->
+
+                                           </div>
+                                           <!--end::Statistics-->
+                                       </div>
+                                       <!--end::Item-->
+                                       <!--begin::Separator-->
+                                       <div class="separator separator-dashed my-3"></div>
+                                       <!--end::Separator-->
+                                       <!--begin::Item-->
+                                       <div class="d-flex flex-stack">
+                                           <!--begin::Section-->
+                                           <div class="text-gray-700 fw-semibold fs-6 me-2">Completed Services</div>
+                                           <!--end::Section-->
+                                           <!--begin::Statistics-->
+                                           <div class="d-flex align-items-senter">
+                                               <i class="bi bi-check-circle fs-2 text-success me-2">
+                                                   <span class="path1"></span>
+                                                   <span class="path2"></span>
+                                               </i>
+                                               <!--begin::Number-->
+                                               <span class="text-gray-900 fw-bolder fs-6" ng-bind="DeepCleaning.CompletedCount || 0"></span>
+                                               <!--end::Number-->
+                                           </div>
+                                           <!--end::Statistics-->
+                                       </div>
+                                       <!--end::Item-->
+                                       <!--begin::Separator-->
+                                       <div class="separator separator-dashed my-3"></div>
+                                       <!--end::Separator-->
+                                       <!--begin::Item-->
+                                       <div class="d-flex flex-stack">
+                                           <!--begin::Section-->
+                                           <div class="text-gray-700 fw-semibold fs-6 me-2">Pending Services</div>
+                                           <!--end::Section-->
+                                           <!--begin::Statistics-->
+                                           <div class="d-flex align-items-senter">
+                                               <i class="bi bi-hourglass-split fs-2 text-danger me-2">
+                                                   <span class="path1"></span>
+                                                   <span class="path2"></span>
+                                               </i>
+                                               <!--begin::Number-->
+                                               <span class="text-gray-900 fw-bolder fs-6" ng-bind="DeepCleaning.PendingCount || 0"></span>
+                                               <!--end::Number-->
+                                           </div>
+                                           <!--end::Statistics-->
+                                       </div>
+                                       <!--end::Item-->
+                                   </div>
+                                   <!--end::Body-->
+                               </div>
+                               <!--end::LIst widget 1-->
+                           </div>
+
+                           <div class="col-sm-4 mb-5 mb-xl-10">
+                               <!--begin::List widget 1-->
+                               <div class="card  shadow-lg h-lg-100">
+                                   <!--begin::Header-->
+                                   <div class="card-header pt-5">
+                                       <!--begin::Title-->
+                                       <h3 class="card-title align-items-start flex-column">
+                                           <span class="card-label fw-bold text-gray-900">Specialized  Cleaning</span>
+
+                                       </h3>
+                                       <!--end::Title-->
+
+                                   </div>
+                                   <!--end::Header-->
+                                   <!--begin::Body-->
+                                   <div class="card-body pt-5">
+                                       <!--begin::Item-->
+                                       <div class="d-flex flex-stack">
+                                           <!--begin::Section-->
+                                           <div class="text-gray-700 fw-semibold fs-6 me-2">Total Services Booked</div>
+                                           <!--end::Section-->
+                                           <!--begin::Statistics-->
+                                           <div class="d-flex align-items-senter">
+                                               <i class="bi bi-calendar-check fs-2 text-success me-2">
+
+                                               </i>
+                                               <!--begin::Number-->
+                                               <span class="text-gray-900 fw-bolder fs-6" ng-bind="SpecializeCleaning.TotalCount || 0"></span>
+                                               <!--end::Number-->
+
+                                           </div>
+                                           <!--end::Statistics-->
+                                       </div>
+                                       <!--end::Item-->
+                                       <!--begin::Separator-->
+                                       <div class="separator separator-dashed my-3"></div>
+                                       <!--end::Separator-->
+                                       <!--begin::Item-->
+                                       <div class="d-flex flex-stack">
+                                           <!--begin::Section-->
+                                           <div class="text-gray-700 fw-semibold fs-6 me-2">Completed Services</div>
+                                           <!--end::Section-->
+                                           <!--begin::Statistics-->
+                                           <div class="d-flex align-items-senter">
+                                               <i class="bi bi-check-circle fs-2 text-success me-2">
+
+                                               </i>
+                                               <!--begin::Number-->
+                                               <span class="text-gray-900 fw-bolder fs-6" ng-bind="SpecializeCleaning.CompletedCount || 0"></span>
+                                               <!--end::Number-->
+                                           </div>
+                                           <!--end::Statistics-->
+                                       </div>
+                                       <!--end::Item-->
+                                       <!--begin::Separator-->
+                                       <div class="separator separator-dashed my-3"></div>
+                                       <!--end::Separator-->
+                                       <!--begin::Item-->
+                                       <div class="d-flex flex-stack">
+                                           <!--begin::Section-->
+                                           <div class="text-gray-700 fw-semibold fs-6 me-2">Pending Services</div>
+                                           <!--end::Section-->
+                                           <!--begin::Statistics-->
+                                           <div class="d-flex align-items-senter">
+                                               <i class="bi bi-hourglass-split fs-2 text-danger me-2">
+                                                   <span class="path1"></span>
+                                                   <span class="path2"></span>
+                                               </i>
+                                               <!--begin::Number-->
+                                               <span class="text-gray-900 fw-bolder fs-6" ng-bind="SpecializeCleaning.PendingCount || 0"></span>
+                                               <!--end::Number-->
+                                           </div>
+                                           <!--end::Statistics-->
+                                       </div>
+                                       <!--end::Item-->
+                                   </div>
+                                   <!--end::Body-->
+                               </div>
+                               <!--end::LIst widget 1-->
+                           </div>
+                           <!--end::Col-->
+
+                       </div>
+
+                <!-- Tab layout for mobile screens -->
+                <div class="d-md-none">
+                    <ul class="nav nav-tabs" id="cleaningTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="regular-tab" data-bs-toggle="tab" data-bs-target="#regular" type="button" role="tab" aria-controls="regular" aria-selected="true">Regular Cleaning</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="deep-tab" data-bs-toggle="tab" data-bs-target="#deep" type="button" role="tab" aria-controls="deep" aria-selected="false">Deep Cleaning</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="specialized-tab" data-bs-toggle="tab" data-bs-target="#specialized" type="button" role="tab" aria-controls="specialized" aria-selected="false">Specialized Cleaning</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="cleaningTabsContent">
+                        <div class="tab-pane fade show active" id="regular" role="tabpanel" aria-labelledby="regular-tab">
+                            <!-- Regular Cleaning Content -->
+                            <div class="card shadow-lg h-lg-100">
+                                <div class="card-header pt-5">
+                                    <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bold text-gray-900">Regular Cleaning</span>
+                                    </h3>
+                                </div>
+                                <div class="card-body pt-5">
+                                    <div class="d-flex flex-stack">
+                                        <div class="text-gray-700 fw-semibold fs-6 me-2">Total Services Booked</div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-calendar-check fs-2 text-success me-2"></i>
+                                            <span class="text-gray-900 fw-bolder fs-6" ng-bind="RegularCleaning.TotalCount || 0"></span>
+                                        </div>
+                                    </div>
+                                    <div class="separator separator-dashed my-3"></div>
+                                    <div class="d-flex flex-stack">
+                                        <div class="text-gray-700 fw-semibold fs-6 me-2">Completed Services</div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-check-circle fs-2 text-success me-2"></i>
+                                            <span class="text-gray-900 fw-bolder fs-6" ng-bind="RegularCleaning.CompletedCount || 0"></span>
+                                        </div>
+                                    </div>
+                                    <div class="separator separator-dashed my-3"></div>
+                                    <div class="d-flex flex-stack">
+                                        <div class="text-gray-700 fw-semibold fs-6 me-2">Pending Services</div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-hourglass-split fs-2 text-danger me-2"></i>
+                                            <span class="text-gray-900 fw-bolder fs-6" ng-bind="RegularCleaning.PendingCount || 0"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="deep" role="tabpanel" aria-labelledby="regular-tab">
+                            <!-- Regular Cleaning Content -->
+                            <div class="card shadow-lg h-lg-100">
+                                <div class="card-header pt-5">
+                                    <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bold text-gray-900">Deep Cleaning</span>
+                                    </h3>
+                                </div>
+                                <div class="card-body pt-5">
+                                    <div class="d-flex flex-stack">
+                                        <div class="text-gray-700 fw-semibold fs-6 me-2">Total Services Booked</div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-calendar-check fs-2 text-success me-2"></i>
+                                            <span class="text-gray-900 fw-bolder fs-6" ng-bind="DeepCleaning.TotalCount || 0"></span>
+                                        </div>
+                                    </div>
+                                    <div class="separator separator-dashed my-3"></div>
+                                    <div class="d-flex flex-stack">
+                                        <div class="text-gray-700 fw-semibold fs-6 me-2">Completed Services</div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-check-circle fs-2 text-success me-2"></i>
+                                            <span class="text-gray-900 fw-bolder fs-6" ng-bind="DeepCleaning.CompletedCount || 0"></span>
+                                        </div>
+                                    </div>
+                                    <div class="separator separator-dashed my-3"></div>
+                                    <div class="d-flex flex-stack">
+                                        <div class="text-gray-700 fw-semibold fs-6 me-2">Pending Services</div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-hourglass-split fs-2 text-danger me-2"></i>
+                                            <span class="text-gray-900 fw-bolder fs-6" ng-bind="DeepCleaning.PendingCount || 0"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="specialized" role="tabpanel" aria-labelledby="regular-tab">
+                            <!-- Regular Cleaning Content -->
+                            <div class="card shadow-lg h-lg-100">
+                                <div class="card-header pt-5">
+                                    <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bold text-gray-900">Specialized Cleaning</span>
+                                    </h3>
+                                </div>
+                                <div class="card-body pt-5">
+                                    <div class="d-flex flex-stack">
+                                        <div class="text-gray-700 fw-semibold fs-6 me-2">Total Services Booked</div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-calendar-check fs-2 text-success me-2"></i>
+                                            <span class="text-gray-900 fw-bolder fs-6" ng-bind="SpecializeCleaning.TotalCount || 0"></span>
+                                        </div>
+                                    </div>
+                                    <div class="separator separator-dashed my-3"></div>
+                                    <div class="d-flex flex-stack">
+                                        <div class="text-gray-700 fw-semibold fs-6 me-2">Completed Services</div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-check-circle fs-2 text-success me-2"></i>
+                                            <span class="text-gray-900 fw-bolder fs-6" ng-bind="SpecializeCleaning.CompletedCount || 0"></span>
+                                        </div>
+                                    </div>
+                                    <div class="separator separator-dashed my-3"></div>
+                                    <div class="d-flex flex-stack">
+                                        <div class="text-gray-700 fw-semibold fs-6 me-2">Pending Services</div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-hourglass-split fs-2 text-danger me-2"></i>
+                                            <span class="text-gray-900 fw-bolder fs-6" ng-bind="SpecializeCleaning.PendingCount || 0"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="container mt-5" id="AllDetails" style="display:none;">
+
+                    <div class="row" ng-hide="dashboarddiv">
+                        <!--begin::Form-->
+                        <form name="SearchForm" id="kt_searchassets" novalidate>
+                            <!--begin::Card-->
+                            <div class="card mb-7">
+                                <!--begin::Card body-->
+                                <div class="card-body">
+
+                                    <!--begin::Compact form-->
+                                    <div class="d-flex align-items-center">
+                                        <!--begin::Input group-->
+                                        <div class="position-relative w-md-900px me-md-2">
+
+                                            <div class="row">
+                                                <div class="col-md-3 mb-5">
+
+                                                    <label class="fs-6 fw-semibold mb-2">Service Status</label>
+
+                                                    <select name="Status" id="CustomerTypeID" aria-label="Status" ng-model="ddlCustomerType" data-control="select2" data-placeholder="Status..." data-dropdown-parent="#kt_searchassets" class="form-select">
+                                                        <option value="">Select a Type ...</option>
+                                                        <option value="Open">Open</option>
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Closed">Completed</option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="col-md-4  mb-5">
+                                                    <!--begin::Label-->
+                                                    <label class="fs-6 fw-semibold mb-2">Service Date</label>
+                                                    <!--end::Label-->
+                                                    <input type="date" class="form-control" ng-model="txtServiceDate" data-td-target="#kt_td_picker_basic" />
+
+
+                                                </div>
+
+                                                <div class="col-md-3 mb-5">
+
+                                                    <label class="fs-6 fw-semibold mb-2">Service Type</label>
+
+                                                    <select name="ServiceType" id="ServiceID" aria-label="Service type" ng-options="service.Value as service.Value for service in ServicesTypeDropdown" ng-model="ddlservicetype" data-control="select2" data-placeholder="Service type..." data-dropdown-parent="#kt_searchassets" class="form-select">
+                                                        <option value="">Select a Type ...</option>
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin:Action-->
+                                        <div class="d-flex align-items-center">
+
+                                            <!--begin::Button-->
+                                            <button type="submit" id="kt_modal_add_customer_submit" ng-click="FilterData()" class="btn btn-primary">
+                                                <span class="indicator-label" id="btnsearch"><i class="bi bi-search"></i></span>
+                                                <span class="indicator-progress" id="btnloader">
+
+                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                </span>
+                                            </button>
+                                            <!--end::Button-->
+                                            @*<button type="submit" class="btn btn-primary me-5" ng-click="FilterData()">Search</button>*@
+                                            <button type="button" class="btn btn-light btn-active-light-primary me-2" ng-click="resetfields()">Reset</button>
+                                            @*<a href="#" id="kt_horizontal_search_advanced_link" class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#kt_advanced_search_form">Advanced Search</a>*@
+
+                                        </div>
+                                        <!--end:Action-->
+                                    </div>
+                                    <!--end::Compact form-->
+                                    <!--begin::Advance form-->
+                                    <div class="collapse" id="kt_advanced_search_form">
+
+
+
+                                    </div>
+                                    <!--end::Advance form-->
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Card-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+
+                    <div class="row" ng-hide="dashboardspinnerdiv" style="display: flex; justify-content: center; align-items: center; height: 50vh;">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="row pendinglistL" ng-hide="dashboarddiv">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Existing booking List</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive" id="tbl_pendinglist" style="display:none;">
+                                        <table class="table table-bordered table-striped" datatable="ng" dt-options="vm.dtOptions">
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Category</th>
+                                                    <th>Sub Category</th>
+                                                    <th>Service Date</th>
+                                                    <th>Payment Status</th>
+                                                    <th>Start Time</th>
+                                                    <th>Finish Time</th>
+                                                    <th>Staff Names</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="booking in CustomerList">
+                                                    <td ng-bind="booking.index" ng-style="{'color': booking.Status == 'InActive' ? 'red' : ''}"></td>
+                                                    <td ng-bind="booking.MainCategory || 'N/A'" ng-style="{'color': booking.Status == 'InActive' ? 'red' : ''}"></td>
+                                                    <td ng-if="booking.catsubID == 3">
+                                                        <a href="" ng-bind="booking.SubCategory || 'N/A'" ng-style="{'color': booking.Status == 'InActive' ? 'red' : ''}" ng-click="GetServiceDetails(booking.GetServices)" data-bs-toggle="modal" data-bs-target="#kt_modal_serviceslist"></a>
+                                                    </td>
+                                                    <td ng-if="booking.catsubID != 3" ng-bind="booking.SubCategory || 'N/A'" ng-style="{'color': booking.Status == 'InActive' ? 'red' : ''}"></td>
+                                                    <td ng-bind="getFormattedDateDisplay(booking.ServiceDate) | date:'fullDate'"></td>
+
+                                                    <td>
+                                                        <span class="badge py-3 px-4 fs-7"
+                                                              ng-class="{
+   'badge-light-info': booking.PaymentStatus && booking.PaymentStatus == null,
+  'badge-light-primary': booking.PaymentStatus && booking.PaymentStatus == 0,
+  'badge-light-success': booking.PaymentStatus && booking.PaymentStatus == 2,
+  'badge-light-warning': booking.PaymentStatus && booking.PaymentStatus == 1,
+  'badge-light-danger': booking.PaymentStatus && (booking.PaymentStatus == 3 || booking.PaymentStatus == 4),
+  'badge-light-yellow': !booking.PaymentStatus || booking.PaymentStatus == null
+}"
+                                                              ng-bind="getPaymentStatuswithoutObject(booking.PaymentStatus)">
+                                                        </span>
+
+                                                    </td>
+                                                    <td ng-bind="booking.StartTime"></td>
+                                                    <td ng-bind="booking.EndTime"></td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+
+                                                            <div ng-bind="booking.Staffs || 'N/A'">
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td ng-bind="booking.WorkingStatus"></td>
+                                                    <td ng-if="booking.WorkingStatus == 'Pending' || booking.WorkingStatus == 'Open'">
+                                                        <button class="btn btn-light dropdown-toggle" ng-if="booking.teamID!=null && booking.Status =='Active'" type="button" data-bs-toggle="dropdown">
+                                                            <i class="bi bi-three-dots"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu" ng-if="booking.teamID!=null && booking.Status =='Active'">
+                                                            <li><a class="dropdown-item" href="#" style="cursor:pointer;" ng-click="RescheduleDateModal(booking)">Reshedule</a></li>
+
+
+                                                        </ul>
+                                                    </td>
+
+                                                    <td ng-if="booking.WorkingStatus == 'Closed'">
+                                                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                            <i class="bi bi-three-dots"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+
+                                                            <li><a class="dropdown-item" href="#" ng-if="booking.WorkingStatus == 'Closed'" data-bs-toggle="modal" data-bs-target="#rating" ng-click="RatingModal(booking)">Rating</a></li>
+                                                            @*<li><a class="dropdown-item" href="#" ng-if="booking.WorkingStatus == 'Closed'" data-bs-toggle="modal" data-bs-target="#complaing" ng-click="ComplainModal(booking)">complaint</a></li>*@
+                                                        </ul>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        @*<dir-pagination-controls pagination-id="PendingTable"></dir-pagination-controls>*@
+                                    </div>
+                                    <div id="tbl_dummypending" style="display:none;">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                                    <th>Service Date</th>
+                                                    <th>Service Day</th>
+                                                    <th>Start Time</th>
+                                                    <th>Finish Time</th>
+                                                    <th>Staff Names</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="10" style="color:blue;" id="spanPenLoader"><span><b>Loading...</b></span></td>
+                                                    <td colspan="10" style="color:red;display:none;" id="spanEmptyPenRecords"><span>No records found!</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="modal fade" id="rating" tabindex="-1" aria-hidden="true">
+                    <!--begin::Modal dialog-->
+                    <div class="modal-dialog modal-dialog-centered mw-850px">
+                        <!--begin::Modal content-->
+                        <div class="modal-content">
+                            <form class="form" name="AddRatingForm" novalidate>
+                                <!--begin::Modal header-->
+                                <div class="modal-header" id="kt_modal_add_customer_header">
+                                    <!--begin::Modal title-->
+                                    <h2 class="fw-bold" ng-bind="'Rate ' + SubCategoryName + ' Service'"></h2>
+                                    <!--end::Modal title-->
+                                    <!--begin::Close-->
+                                    <div data-bs-dismiss="modal" ng-click="InitRating()" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                        <i class="ki-outline ki-cross fs-1"></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+                                <!--end::Modal header-->
+                                <!--begin::Modal body-->
+                                <div class="modal-body py-10 px-lg-17">
+
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <span style="font-size:20px;" class="required">Rating:</span>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <jk-rating-stars max-rating="5"
+                                                             rating="secondRate"
+                                                             on-rating="onItemRating(rating)">
+                                            </jk-rating-stars>
+                                            <span style="color:red; display:none;" id="spanRatingReqMsg">Rating is required!</span>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <span><b>Reviews:</b></span>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p>
+                                                Thank you for Rating {{secondRate}} stars
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="comment" class="form-label">Comment</label>
+                                            <textarea class="form-control" name="review" rows="3" cols="3" maxlength="160" placeholder="Review" ng-model="review"></textarea>
+
+                                            @*<span ng-if="ratingForm.$submitted && ratingForm.review.$invalid" style="color:red" ng-bind="msgVrating"></span>*@
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <!--begin::Label-->
+                                            <label class="col-form-label text-lg-right">Upload Files:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Dropzone-->
+                                            <div class="dropzone" id="kt_dropzonejs_example_2">
+
+                                                <!--begin::Message-->
+                                                <div class="dz-message needsclick">
+                                                    <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+
+                                                    <!--begin::Info-->
+                                                    <div class="ms-4">
+                                                        <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
+                                                        <span class="fs-7 fw-semibold text-gray-500">Upload up to 1 files</span>
+                                                    </div>
+                                                    <!--end::Info-->
+                                                </div>
+                                            </div>
+                                            <!--end::Dropzone-->
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <!--end::Modal body-->
+                                <!--begin::Modal footer-->
+                                <div class="modal-footer flex-center">
+                                    <!--begin::Button-->
+                                    <button type="reset" data-bs-dismiss="modal" ng-click="InitRating()" class="btn btn-light me-3">Discard</button>
+                                    <!--end::Button-->
+                                    <!--begin::Button-->
+                                    <button type="submit" id="kt_modal_add_customer_submit" ng-click="SaveRating()" class="btn btn-primary">
+                                        <span class="indicator-label" id="btnRsave">Submit</span>
+                                        <span class="indicator-progress" id="btnRloader">
+                                            Please wait...
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+                                    <!--end::Button-->
+                                </div>
+                                <!--end::Modal footer-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="complaing" tabindex="-1" aria-hidden="true">
+                    <!--begin::Modal dialog-->
+                    <div class="modal-dialog modal-dialog-centered mw-650px">
+
+                        <!--begin::Modal content-->
+                        <div class="modal-content">
+                            <form class="form" name="AddComplaintForm" novalidate>
+                                <!--begin::Modal header-->
+                                <div class="modal-header" id="kt_modal_add_customer_header">
+                                    <!--begin::Modal title-->
+                                    <h2 class="fw-bold" ng-bind="'Register Complaint for ' + SubCategoryName + ' Service'"></h2>
+                                    <!--end::Modal title-->
+                                    <!--begin::Close-->
+                                    <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                        <i class="ki-outline ki-cross fs-1"></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+                                <!--end::Modal header-->
+                                <!--begin::Modal body-->
+                                <div class="modal-body py-10 px-lg-17">
+
+                                    <!--begin::Input group-->
+                                    <div class="fv-row mb-4">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Comment</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <textarea type="text" class="form-control" ng-model="txtcomment" rows="3" cols="3" placeholder="" name="Name" required></textarea>
+                                        <!--end::Input-->
+                                        <span ng-if="AddComplaintForm.$submitted && AddComplaintForm.Name.$invalid" style="color:red">field is required</span>
+                                    </div>
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="fv-row">
+                                        <!--begin::Label-->
+                                        <label class="col-form-label text-lg-right">Upload Files:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Dropzone-->
+                                        <div class="dropzone" id="kt_dropzonejs_example_1">
+
+                                            <!--begin::Message-->
+                                            <div class="dz-message needsclick">
+                                                <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+
+                                                <!--begin::Info-->
+                                                <div class="ms-4">
+                                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
+                                                    <span class="fs-7 fw-semibold text-gray-500">Upload up to 1 files</span>
+                                                </div>
+                                                <!--end::Info-->
+                                            </div>
+                                        </div>
+                                        <!--end::Dropzone-->
+                                    </div>
+                                    <!--end::Input group-->
+
+
+
+
+                                </div>
+                                <!--end::Modal body-->
+                                <!--begin::Modal footer-->
+                                <div class="modal-footer flex-center">
+                                    <!--begin::Button-->
+                                    <button type="reset" ng-click="initForm()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                    <!--end::Button-->
+                                    <!--begin::Button-->
+                                    <button type="submit" id="kt_modal_add_customer_submit" ng-click="RegisterComplaint(AddComplaintForm.$valid)" class="btn btn-primary">
+                                        <span class="indicator-label" id="btnRCsave">Submit</span>
+                                        <span class="indicator-progress" id="btnRCloader">
+                                            Please wait...
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+                                    <!--end::Button-->
+                                </div>
+                                <!--end::Modal footer-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="renewalmodal" tabindex="-1" aria-hidden="true">
+                    <!--begin::Modal dialog-->
+                    <div class="modal-dialog modal-fullscreen">
+                        <!--begin::Modal content-->
+                        <div class="modal-content shadow-none">
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Renew Your Service</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <h5 class="card-title mb-10">Property Details:</h5>
+
+                                <div class="row mb-5" ng-hide="MultiplePro">
+                                    <div class="col-md-4 mb-5">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2 required">Area</label>
+                                        <!--end::Label-->
+                                        <select name="ItemType" id="dltAreaID" ng-disabled="AreaDisable" aria-label="Select a Area" ng-change="GetProList()" ng-model="ddlArea" data-control="select2" data-placeholder="Select a Area..." data-dropdown-parent="#kt_searchassets" class="form-select">
+                                            <option value="">Select a Area ...</option>
+                                            <option value="{{area.ID}}" ng-repeat="area in AreaDropdown" ng-bind="area.Value"></option>
+                                        </select>
+                                        <span style="color:red" ng-bind="msgSVRArea"></span>
+                                    </div>
+                                    <div class="col-md-3 mb-5">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class="required">  Select Property</span>
+
+                                        </label>
+                                        <!--end::Label-->
+                                        <select name="Property" id="ExProperty" ng-disabled="PropertyDisable" ng-options="prop as prop.Value  for prop in PropertyDropdown" ng-model="ddlProperty" ng-change="GetPropDetails()" aria-label="Select a Property" data-control="select2" data-placeholder="Select a Property..." class="form-select">
+                                            <option ng-selected="false" value="">Select Property</option>
+
+                                        </select>
+                                        <span style="color:red" ng-bind="msgSVProperty"></span>
+                                    </div>
+                                    <div class="col-md-3 mb-5">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">Select Residential</label>
+                                        <select name="ResidentialA" id="dltRestID" ng-disabled="ResidentialDisable" aria-label="Select a Property" ng-model="ddlResidential" ng-options="resd.ID as resd.Value for resd in ResidentialDropdown" data-control="select2" data-placeholder="Select a Residential Type..." data-dropdown-parent="#kt_searchassets" class="form-select">
+                                            <option value="">Select a  Type...</option>
+
+                                        </select>
+                                        <span style="color:red" ng-bind="msgSVResidential"></span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <!--begin::Button-->
+                                        <button type="submit" style=" margin-top: 22px;" id="kt_modal_add_customer_submit" ng-click="GetRenewD()" class="btn btn-primary">
+                                            <span class="indicator-label" id="btnRensearch">Search</span>
+                                            <span class="indicator-progress" id="btnRenloader">
+                                                Please wait...
+                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            </span>
+                                        </button>
+                                        <!--end::Button-->
+                                    </div>
+
+                                </div>
+                                <div class="row" ng-hide="SinglePro">
+                                    <div class="col-md-6 mb-5">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class="">Area Name:</span>
+
+                                        </label>
+                                        <!--end::Label-->
+                                        <span class="fw-bold fs-6 text-gray-800" ng-bind="PropDetailCount[0].PropertyArea"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class="">Property Name:</span>
+
+                                        </label>
+                                        <!--end::Label-->
+                                        <span class="fw-bold fs-6 text-gray-800" ng-bind="PropDetailCount[0].PropertyName"></span>
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class=""> Residence Type:</span>
+                                        </label>
+                                        <!--end::Label-->
+                                        <span class="fw-bold fs-6 text-gray-800" ng-bind="PropDetailCount[0].PropertyResidency"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <!--begin::Label-->
+                                        <label class="fs-6 fw-semibold mb-2">
+                                            <span class=""> Apartment No:</span>
+                                        </label>
+                                        <!--end::Label-->
+                                        <span class="fw-bold fs-6 text-gray-800" ng-bind="PropDetailCount[0].ApartmentName"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="card card shadow-sm" ng-hide="sinPro">
+                                    <div class="card-header text-white" style="background-color: #5756a2; min-height: 40px;">
+                                        <div class="card-title m-0" style="color:#fff;">
+                                            Booking Summary
+                                        </div>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="container-fluid d-flex justify-content-between">
+                                            <div class="col-lg-4 ps-0">
+                                                <a href="#" class="noble-ui-logo d-block"><img src="~/Images/logo.png" style="height: 90px;" /></a>
+                                                <p class="mt-1 mb-1"><b>Urban Hospitality Services</b></p>
+                                                <p>2nd Floor, Al Hitmi Building, C-Ring Road, P.O Box: 7218, Doha - Qatar</p>
+
+                                            </div>
+                                            <div class="col-lg-8 ps-0">
+                                                <!-- Single Card -->
+                                                <div class="card preferreddays" ng-if="RenewalDetls!=null">
+                                                    <div class="card-header">
+
+                                                    </div>
+                                                    <!-- Line 1: Preferred Days -->
+                                                    <div class="row-content">
+                                                        <span style="color: #000;" ng-repeat="day in RenewalDetls.Days.split(',')">{{ day }}</span>
+
+                                                    </div>
+                                                    <!-- Line 2: Service Times -->
+                                                    <div class="row-content mt-3">
+                                                        <span style="color: #000;" ng-repeat="time in RenewalDetls.Times" ng-bind="time.Start + '-'+ time.End"></span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid mt-5 w-100">
+                                            <div class="row">
+                                                <div class="col-md-6">
+
+                                                    <p><strong>Apartment No:</strong> {{RenewalDetls.ApartmentNo}}</p>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="table-responsive w-100">
+
+
+                                                    <table class="table table-bordered" ng-if="RenewalList.length!=0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Select Package</th>
+                                                                <th>Package</th>
+                                                                <th>No of Services</th>
+                                                                <th>Price per service</th>
+                                                                <th>Start Date</th>
+                                                                <th>End Date</th>
+
+                                                                <th>Discount Price</th>
+                                                                <th>Discount Percentage</th>
+                                                                <th>Package Name</th>
+                                                                <th>Total Price</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="package in RenewalList">
+                                                                <td>
+                                                                    <div class="form-check">
+                                                                        <input type="checkbox" class="form-check-input" ng-model="package.selected" ng-click="selectPackage(package)">
+                                                                    </div>
+                                                                </td>
+                                                                <td ng-bind="package.PackageN"></td>
+                                                                <td ng-bind="package.TotalNoOfService"></td>
+                                                                <td ng-bind="package.priceperservice | currencyFormat"></td>
+                                                                <td ng-bind="package.StartDate"></td>
+                                                                <td ng-bind="package.EndDate"></td>
+
+                                                                <td>{{ package.DiscountPrice | currencyFormat}}</td>
+                                                                <td>{{ package.DiscountPercentage }}%</td>
+                                                                <td>{{ package.PackageName }}</td>
+                                                                <td>{{ package.TotalPrice | currencyFormat }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card shadow-sm" ng-hide="MultipleSummary">
+                                    <div class="card-header text-white" style="background-color: #5756a2; min-height: 40px;">
+                                        <div class="card-title m-0" style="color:#fff;">
+                                            Booking Summary
+                                        </div>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="margin-top: -40px;" class="container-fluid d-flex justify-content-between">
+                                            <div class="col-lg-4 ps-0">
+                                                <a href="#" class="noble-ui-logo d-block"><img src="~/Images/logo.png" style="height: 90px;" /></a>
+                                                <p class="mt-1 mb-1"><b>Urban Hospitality Services</b></p>
+                                                <p>2nd Floor, Al Hitmi Building, C-Ring Road, P.O Box: 7218, Doha - Qatar</p>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="container-fluid mt-5 w-100">
+                                            <div class="row">
+                                                <div class="col-md-6">
+
+                                                    <p><strong>Apartment No:</strong> {{RenewalDetls.ApartmentNo}}</p>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="table-responsive w-100">
+                                                    <table class="table table-bordered" ng-if="RenewalDetls!=null">
+                                                        <thead>
+                                                            <tr>
+
+                                                                <th style="text-align:center;">Service Type</th>
+                                                                <th style="text-align:center;">Time Duration</th>
+
+                                                                <th style="text-align:center;">Price</th>
+                                                                <th style="text-align:center;">Weekly Frequency</th>
+                                                                <th style="text-align:center;">Preferred Days</th>
+
+                                                                <th>Preferred Time</th>
+                                                                <th style="text-align:center;"> Total No Of Service</th>
+
+                                                                <th style="text-align:center;">Start Date</th>
+                                                                <th style="text-align:center;">End Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="text-end">
+
+                                                                <td style="text-align:center;" ng-bind="RenewalDetls.SubCategory"></td>
+                                                                <td style="text-align:center;" ng-bind="RenewalDetls.Duration"></td>
+
+                                                                <td style="text-align:center;" ng-bind="RenewalDetls.Price + ' QR'"></td>
+                                                                <td style="text-align:center;" ng-bind="RenewalDetls.PackageName"></td>
+                                                                <td style="text-align:center;" ng-bind="RenewalDetls.Days"></td>
+
+                                                                <td class="text-break" ng-bind="RenewalDetls.Times.length != 0 ? formatTimes(RenewalDetls.Times) : ''"></td>
+
+                                                                <td style="text-align:center;" ng-bind="RenewalDetls.TotalNoOfService"></td>
+
+                                                                <td style="text-align:center;" ng-bind="getFormattedDateDisplay(RenewalDetls.StartDate)"></td>
+                                                                <td style="text-align:center;" ng-bind="getFormattedDateDisplay(RenewalDetls.EndDate)"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="7"><strong> Price:</strong></td>
+                                                                <td colspan="5"><strong ng-bind="TotalPrice | currencyFormat"></strong></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="7"><strong> Service Months:</strong></td>
+                                                                <td colspan="5"><strong ng-bind="RenewalDetls.NoOfMonths"></strong></td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="7"><strong> Discount Percentage:</strong></td>
+                                                                <td colspan="5"><strong>{{Discount+"%"}}</strong></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="7"><strong>Discount Price:</strong></td>
+                                                                <td colspan="5"><strong ng-bind="DiscountPrice | currencyFormat"></strong></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="7"><strong>Final  Price:</strong></td>
+                                                                <td colspan="5"><strong ng-bind="RenewalDetls.TotalPrice | currencyFormat"></strong></td>
+                                                            </tr>
+
+
+                                                        </tbody>
+                                                    </table>
+
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                @*<button type="submit" ng-disabled="isRenewalDetlsEmpty()" id="kt_modal_add_customer_submit" ng-click="RenewService()" class="btn btn-primary">
+                            <span class="indicator-label" id="btnRSsave">Renew</span>
+                            <span class="indicator-progress" id="btnRSloader">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>*@
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="renewalmodal1" tabindex="-1" aria-hidden="true">
+                    <!--begin::Modal dialog-->
+                    <div class="modal-dialog modal-fullscreen">
+
+                        <!--begin::Modal content-->
+                        <div class="modal-content shadow-none">
+
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Select Frequency</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+                                <div class="row mb-3">
+                                    <!--begin::Label-->
+                                    <!--end::Label-->
+                                    <div class="col-md-10 freq" ng-show="PackagesDetails.length != 0">
+                                        <label class="required fw-semibold fs-6 mb-2" ng-show="PackagesDetails.length != 0">Select Frequency</label>
+                                        <label class="float-right fw-semibold fs-6 mb-2" style="float: inline-end;" ng-show="PackagesDetails.length != 0">Price perservice</label>
+                                        <div ng-repeat="detail in PackagesDetails | orderBy:'RecursiveTime'" name="FreType" id="PackageD" class="form-check" style="cursor:pointer;">
+                                            <input class="form-check-input" type="radio" name="frequency" id="frequency{{detail.packID}}" ng-model="$parent.selectedFrequency" ng-click="selectFrequency(detail)" value="{{detail.packID}}">
+                                            <label class="form-check-label" style="cursor: pointer; font-weight: 500;" for="frequency{{detail.packID}}">
+                                                <span style="display: inline-block;">{{ detail.PackageName }}</span>
+                                                <span style="display: inline-block;">({{ formatTimeDuration(detail.Duration,detail.TimeMeasurement) }})</span>
+                                            </label>
+                                            <span class="price">{{detail.Price + ' QR '}}perservice</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <!-- Select Start Date -->
+                                    <div class="col-md-4 mb-4" ng-hide="BasedOnPackageSelect">
+                                        <label class="form-label Is-required">Select Start Date</label>
+                                        <input class="form-control" placeholder="Pick a date" ng-model="txtRenewStartDate"
+                                               ng-change="GetChangeDatesRenew()" id="kt_specializeRen" />
+
+                                    </div>
+                                    <!-- Select No Of Months -->
+                                    <div class="col-md-4 mb-4" ng-hide="BasedOnNoOfMonthsR">
+                                        <label class="form-label Is-required">Select No Of Months</label>
+                                        <select select2 style="width: 100%;" ng-model="ddlNoOfMonths" ng-change="onMonthSelection()" class="form-select" id="ddlNoOfMonthsR">
+                                            <option disabled="">Select Type</option>
+                                            <option value="4">1 Month</option>
+                                            <option value="1">3 Months (5 % Discount)</option>
+                                            <option value="2">6 Months (10 % Discount)</option>
+                                            <option value="3">12 Months (15 % Discount)</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <!-- Select Days -->
+                                <div class="col-sm-12 mb-3" ng-show="DayPackage.length != 0">
+                                    <label class="form-label Is-required" ng-show="DayPackage.length != 0">Select your preferred days</label>
+                                    <div class="card-body">
+                                        <div ng-repeat="day in DayPackage" class="day-slot mb-3">
+                                            <input type="radio" name="dayslot" ng-model="$parent.selectedDay" id="slotD{{$index + 1}}" value="{{day.Days}}" ng-true-value="day.Days" ng-false-value="false" ng-click="selectedDaysPack(day)">
+                                            <label for="slotD{{$index + 1}}">{{day.Days}}</label>
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                    <span style="color:green;" ng-bind="msgVDayPDays"></span>
+                                </div>
+                                <!-- Time Selection for Chosen Days (Initially Hidden) -->
+                                <div class="container mt-2 mb-3" ng-show="selectedDays.length > 0">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header text-white" style="min-height: 40px;">
+                                            <div class="card-title m-0">
+                                                Select the Start Time for the Chosen Days
+                                            </div>
+
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row g-3 mb-3">
+                                                <div ng-repeat="day in selectedDays" class="col-md-4">
+                                                    <div class="p-3 border rounded shadow-sm">
+                                                        <h6>{{ day }}</h6>
+                                                        <!-- First Day -->
+                                                        <select select2 style="width: 100%;" name="SelectTime" class="form-select mt-2"
+                                                                ng-model="timeSelections[day]"
+                                                                ng-change="timeSelections[day] && onTimeChange(day, timeSelections[day])"
+                                                                ng-if="$index === 0" ng-disabled="isTimeConfirmed">
+                                                            <option value="" disabled>Select Time</option>
+                                                            <option ng-repeat="time in timeOptionsForDays[day]" value="{{ time }}">{{ time.Display }}</option>
+                                                        </select>
+
+                                                        <!-- Other Days -->
+                                                        <select select2 style="width: 100%;" name="SelectTime" class="form-select mt-2"
+                                                                ng-model="timeSelections[day]"
+                                                                ng-if="$index !== 0" ng-disabled="isTimeConfirmed || !timeOptionsForDays[day]">
+                                                            <option value="" disabled>Select Time</option>
+                                                            <option ng-repeat="time in timeOptionsForDays[day]" value="{{ time }}">{{ time.Display }}</option>
+                                                        </select>
+                                                        <!-- Time Selection -->
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Confirm Time Button -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <button ng-hide="loaderconfirmbtn" type="button" class="btn btn-primary"><i class="fa fa-spinner"></i>  loading</button>
+                                                    <button ng-hide="btnconfirmd" type="button" class="btn btn-primary"
+                                                            ng-click="ConfirmTime()"
+                                                            ng-disabled="!areAllTimesSelected() || isTimeConfirmed || btnConfirmDisabled">
+                                                        <!-- Disable after confirmation -->
+                                                        Confirm the Booking Time
+                                                    </button>
+                                                </div>
+
+                                                <!-- Delete Time Button -->
+                                                <div class="col-md-6" ng-show="isTimebtnConfirmed">
+                                                    <button ng-hide="loaderchangetimebtn" type="button" class="btn btn-danger"><i class="fa fa-spinner"></i>  loading</button>
+                                                    <!-- Show only if time is confirmed -->
+                                                    <button ng-hide="changetimebtn" type="button" class="btn btn-danger"
+                                                            ng-click="DeleteConfirmedTime()">
+                                                        Change the Booking Time
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" ng-disabled="!Disablesubmitbtn()" id="kt_modal_add_customer_submit" ng-click="ExistingCustomerRenew()" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnRSsave">Save</span>
+                                    <span class="indicator-progress" id="btnRSloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="renewalmodalfreq" tabindex="-1" aria-hidden="true">
+                    <!--begin::Modal dialog-->
+                    <div class="modal-dialog modal-fullscreen">
+
+                        <!--begin::Modal content-->
+                        <div class="modal-content shadow-none">
+
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Renew Your Service</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+
+
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" ng-disabled="isRenewalDetlsEmpty()" id="kt_modal_add_customer_submit" ng-click="RenewService()" class="btn btn-primary">
+                                    <span class="indicator-label" id="btnRSsave">Renew</span>
+                                    <span class="indicator-progress" id="btnRSloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="reschedulemodal" tabindex="-1" aria-hidden="true">
+                    <!--begin::Modal dialog-->
+                    <div class="modal-dialog modal-fullscreen">
+
+                        <!--begin::Modal content-->
+                        <div class="modal-content shadow-none">
+
+                            <!--begin::Modal header-->
+                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                <!--begin::Modal title-->
+                                <h2 class="fw-bold">Reschedule Service</h2>
+                                <!--end::Modal title-->
+                                <!--begin::Close-->
+                                <div data-bs-dismiss="modal" class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <i class="ki-outline ki-cross fs-1"></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <!--end::Modal header-->
+                            <!--begin::Modal body-->
+                            <div class="modal-body py-10 px-lg-17">
+
+                                <div class="table-responsive" id="tbl_bookingReslist" style="display:none;">
+                                    <!--begin::Table-->
+                                    <table class="table table-bordered gs-7 gy-7 gx-7" id="kt_customers_all" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+
+                                                <th class="w-10px pe-2">
+
+                                                </th>
+                                                <th style="text-align: center;" class="min-w-100px">Package Name</th>
+                                                <th style="text-align: center;" class="min-w-50px">Task No</th>
+                                                <th style="text-align: center;" class="min-w-100px">Date</th>
+                                                <th style="text-align: center;" class="min-w-75px">Start Time</th>
+                                                <th style="text-align: center;" class="min-w-75px">End Time</th>
+                                                <th style="text-align: center;" class="min-w-30px">Duration</th>
+
+                                                <th style="text-align: center;" class="min-w-50px">Price</th>
+                                                <th style="text-align: center;" class="min-w-50px">Payment Status</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="package in RescheduleList | filter: searchbook | orderBy:'ServiceDate'" style="text-align:center;">
+
+                                                <td>
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                        <!-- Bind the checkbox to the 'selected' property -->
+                                                        <input class="form-check-input" type="checkbox"
+                                                               ng-model="package.selected"
+                                                               ng-click="selectPackage(package)" />
+                                                    </div>
+                                                </td>
+
+                                                <td ng-bind="package.PackageName"></td>
+                                                <td ng-bind="package.TaskNo !=null ?'UHS_TAS_'+package.TaskNo : 'N/A'"></td>
+
+                                                <td ng-bind="getFormattedDateDisplayRs(package.ServiceDate) | date:'fullDate'"></td>
+                                                <td ng-bind="package.StartTime"></td>
+                                                <td ng-bind="package.EndTime"></td>
+                                                <td ng-bind="package.Duration"></td>
+                                                <td ng-bind="package.Price + ' QR'"></td>
+                                                <td>
+                                                    <span class="badge py-3 px-4 fs-7"
+                                                          ng-class="{
+         'badge-light-info': package.PaymentStatus && package.PaymentStatus == null,
+        'badge-light-primary': package.PaymentStatus && package.PaymentStatus == 0,
+        'badge-light-success': package.PaymentStatus && package.PaymentStatus == 2,
+        'badge-light-warning': package.PaymentStatus && package.PaymentStatus == 1,
+        'badge-light-danger': package.PaymentStatus && (package.PaymentStatus == 3 || package.PaymentStatus == 4),
+        'badge-light-yellow': !package.PaymentStatus || package.PaymentStatus == null
+      }"
+                                                          ng-bind="getPaymentStatuswithoutObject(package.PaymentStatus)">
+                                                    </span>
+
+                                                </td>
+
+
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <div id="tbl_dummyResbooking">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-175px">Package Name</th>
+                                                <th>Task No</th>
+                                                <th class="min-w-100px">Date</th>
+                                                <th class="min-w-50px">Start Time</th>
+                                                <th class="min-w-50px">End Time</th>
+                                                <th class="min-w-100px">Duration</th>
+
+                                                <th class="min-w-100px">Price</th>
+                                                <th>Payment Status</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="10" style="color:blue;" id="spanResLoader"><span><b>Loading...</b></span></td>
+                                                <td colspan="10" style="color:red;display:none;" id="spanResEmptyRecords"><span>No records found!</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--end::Modal body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" ng-disabled="!selectedPackage" class="btn btn-primary">
+                                    <span class="indicator-label" id="reschedulegetdate" ng-click="RescheduleDateModal()">Reschedule</span>
+                                    <span class="indicator-progress" id="rescheduleloader">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" tabindex="-1" id="kt_modal_stacked_2">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+
+                        <div class="modal-content shadow-lg">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Select Reschedule Date</h3>
+
+                                <!--begin::Close-->
+                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" ng-click="InitReschedule()" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+                            <form name="RescheduleForm" novalidate>
+                                <div class="modal-body">
+                                    <h5 class="card-title mb-5">Your Schedule Details:</h5>
+                                    <div class="row mb-5">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Package Name:</label><br />
+                                            <span ng-bind="RescDetails.PackageName"></span>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Service Date:</label><br />
+                                            <span ng-bind="getFormattedDateDisplay(RescDetails.ServiceDate) | date:'fullDate'"></span>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Time Range:</label><br />
+                                            <span ng-bind="RescDetails.StartTime + ' '+ RescDetails.EndTime"></span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label Is-required">Select  Date</label>
+                                            <input class="form-control" name="DateStart" placeholder="Pick a date" ng-model="txtStartDate"
+                                                   id="kt_specialize" ng-change="GetChangeDates()" required />
+                                            <span ng-if="RescheduleForm.$submitted && RescheduleForm.DateStart.$invalid" style="color:red">field is required</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label Is-required">Select  Time</label>
+                                            <select name="SelectTime" id="TimeDropdown" class="form-select mt-2" ng-options="time as time.Display for time in TimeDropdowns" data-control="select2" data-placeholder="Select a Time..." data-dropdown-parent="#kt_modal_stacked_2"
+                                                    ng-model="txtreschedulTime"
+                                                    ng-disabled="isTimeConfirmedR">
+                                                <option value="" disabled>Select Time</option>
+                                                <option ng-repeat="time in TimeDropdowns" value="{{ time }}">{{ time.Display }}</option>
+                                            </select>
+                                            <span ng-if="RescheduleForm.$submitted && RescheduleForm.DateStart.$invalid" style="color:red">field is required</span>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="row">
+                                <div class="col-md-10" style="margin-top: 20px;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="termscondition" ng-model="termscondition" ng-true-value="true" ng-false-value="false" type="checkbox" id="flexCheckTerms" required />
+                                        <label class="form-check-label" style="color: #071437;" for="flexCheckTerms">
+                                            I hereby accept the <a href="" data-bs-toggle="modal" data-bs-target="#termsModal">terms & conditions of service reschedule policy</a>
+                                        </label><br />
+                                        <span ng-if="RescheduleForm.$submitted && RescheduleForm.termscondition.$invalid" style="color:red">field are required</span>
+                                    </div>
+
+                                </div>
+
+
+                            </div>*@
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <!--begin::Button-->
+                                    <button type="reset" ng-click="InitReschedule()" data-bs-dismiss="modal" class="btn btn-light me-3">Discard</button>
+                                    <!--end::Button-->
+                                    <!--begin::Button-->
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="indicator-label" id="reschedulegetbtn" ng-click="SaveRescheduleDate(RescheduleForm.$valid)">Update</span>
+                                        <span class="indicator-progress" id="reschedulebtnloader">
+                                            Please wait...
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+                                    <!--end::Button-->
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="verifyModal" tabindex="-1" aria-labelledby="verifyModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="verifyModalLabel">Verification Required</h5>
+                                <button type="button" id="start-tour" ng-click="CloseVerifyModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <i class="bi bi-exclamation-circle"></i> <!-- Bootstrap Icon for attention -->
+                                <p>Please verify your <strong>email</strong> and <strong>mobile number</strong> to proceed.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="start-tour" ng-click="CloseVerifyModal()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" ng-click="verifyNow()" class="btn btn-primary">Verify Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile OTP Verification Modal -->
+                <div class="modal fade" id="mobileOtpModal" tabindex="-1" aria-labelledby="mobileOtpModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form name="MobileOTPform" novalidate>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="mobileOtpModalLabel">Mobile Number Verification</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    @*<div class="row float-right">
+                                <div class="col-md-6">
+                                    <div ng-show="showTimer">
+                                        Time remaining:  <span class="timerstyle" ng-bind="timer | secondsToMinutes"></span>
+                                    </div>
+
+                                </div>
+                            </div>*@
+                                    <p>Enter the OTP sent to your mobile number:</p>
+                                    <input type="text" required class="form-control" maxlength="5" name="OTPMobile" placeholder="Enter OTP" ng-model="mobileOtp">
+                                    <span ng-if="MobileOTPform.$submitted && MobileOTPform.OTPMobile.$invalid" style="color:red">Field is required</span>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <!--begin::Button-->
+                                    <button type="submit" ng-click="verifyMobileOtp(MobileOTPform.$valid)" class="btn btn-primary">
+                                        <span class="indicator-label" id="btnMobiltOsave">Submit OTP</span>
+                                        <span class="indicator-progress" id="btnMobileOloader">
+                                            Please wait...
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email OTP Verification Modal -->
+                <div class="modal fade" id="emailOtpModal" tabindex="-1" aria-labelledby="emailOtpModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form name="EmailOTPForm" novalidate>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="emailOtpModalLabel">Email Verification</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    @*<div class="row float-right">
+                                <div class="col-md-6">
+                                    <div ng-show="showTimer">
+                                        Time remaining:  <span class="timerstyle" ng-bind="timer | secondsToMinutes"></span>
+                                    </div>
+
+                                </div>
+                            </div>*@
+                                    <p>Enter the OTP sent to your email address:</p>
+                                    <input type="text" class="form-control" maxlength="8" name="OTPEmail" required placeholder="Enter OTP" ng-model="emailOtp">
+                                    <span ng-if="EmailOTPForm.$submitted && EmailOTPForm.OTPEmail.$invalid" style="color:red">Field is required</span>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <!--begin::Button-->
+                                    <button type="submit" ng-click="verifyEmailOtp(EmailOTPForm.$valid)" class="btn btn-primary">
+                                        <span class="indicator-label" id="btnEmailsave">Submit OTP</span>
+                                        <span class="indicator-progress" id="btnEmailloader">
+                                            Please wait...
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="termsModalLabel">URBAN SERVICES : SERVICE RESCHEDULE POLICY</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Service Reschedule Modal -->
+                                <P>
+                                    Urban Home Services is committed to providing exceptional and flexible cleaning services to our
+                                    valued customers. We understand that sometimes plans change, and we aim to accommodate your
+                                    needs as best as possible. Below are the guidelines for rescheduling your service appointments.
+                                </P>
+
+                                <h6>1. Rescheduling Guidelines</h6>
+
+                                <h6>1.1 Advance Notice</h6>
+
+
+                                <ul>
+                                    <li>
+                                        <strong>12-Hour Notice:</strong> To reschedule a service, please provide at least 12 hours'
+                                        notice during office working hours (8 AM to 6 PM). This allows us to adjust our schedule and
+                                        accommodate your new preferred time slot.
+                                    </li>
+                                    <li>
+                                        <strong>Less Than 12-Hour Notice:</strong> If you need to reschedule with less than 12
+                                        hours' notice, we will do our best to accommodate your request, but it is subject to
+                                        availability and may incur a rescheduling fee.
+                                    </li>
+                                </ul>
+
+                                <h6>1.2 How to Reschedule</h6>
+                                <ul>
+                                    <li>
+                                        <strong>Contact Us:</strong> You can reschedule your appointment by calling or sending a
+                                        WhatsApp message to +974 31170222. Please provide your name, original appointment date, and
+                                        preferred new date and time.
+                                    </li>
+                                    <li>
+                                        <strong>Confirmation:</strong> Our team will confirm the new appointment time with you as
+                                        soon as possible.
+                                    </li>
+                                </ul>
+
+                                <h6>2. Rescheduling Fees</h6>
+                                <ul>
+                                    <li>
+                                        <strong>No Fee:</strong> Rescheduling requests made with at least 12 hours' notice will not
+                                        incur any fees.
+                                    </li>
+                                    <li>
+                                        <strong>Resheduling Free:</strong>Requests made with less than 12 hours' notice but more
+                                        than 3 hours' notice may incur a rescheduling fee of 50% of one service. For example, if a
+                                        4-service package for a studio apartment is QAR 152 and one service is QAR 38, the fee will
+                                        be QAR 19. This amount will be deducted and adjusted in the next month’s service invoice
+                                    </li>
+                                </ul>
+
+                                <h6>3. Service Cancellations</h6>
+                                <ul>
+                                    <li>
+                                        <strong>12-Hour Notice:</strong> Cancellations made with at least 12 hours' notice during
+                                        office working hours will not incur any charges.
+                                    </li>
+                                    <li>
+                                        <strong>Less Than 3-Hour Notice:</strong> Cancellations made with less than 3 hours' notice
+                                        will incur the full charge, and the service will be marked as completed.
+                                    </li>
+                                </ul>
+
+                                <h6>4. Emergencies</h6>
+                                <ul>
+                                    <li>
+                                        <strong>Special Considerations:</strong> We understand that emergencies happen. In such
+                                        cases, please contact us as soon as possible, and we will handle rescheduling on a
+                                        case-by-case basis without any additional fees.
+                                    </li>
+                                </ul>
+
+                                <h6>5. Contact Information</h6>
+                                <ul>
+                                    <li><strong>Phone/WhatsApp:</strong> +974 31170222</li>
+                                </ul>
+
+                                <h6>6. Customer Satisfaction</h6>
+                                <ul>
+                                    <li>
+                                        <strong>Our Commitment:</strong> Urban Home Services strives to meet and exceed customer
+                                        expectations. If you have any concerns or special requests, please let us know, and we will do
+                                        our best to accommodate you.
+                                    </li>
+                                </ul>
+
+                                <p>We appreciate your understanding and cooperation with our rescheduling policy. Our goal is to provide you with the best possible service, tailored to your needs. Thank you for choosing Urban Home Services. </p>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            </div>
+    </div>
+        </div>
+

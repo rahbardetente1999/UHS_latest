@@ -1,0 +1,305 @@
+﻿/*L-desktop*/
+
+@media (min-device-width: 1600px) {
+    .container {
+        max-width: 940px;
+    }
+}
+
+/*L-laptops*/
+@media (max-width: 1440px) {
+
+    .container {
+        max-width: 800px;
+    }
+
+    .text-content {
+        margin-top: 20px;
+    }
+
+        .text-content .main-heading {
+            width: 82%;
+            font-size: 30px;
+        }
+
+        .text-content .main-text {
+            width: 75%;
+        }
+
+    .package-single {
+        height: 125px;
+    }
+}
+
+/*laptops/tablets*/
+@media (max-width: 1024px) {
+    .container {
+        max-width: 630px;
+    }
+
+    .tab-100 {
+        width: 100%;
+    }
+
+    .tab-50 {
+        width: 50%;
+    }
+
+    .main-inner {
+        padding: 40px 70px;
+    }
+
+    .main-wrapper {
+        padding: 40px 70px;
+    }
+
+    .step-counter {
+        left: 25px;
+    }
+    /* Large laptops */
+    @media (max-width: 1440px) {
+        .step-counter {
+            left: 60px;
+        }
+    }
+
+    /* Medium laptops */
+    @media (max-width: 1366px) {
+        .step-counter {
+            left: 55px;
+        }
+    }
+
+    /* Laptops */
+    @media (max-width: 1280px) {
+        .step-counter {
+            left: 50px;
+        }
+    }
+
+    .text-content {
+        margin-top: 20px;
+    }
+
+        .text-content .main-heading {
+            font-size: 35px;
+            width: 85%;
+        }
+
+        .text-content .main-text {
+            font-size: 16px;
+            width: 80%;
+        }
+
+    .step2 .text-content .main-text {
+        font-size: 19px;
+    }
+
+    .offset-md-1 {
+        margin-left: 0;
+    }
+
+
+    .thankyou-page article p {
+        width: 80%;
+    }
+
+    .social-media {
+        width: 65%;
+    }
+
+    .thankyou-page article h1 {
+        font-size: 60px;
+    }
+
+        .thankyou-page article h1 span {
+            font-size: 65px;
+        }
+
+    .thankyou-page article span {
+        font-size: 18px;
+    }
+}
+
+
+/*tablets*/
+@media (max-width: 768px) {
+    .tab-sm-100 {
+        width: 100%;
+    }
+
+    .tab-sm-50 {
+        width: 50%;
+    }
+
+    .container1 {
+        max-width: 500px;
+    }
+
+    .main-wrapper {
+        padding: 20px 50px;
+    }
+
+    .main-inner {
+        padding: 20px 50px;
+    }
+
+    .text-content .main-heading {
+        font-size: 30px;
+    }
+
+    .step2 .text-content .main-text {
+        font-size: 18px;
+    }
+
+    .step-counter {
+        left: 25px;
+    }
+
+    .step2 .text-content .main-text {
+        width: 80%;
+    }
+
+    .upload-area-inner label {
+        width: 100%;
+    }
+
+    .package-single {
+        height: 105px;
+    }
+
+        .package-single h3 {
+            font-size: 20px;
+        }
+
+        .package-single p {
+            font-size: 10px;
+        }
+
+
+    .social-media {
+        width: 85%;
+    }
+}
+
+
+/*Smart phone*/
+@media(max-width: 576px) {
+    .mob-100 {
+        width: 100%;
+    }
+
+    .mob-50 {
+        width: 50%;
+    }
+
+    .main-wrapper {
+        padding: 0;
+    }
+
+    .logo {
+        padding: 15px 30px;
+    }
+
+    .main-inner {
+        padding: 0;
+        border-radius: 0;
+    }
+
+    .text-content .main-heading {
+        font-size: 16px;
+        width: 96%;
+    }
+
+    .text-content .main-text {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .next-prev {
+        justify-content: center;
+    }
+
+    .info-text {
+        font-size: 14px;
+    }
+
+    .step2 .text-content .main-text {
+        font-size: 14px;
+        width: 90%;
+    }
+
+    .text_input input[type=text], .select_field select, .message_field textarea, .text_input input[type=tel] {
+        font-size: 14px;
+    }
+
+    .service-area {
+        padding: 0;
+        height: auto;
+    }
+
+    .gender_field {
+        height: auto;
+        display: block;
+    }
+
+        .gender_field select + span::after {
+            top: 65%;
+        }
+
+    .text-content {
+        margin-top: 50px;
+    }
+
+    .upload-area-inner label {
+        width: 100%;
+    }
+
+    .next-prev {
+        display: block;
+    }
+
+        .next-prev span {
+            display: block;
+        }
+
+    .step-counter {
+        display: none;
+    }
+
+    .progress-counter {
+        position: fixed;
+        z-index: 100;
+    }
+
+
+
+
+    .thankyou-page article h1 {
+        font-size: 30px;
+    }
+
+        .thankyou-page article h1 span {
+            font-size: 35px;
+        }
+
+    .thankyou-page article span {
+        font-size: 15px;
+    }
+
+    .thankyou-page article p {
+        font-size: 15px;
+        width: 90%;
+    }
+
+    .thankyou-page .logo-text {
+        font-size: 60px;
+    }
+
+    .social-media {
+        width: 100%;
+    }
+}
+
+/* Responsive Styles */
+

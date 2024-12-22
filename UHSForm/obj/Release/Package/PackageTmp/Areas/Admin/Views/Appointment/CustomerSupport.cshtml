@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "CustomerSupport";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" ng-controller="CustomerSupportController">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card header-->
+                <div class="card-header border-0 pt-6">
+                    <!--begin::Card title-->
+                    <div class="card-title fw-medium">
+                        Ticket List
+                    </div>
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <div class="table-responsive" id="tbl_supportlist" style="display:none;">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+                            <thead>
+                                <tr class="text-start  fw-bold fs-7 text-uppercase gs-0">
+                                    <th>S.No</th>
+                                    <th>Ticket Title</th>
+                                    <th style="cursor:pointer;">TicketType</th>
+                                    <th style="cursor:pointer;">
+                                        ServiceType
+                                    </th>
+                                    <th style="cursor:pointer;">ActionFor</th>
+                                    <th>Discription</th>
+                                    <th>Date of Creation</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+                                <tr ng-repeat="support in customerSupportData">
+                                    <td ng-bind="support.index"></td>
+                                    <td ng-bind="support.Title"></td>
+                                    <td ng-bind="support.CustomerSupportServiceTicketType"></td>
+                                    <td ng-bind="support.CustomerSupportServiceType"></td>
+                                    <td ng-bind="support.CustomerSupportActionFor || support.ActionForOther"></td>
+                                    <td ng-bind="support.Remarks"></td>
+                                    <td ng-bind="support.ServiceDate"></td>
+                                    <td>
+                                        <span class="badge" ng-class="{'badge-light-warning': support.CustomerSupportTaskStatus === 'Opening','badge-light-warning': support.CustomerSupportTaskStatus === 'Pending', 'badge-light-success': support.CustomerSupportTaskStatus === 'Closed'}" ng-bind="support.CustomerSupportTaskStatus"></span>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="support.CustomerSupportTaskStatus === 'Closed'">
+                                            Action <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" ng-click="updateAction(support, 1)">Open</a>
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" ng-click="updateAction(support, 2)">Pending</a>
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" ng-click="updateAction(support, 3)">Close</a>
+
+                                        </div>
+                                    </td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--end::Table-->
+                    </div>
+
+                    <div id="tbl_dummysupport" >
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Ticket Title</th>
+                                    <th style="cursor:pointer;">TicketType</th>
+                                    <th style="cursor:pointer;">
+                                        ServiceType
+                                    </th>
+                                    <th style="cursor:pointer;">ActionFor</th>
+                                    <th style="cursor:pointer;">ActionForDetails</th>
+                                    <th>Discription</th>
+                                    <th>Date of Creation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="color:blue;" id="spanLoader"><span><b>Loading...</b></span>
+                                    </td>
+                                    <td colspan="8" style="color:red;display:none;" id="spanEmptyRecords"><span>No
+                                            records found!</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+            <!-- kt_modal_add_customer -->
+            <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered mw-850px">
+                    <div class="modal-content">
+                        <!-- Form -->
+                        <form class="form" name="ticketForm" novalidate>
+                            <!-- Modal Footer -->
+                            <div class="modal-footer">
+                                <button type="reset" ng-click="resetForm()" data-bs-dismiss="modal"
+                                    class="btn btn-light">Discard</button>
+                                <button type="submit" ng-click="submitTicket(ticketForm.$valid)"
+                                    class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
